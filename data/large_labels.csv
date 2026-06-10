@@ -14,40 +14,511 @@ src_ip,verdict,notes
 10.4.3.90,false_positive,"internal user gali, typos then normal login"
 10.0.5.237,false_positive,"internal user gsantos, typos then normal login"
 10.4.2.25,false_positive,"internal user fokafor, typos then normal login"
-10.4.4.154,false_positive,"internal service account svc-monitor9, scheduled jobs"
-10.3.5.67,false_positive,"internal service account svc-metrics2, scheduled jobs"
-10.1.5.106,false_positive,"internal service account svc-archiver4, scheduled jobs"
-10.0.1.162,false_positive,HARD: internal cron with stale credentials for svc-inventory2
-10.1.5.40,false_positive,HARD: internal cron with stale credentials for svc-metrics2
-91.7.23.60,false_positive,"HARD: employee jzhang from home IP, typo then success"
-178.112.162.210,false_positive,"HARD: employee clee from home IP, typo then success"
-103.170.241.104,false_positive,"HARD: employee mbrown from home IP, typo then success"
-80.133.92.161,false_positive,"HARD: employee cbrown from home IP, typo then success"
-185.205.61.183,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
-109.223.48.253,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
-109.204.14.77,true_positive,"classic multi-username brute force, blocked"
-194.200.190.251,true_positive,"classic multi-username brute force, blocked"
-91.220.251.39,true_positive,"classic multi-username brute force, blocked"
-121.27.147.131,true_positive,"classic multi-username brute force, blocked"
-152.192.110.46,true_positive,"classic multi-username brute force, blocked"
-91.51.44.156,true_positive,"classic multi-username brute force, blocked"
-171.174.98.74,true_positive,"classic multi-username brute force, blocked"
-141.164.203.161,true_positive,account compromise: deploy success after failures
-209.5.91.203,true_positive,account compromise: webadmin success after failures
-212.166.48.75,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
-134.87.249.49,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
-221.47.139.77,true_positive,"HARD: stolen credentials — clean login as gokafor, zero failures"
-146.11.186.224,true_positive,"HARD: stolen credentials — clean login as nzhang, zero failures"
-163.206.191.175,true_positive,"HARD: stolen credentials — clean login as jnguyen, zero failures"
-10.2.2.100,true_positive,internal lateral movement: spraying accounts from one host
-80.157.73.179,true_positive,"scanner recon: connection probes only, no auth attempted"
-89.32.252.53,true_positive,"scanner recon: connection probes only, no auth attempted"
-221.148.18.34,true_positive,"scanner recon: connection probes only, no auth attempted"
-178.40.43.170,true_positive,SSH key scanning: failed publickey attempts across hosts
-152.132.119.129,true_positive,SSH key scanning: failed publickey attempts across hosts
-185.131.102.130,true_positive,SSH key scanning: failed publickey attempts across hosts
-171.126.181.146,true_positive,SSH key scanning: failed publickey attempts across hosts
-141.108.38.107,true_positive,HARD: distributed spray node (141.108.38.0/24) vs 'root'
-141.108.38.171,true_positive,HARD: distributed spray node (141.108.38.0/24) vs 'root'
-141.108.38.247,true_positive,HARD: distributed spray node (141.108.38.0/24) vs 'root'
-141.108.38.182,true_positive,HARD: distributed spray node (141.108.38.0/24) vs 'root'
+10.4.4.154,false_positive,"internal user gbrown, typos then normal login"
+10.0.2.78,false_positive,"internal user eali, typos then normal login"
+10.0.0.245,false_positive,"internal user fwilson, typos then normal login"
+10.4.5.234,false_positive,"internal user ecastro, typos then normal login"
+10.3.5.96,false_positive,"internal user sivanov, typos then normal login"
+10.3.4.196,false_positive,"internal user fgarcia, typos then normal login"
+10.0.4.76,false_positive,"internal user agarcia, typos then normal login"
+10.0.1.63,false_positive,"internal user rdubois, typos then normal login"
+10.0.0.60,false_positive,"internal user jzhang, typos then normal login"
+10.2.4.35,false_positive,"internal user tbrown, typos then normal login"
+10.2.4.70,false_positive,"internal user jokafor, typos then normal login"
+10.2.2.161,false_positive,"internal user elee, typos then normal login"
+10.2.3.67,false_positive,"internal user jbrown, typos then normal login"
+10.1.5.26,false_positive,"internal user mokafor, typos then normal login"
+10.2.4.58,false_positive,"internal user sbrown, typos then normal login"
+10.3.0.171,false_positive,"internal user bsantos, typos then normal login"
+10.0.2.221,false_positive,"internal user ltaylor, typos then normal login"
+10.0.3.218,false_positive,"internal user dgarcia, typos then normal login"
+10.3.3.229,false_positive,"internal user fali, typos then normal login"
+10.4.0.157,false_positive,"internal user lchen, typos then normal login"
+10.3.2.42,false_positive,"internal user pokafor, typos then normal login"
+10.3.5.237,false_positive,"internal user plee, typos then normal login"
+10.3.3.195,false_positive,"internal user knovak, typos then normal login"
+10.1.0.65,false_positive,"internal user kbrown, typos then normal login"
+10.4.5.100,false_positive,"internal user tzhang, typos then normal login"
+10.2.1.245,false_positive,"internal user bmiller, typos then normal login"
+10.1.2.175,false_positive,"internal user tcastro, typos then normal login"
+10.0.2.23,false_positive,"internal user rzhang, typos then normal login"
+10.2.1.37,false_positive,"internal user cnguyen, typos then normal login"
+10.4.2.210,false_positive,"internal user ctaylor, typos then normal login"
+10.0.5.165,false_positive,"internal user esingh, typos then normal login"
+10.1.5.115,false_positive,"internal user smiller, typos then normal login"
+10.0.2.143,false_positive,"internal user pbrown, typos then normal login"
+10.0.4.166,false_positive,"internal user rnovak, typos then normal login"
+10.2.3.20,false_positive,"internal user mtaylor, typos then normal login"
+10.0.0.74,false_positive,"internal user csantos, typos then normal login"
+10.3.4.12,false_positive,"internal user mpatel, typos then normal login"
+10.4.3.45,false_positive,"internal user enguyen, typos then normal login"
+10.2.2.33,false_positive,"internal user pnguyen, typos then normal login"
+10.0.1.108,false_positive,"internal user rpatel, typos then normal login"
+10.2.2.147,false_positive,"internal user btaylor, typos then normal login"
+10.1.0.68,false_positive,"internal user ehassan, typos then normal login"
+10.4.2.108,false_positive,"internal user cdubois, typos then normal login"
+10.0.4.17,false_positive,"internal user sgarcia, typos then normal login"
+10.0.0.154,false_positive,"internal user mbrown, typos then normal login"
+10.1.1.78,false_positive,"internal user abrown, typos then normal login"
+10.4.2.200,false_positive,"internal user kdubois, typos then normal login"
+10.3.3.45,false_positive,"internal user adubois, typos then normal login"
+10.2.0.130,false_positive,"internal user ntaylor, typos then normal login"
+10.4.1.147,false_positive,"internal user edubois, typos then normal login"
+10.1.2.143,false_positive,"internal user thassan, typos then normal login"
+10.4.1.177,false_positive,"internal user etaylor, typos then normal login"
+10.4.5.53,false_positive,"internal user cmiller, typos then normal login"
+10.0.3.155,false_positive,"internal user cnovak, typos then normal login"
+10.2.1.167,false_positive,"internal user mnovak, typos then normal login"
+10.2.5.29,false_positive,"internal user rhassan, typos then normal login"
+10.3.1.126,false_positive,"internal user rgarcia, typos then normal login"
+10.3.4.57,false_positive,"internal user nkim, typos then normal login"
+10.0.2.223,false_positive,"internal user fnguyen, typos then normal login"
+10.2.1.225,false_positive,"internal user llee, typos then normal login"
+10.1.5.175,false_positive,"internal user alee, typos then normal login"
+10.3.2.248,false_positive,"internal user nmiller, typos then normal login"
+10.3.4.75,false_positive,"internal user nali, typos then normal login"
+10.1.5.4,false_positive,"internal user pivanov, typos then normal login"
+10.4.2.16,false_positive,"internal user rsingh, typos then normal login"
+10.1.0.122,false_positive,"internal user pcastro, typos then normal login"
+10.0.1.140,false_positive,"internal user pchen, typos then normal login"
+10.3.0.153,false_positive,"internal user mali, typos then normal login"
+10.1.1.212,false_positive,"internal user snovak, typos then normal login"
+10.0.4.160,false_positive,"internal user cali, typos then normal login"
+10.3.4.93,false_positive,"internal user ftaylor, typos then normal login"
+10.4.1.146,false_positive,"internal user bgarcia, typos then normal login"
+10.0.4.124,false_positive,"internal user jmiller, typos then normal login"
+10.4.2.247,false_positive,"internal user ssingh, typos then normal login"
+10.2.3.4,false_positive,"internal user lwilson, typos then normal login"
+10.1.3.20,false_positive,"internal user lkim, typos then normal login"
+10.1.4.229,false_positive,"internal user mkim, typos then normal login"
+10.2.3.122,false_positive,"internal user czhang, typos then normal login"
+10.4.1.32,false_positive,"internal user ktaylor, typos then normal login"
+10.3.2.100,false_positive,"internal user cpatel, typos then normal login"
+10.1.2.96,false_positive,"internal user kivanov, typos then normal login"
+10.0.3.235,false_positive,"internal user ataylor, typos then normal login"
+10.3.5.83,false_positive,"internal user achen, typos then normal login"
+10.2.5.24,false_positive,"internal user fsingh, typos then normal login"
+10.1.4.113,false_positive,"internal user ncastro, typos then normal login"
+10.2.1.28,false_positive,"internal user eivanov, typos then normal login"
+10.1.1.189,false_positive,"internal user jnovak, typos then normal login"
+10.1.1.179,false_positive,"internal user lsantos, typos then normal login"
+10.3.1.245,false_positive,"internal user skim, typos then normal login"
+10.3.3.168,false_positive,"internal user rkim, typos then normal login"
+10.1.3.90,false_positive,"internal user mchen, typos then normal login"
+10.0.0.204,false_positive,"internal user tivanov, typos then normal login"
+10.1.1.32,false_positive,"internal user ewilson, typos then normal login"
+10.4.3.109,false_positive,"internal user emiller, typos then normal login"
+10.1.0.173,false_positive,"internal user mwilson, typos then normal login"
+10.0.5.66,false_positive,"internal user khassan, typos then normal login"
+10.3.2.144,false_positive,"internal user lnguyen, typos then normal login"
+10.0.2.58,false_positive,"internal user gsingh, typos then normal login"
+10.4.5.74,false_positive,"internal user jivanov, typos then normal login"
+10.0.1.139,false_positive,"internal user nlee, typos then normal login"
+10.2.0.143,false_positive,"internal user akim, typos then normal login"
+10.4.5.80,false_positive,"internal user anovak, typos then normal login"
+10.0.5.21,false_positive,"internal user enovak, typos then normal login"
+10.1.5.189,false_positive,"internal user csingh, typos then normal login"
+10.4.1.98,false_positive,"internal user lcastro, typos then normal login"
+10.1.0.34,false_positive,"internal user rnguyen, typos then normal login"
+10.3.1.29,false_positive,"internal user jwilson, typos then normal login"
+10.1.5.207,false_positive,"internal user pkim, typos then normal login"
+10.2.1.96,false_positive,"internal user ssantos, typos then normal login"
+10.1.5.2,false_positive,"internal user rlee, typos then normal login"
+10.4.4.91,false_positive,"internal user pzhang, typos then normal login"
+10.1.2.25,false_positive,"internal user sdubois, typos then normal login"
+10.0.3.97,false_positive,"internal user ggarcia, typos then normal login"
+10.3.4.27,false_positive,"internal user lhassan, typos then normal login"
+10.0.1.210,false_positive,"internal user lgarcia, typos then normal login"
+10.2.2.174,false_positive,"internal user cbrown, typos then normal login"
+10.4.0.28,false_positive,"internal user eokafor, typos then normal login"
+10.3.1.220,false_positive,"internal user staylor, typos then normal login"
+10.1.3.199,false_positive,"internal user kkim, typos then normal login"
+10.1.0.62,false_positive,"internal user jtaylor, typos then normal login"
+10.2.4.95,false_positive,"internal user kchen, typos then normal login"
+10.3.1.27,false_positive,"internal user egarcia, typos then normal login"
+10.0.3.207,false_positive,"internal user msingh, typos then normal login"
+10.4.3.193,false_positive,"internal user dnovak, typos then normal login"
+10.2.4.132,false_positive,"internal user azhang, typos then normal login"
+10.0.2.140,false_positive,"internal user amiller, typos then normal login"
+10.1.5.220,false_positive,"internal user mhassan, typos then normal login"
+10.2.5.100,false_positive,"internal user dmiller, typos then normal login"
+10.3.1.169,false_positive,"internal user rmiller, typos then normal login"
+10.1.5.8,false_positive,"internal user rcastro, typos then normal login"
+10.4.4.166,false_positive,"internal user mivanov, typos then normal login"
+10.4.1.102,false_positive,"internal user bbrown, typos then normal login"
+10.2.5.198,false_positive,"internal user kokafor, typos then normal login"
+10.3.4.208,false_positive,"internal user chassan, typos then normal login"
+10.0.0.29,false_positive,"internal user rokafor, typos then normal login"
+10.4.5.75,false_positive,"internal service account svc-indexer6, scheduled jobs"
+10.1.0.115,false_positive,"internal service account svc-backup8, scheduled jobs"
+10.2.4.230,false_positive,"internal service account svc-archiver8, scheduled jobs"
+10.0.3.211,false_positive,"internal service account svc-sync9, scheduled jobs"
+10.4.0.2,false_positive,"internal service account svc-sync2, scheduled jobs"
+10.3.4.3,false_positive,"internal service account svc-monitor4, scheduled jobs"
+10.1.5.116,false_positive,"internal service account svc-metrics5, scheduled jobs"
+10.4.5.33,false_positive,"internal service account svc-deployer3, scheduled jobs"
+10.3.5.50,false_positive,"internal service account svc-backup4, scheduled jobs"
+10.3.3.63,false_positive,"internal service account svc-indexer1, scheduled jobs"
+10.2.1.228,false_positive,"internal service account svc-indexer3, scheduled jobs"
+10.3.5.242,false_positive,"internal service account svc-patching4, scheduled jobs"
+10.0.1.92,false_positive,"internal service account svc-monitor3, scheduled jobs"
+10.3.5.231,false_positive,"internal service account svc-metrics2, scheduled jobs"
+10.0.2.133,false_positive,"internal service account svc-backup5, scheduled jobs"
+10.0.0.237,false_positive,"internal service account svc-patching4, scheduled jobs"
+10.0.3.114,false_positive,"internal service account svc-deployer2, scheduled jobs"
+10.3.5.143,false_positive,"internal service account svc-indexer8, scheduled jobs"
+10.4.1.227,false_positive,"internal service account svc-archiver3, scheduled jobs"
+10.2.4.78,false_positive,"internal service account svc-etl6, scheduled jobs"
+10.0.3.122,false_positive,"internal service account svc-sync7, scheduled jobs"
+10.0.3.160,false_positive,"internal service account svc-indexer5, scheduled jobs"
+10.3.5.110,false_positive,"internal service account svc-inventory2, scheduled jobs"
+10.4.0.216,false_positive,"internal service account svc-metrics1, scheduled jobs"
+10.0.0.133,false_positive,"internal service account svc-archiver7, scheduled jobs"
+10.4.5.126,false_positive,"internal service account svc-indexer6, scheduled jobs"
+10.3.1.131,false_positive,"internal service account svc-indexer6, scheduled jobs"
+10.0.0.202,false_positive,"internal service account svc-indexer2, scheduled jobs"
+10.1.4.140,false_positive,"internal service account svc-patching2, scheduled jobs"
+10.2.2.126,false_positive,"internal service account svc-metrics3, scheduled jobs"
+10.2.4.167,false_positive,HARD: internal cron with stale credentials for svc-archiver2
+10.4.4.84,false_positive,HARD: internal cron with stale credentials for svc-indexer1
+10.2.3.175,false_positive,HARD: internal cron with stale credentials for svc-backup6
+10.4.3.245,false_positive,HARD: internal cron with stale credentials for svc-inventory1
+10.4.2.169,false_positive,HARD: internal cron with stale credentials for svc-backup1
+10.2.5.68,false_positive,HARD: internal cron with stale credentials for svc-inventory4
+10.4.2.101,false_positive,HARD: internal cron with stale credentials for svc-backup2
+10.4.4.128,false_positive,HARD: internal cron with stale credentials for svc-archiver4
+10.3.0.242,false_positive,HARD: internal cron with stale credentials for svc-backup6
+10.0.3.112,false_positive,HARD: internal cron with stale credentials for svc-indexer6
+10.0.2.158,false_positive,HARD: internal cron with stale credentials for svc-deployer2
+10.2.5.242,false_positive,HARD: internal cron with stale credentials for svc-monitor9
+10.2.2.151,false_positive,HARD: internal cron with stale credentials for svc-metrics3
+10.2.4.146,false_positive,HARD: internal cron with stale credentials for svc-indexer5
+10.4.2.13,false_positive,HARD: internal cron with stale credentials for svc-patching4
+10.2.2.171,false_positive,HARD: internal cron with stale credentials for svc-archiver7
+10.2.1.15,false_positive,HARD: internal cron with stale credentials for svc-metrics9
+10.4.5.11,false_positive,HARD: internal cron with stale credentials for svc-patching4
+10.3.2.207,false_positive,HARD: internal cron with stale credentials for svc-sync5
+10.0.2.11,false_positive,HARD: internal cron with stale credentials for svc-patching6
+209.192.53.123,false_positive,"HARD: employee fivanov from home IP, typo then success"
+80.113.115.220,false_positive,"HARD: employee jsingh from home IP, typo then success"
+212.200.176.139,false_positive,"HARD: employee tmiller from home IP, typo then success"
+178.222.100.252,false_positive,"HARD: employee ckim from home IP, typo then success"
+37.234.246.100,false_positive,"HARD: employee twilson from home IP, typo then success"
+141.101.40.30,false_positive,"HARD: employee ngarcia from home IP, typo then success"
+152.41.154.149,false_positive,"HARD: employee tnovak from home IP, typo then success"
+109.234.145.227,false_positive,"HARD: employee mlee from home IP, typo then success"
+141.118.98.235,false_positive,"HARD: employee dcastro from home IP, typo then success"
+202.186.184.232,false_positive,"HARD: employee ndubois from home IP, typo then success"
+80.130.11.120,false_positive,"HARD: employee jlee from home IP, typo then success"
+109.172.191.120,false_positive,"HARD: employee slee from home IP, typo then success"
+171.190.100.45,false_positive,"HARD: employee schen from home IP, typo then success"
+31.215.162.209,false_positive,"HARD: employee msantos from home IP, typo then success"
+23.254.3.88,false_positive,"HARD: employee blee from home IP, typo then success"
+171.161.48.161,false_positive,"HARD: employee bdubois from home IP, typo then success"
+134.168.80.5,false_positive,"HARD: employee szhang from home IP, typo then success"
+45.183.137.204,false_positive,"HARD: employee dsantos from home IP, typo then success"
+37.86.4.157,false_positive,"HARD: employee kcastro from home IP, typo then success"
+141.194.62.160,false_positive,"HARD: employee spatel from home IP, typo then success"
+146.190.224.86,false_positive,"HARD: employee gpatel from home IP, typo then success"
+89.206.175.180,false_positive,"HARD: employee fsantos from home IP, typo then success"
+193.254.36.242,false_positive,"HARD: employee bnguyen from home IP, typo then success"
+77.185.50.64,false_positive,"HARD: employee kwilson from home IP, typo then success"
+163.157.188.112,false_positive,"HARD: employee jcastro from home IP, typo then success"
+134.144.155.125,false_positive,"HARD: employee bchen from home IP, typo then success"
+193.253.150.20,false_positive,"HARD: employee npatel from home IP, typo then success"
+121.131.181.127,false_positive,"HARD: employee ppatel from home IP, typo then success"
+23.179.170.167,false_positive,"HARD: employee knguyen from home IP, typo then success"
+37.133.232.50,false_positive,"HARD: employee nzhang from home IP, typo then success"
+212.205.88.210,false_positive,"HARD: employee bcastro from home IP, typo then success"
+163.107.167.75,false_positive,"HARD: employee rivanov from home IP, typo then success"
+141.113.160.235,false_positive,"HARD: employee dtaylor from home IP, typo then success"
+89.123.124.174,false_positive,"HARD: employee dchen from home IP, typo then success"
+134.155.133.254,false_positive,"HARD: employee pmiller from home IP, typo then success"
+146.223.178.104,false_positive,"HARD: employee divanov from home IP, typo then success"
+23.163.92.225,false_positive,"HARD: employee mmiller from home IP, typo then success"
+209.99.75.157,false_positive,"HARD: employee mnguyen from home IP, typo then success"
+89.63.54.45,false_positive,"HARD: employee nchen from home IP, typo then success"
+193.186.125.25,false_positive,"HARD: employee ghassan from home IP, typo then success"
+89.67.29.76,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+202.32.70.219,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+194.202.253.221,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+91.218.192.10,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+37.93.232.87,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+103.163.219.24,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+221.229.9.241,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+31.42.170.52,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+152.181.200.209,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+193.71.53.151,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+31.245.144.17,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+141.95.37.232,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+37.158.85.32,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+217.163.85.37,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+178.129.78.183,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+209.92.249.35,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+194.106.129.117,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+217.93.202.112,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+62.83.170.254,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+103.180.158.242,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+23.7.39.204,true_positive,"classic multi-username brute force, blocked"
+91.124.51.246,true_positive,"classic multi-username brute force, blocked"
+134.73.154.56,true_positive,"classic multi-username brute force, blocked"
+163.28.234.35,true_positive,"classic multi-username brute force, blocked"
+146.37.246.5,true_positive,"classic multi-username brute force, blocked"
+194.225.82.207,true_positive,"classic multi-username brute force, blocked"
+134.179.204.29,true_positive,"classic multi-username brute force, blocked"
+185.65.29.11,true_positive,"classic multi-username brute force, blocked"
+23.239.14.8,true_positive,"classic multi-username brute force, blocked"
+185.99.126.6,true_positive,"classic multi-username brute force, blocked"
+202.254.66.251,true_positive,"classic multi-username brute force, blocked"
+178.162.140.189,true_positive,"classic multi-username brute force, blocked"
+89.183.75.32,true_positive,"classic multi-username brute force, blocked"
+31.111.25.240,true_positive,"classic multi-username brute force, blocked"
+77.215.137.103,true_positive,"classic multi-username brute force, blocked"
+209.237.225.175,true_positive,"classic multi-username brute force, blocked"
+194.89.186.110,true_positive,"classic multi-username brute force, blocked"
+23.241.170.105,true_positive,"classic multi-username brute force, blocked"
+202.74.45.73,true_positive,"classic multi-username brute force, blocked"
+212.96.1.124,true_positive,"classic multi-username brute force, blocked"
+103.11.31.224,true_positive,"classic multi-username brute force, blocked"
+80.195.239.113,true_positive,"classic multi-username brute force, blocked"
+202.44.172.101,true_positive,"classic multi-username brute force, blocked"
+109.198.92.163,true_positive,"classic multi-username brute force, blocked"
+163.121.220.100,true_positive,"classic multi-username brute force, blocked"
+202.184.116.47,true_positive,"classic multi-username brute force, blocked"
+193.176.137.212,true_positive,"classic multi-username brute force, blocked"
+80.174.248.182,true_positive,"classic multi-username brute force, blocked"
+152.5.243.248,true_positive,"classic multi-username brute force, blocked"
+91.33.82.170,true_positive,"classic multi-username brute force, blocked"
+89.214.89.20,true_positive,"classic multi-username brute force, blocked"
+141.171.214.66,true_positive,"classic multi-username brute force, blocked"
+152.220.22.87,true_positive,"classic multi-username brute force, blocked"
+171.149.32.26,true_positive,"classic multi-username brute force, blocked"
+109.64.93.38,true_positive,"classic multi-username brute force, blocked"
+62.133.254.11,true_positive,"classic multi-username brute force, blocked"
+178.15.208.101,true_positive,"classic multi-username brute force, blocked"
+202.53.98.147,true_positive,"classic multi-username brute force, blocked"
+121.17.39.148,true_positive,"classic multi-username brute force, blocked"
+152.249.170.17,true_positive,"classic multi-username brute force, blocked"
+212.16.121.65,true_positive,"classic multi-username brute force, blocked"
+221.23.208.55,true_positive,"classic multi-username brute force, blocked"
+121.20.71.108,true_positive,"classic multi-username brute force, blocked"
+45.127.36.236,true_positive,"classic multi-username brute force, blocked"
+141.177.150.160,true_positive,"classic multi-username brute force, blocked"
+77.23.146.49,true_positive,"classic multi-username brute force, blocked"
+185.162.16.66,true_positive,"classic multi-username brute force, blocked"
+77.32.92.196,true_positive,"classic multi-username brute force, blocked"
+134.6.138.197,true_positive,"classic multi-username brute force, blocked"
+217.247.50.156,true_positive,"classic multi-username brute force, blocked"
+62.207.9.54,true_positive,"classic multi-username brute force, blocked"
+109.205.156.119,true_positive,"classic multi-username brute force, blocked"
+62.238.25.180,true_positive,"classic multi-username brute force, blocked"
+152.28.68.153,true_positive,"classic multi-username brute force, blocked"
+23.162.92.184,true_positive,"classic multi-username brute force, blocked"
+23.129.222.245,true_positive,"classic multi-username brute force, blocked"
+193.124.198.152,true_positive,"classic multi-username brute force, blocked"
+152.208.92.105,true_positive,"classic multi-username brute force, blocked"
+89.34.182.12,true_positive,"classic multi-username brute force, blocked"
+185.51.227.64,true_positive,"classic multi-username brute force, blocked"
+178.30.203.179,true_positive,"classic multi-username brute force, blocked"
+91.131.58.84,true_positive,"classic multi-username brute force, blocked"
+103.106.202.73,true_positive,"classic multi-username brute force, blocked"
+141.241.191.12,true_positive,"classic multi-username brute force, blocked"
+23.254.142.123,true_positive,"classic multi-username brute force, blocked"
+209.95.56.165,true_positive,"classic multi-username brute force, blocked"
+134.121.136.29,true_positive,"classic multi-username brute force, blocked"
+202.16.103.222,true_positive,"classic multi-username brute force, blocked"
+103.166.33.78,true_positive,"classic multi-username brute force, blocked"
+77.248.147.45,true_positive,"classic multi-username brute force, blocked"
+23.226.10.12,true_positive,account compromise: webadmin success after failures
+185.184.125.38,true_positive,account compromise: backup success after failures
+221.166.1.162,true_positive,account compromise: deploy success after failures
+109.67.191.251,true_positive,account compromise: webadmin success after failures
+77.17.117.177,true_positive,account compromise: backup success after failures
+171.53.81.144,true_positive,account compromise: webadmin success after failures
+217.244.198.129,true_positive,account compromise: deploy success after failures
+217.173.192.250,true_positive,account compromise: backup success after failures
+193.137.100.238,true_positive,account compromise: deploy success after failures
+193.148.42.201,true_positive,account compromise: webadmin success after failures
+194.152.127.25,true_positive,account compromise: deploy success after failures
+146.35.185.89,true_positive,account compromise: devops success after failures
+212.201.72.47,true_positive,account compromise: deploy success after failures
+23.216.210.153,true_positive,account compromise: webadmin success after failures
+23.37.253.125,true_positive,account compromise: devops success after failures
+109.67.243.223,true_positive,account compromise: deploy success after failures
+45.12.142.17,true_positive,account compromise: deploy success after failures
+45.38.151.9,true_positive,account compromise: webadmin success after failures
+141.47.89.138,true_positive,account compromise: webadmin success after failures
+23.9.14.252,true_positive,account compromise: devops success after failures
+109.64.170.183,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+221.154.210.129,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+141.98.154.144,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+178.69.63.61,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+178.234.29.158,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+80.120.13.133,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+217.170.160.68,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+212.150.114.232,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+194.131.7.210,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+209.238.59.148,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+141.122.81.123,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+77.131.228.129,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+194.239.217.124,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+45.91.109.13,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+134.91.27.201,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+185.97.98.141,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+62.144.86.28,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+171.33.0.130,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+91.102.122.40,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+80.213.28.152,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+89.55.121.186,true_positive,"HARD: stolen credentials — clean login as mzhang, zero failures"
+77.93.232.246,true_positive,"HARD: stolen credentials — clean login as tgarcia, zero failures"
+80.179.74.72,true_positive,"HARD: stolen credentials — clean login as clee, zero failures"
+178.193.139.163,true_positive,"HARD: stolen credentials — clean login as kzhang, zero failures"
+77.236.100.162,true_positive,"HARD: stolen credentials — clean login as ldubois, zero failures"
+202.159.140.114,true_positive,"HARD: stolen credentials — clean login as tlee, zero failures"
+45.158.34.186,true_positive,"HARD: stolen credentials — clean login as lmiller, zero failures"
+23.153.167.168,true_positive,"HARD: stolen credentials — clean login as tnguyen, zero failures"
+91.202.231.191,true_positive,"HARD: stolen credentials — clean login as rchen, zero failures"
+171.229.7.148,true_positive,"HARD: stolen credentials — clean login as jali, zero failures"
+217.104.224.99,true_positive,"HARD: stolen credentials — clean login as rali, zero failures"
+121.59.236.15,true_positive,"HARD: stolen credentials — clean login as ttaylor, zero failures"
+62.196.80.158,true_positive,"HARD: stolen credentials — clean login as echen, zero failures"
+37.96.233.250,true_positive,"HARD: stolen credentials — clean login as epatel, zero failures"
+134.124.182.128,true_positive,"HARD: stolen credentials — clean login as awilson, zero failures"
+217.230.3.240,true_positive,"HARD: stolen credentials — clean login as snguyen, zero failures"
+89.189.194.228,true_positive,"HARD: stolen credentials — clean login as nsingh, zero failures"
+193.44.94.253,true_positive,"HARD: stolen credentials — clean login as gzhang, zero failures"
+121.74.166.121,true_positive,"HARD: stolen credentials — clean login as tdubois, zero failures"
+80.63.170.77,true_positive,"HARD: stolen credentials — clean login as gwilson, zero failures"
+221.38.68.161,true_positive,"HARD: stolen credentials — clean login as tchen, zero failures"
+134.113.121.131,true_positive,"HARD: stolen credentials — clean login as sali, zero failures"
+194.245.92.68,true_positive,"HARD: stolen credentials — clean login as dnguyen, zero failures"
+178.109.252.152,true_positive,"HARD: stolen credentials — clean login as asantos, zero failures"
+91.215.115.176,true_positive,"HARD: stolen credentials — clean login as fpatel, zero failures"
+171.167.57.153,true_positive,"HARD: stolen credentials — clean login as fhassan, zero failures"
+152.8.100.237,true_positive,"HARD: stolen credentials — clean login as jchen, zero failures"
+221.162.152.173,true_positive,"HARD: stolen credentials — clean login as ccastro, zero failures"
+121.99.203.25,true_positive,"HARD: stolen credentials — clean login as flee, zero failures"
+217.193.196.221,true_positive,"HARD: stolen credentials — clean login as gokafor, zero failures"
+10.0.3.215,true_positive,internal lateral movement: spraying accounts from one host
+10.1.3.138,true_positive,internal lateral movement: spraying accounts from one host
+10.4.1.73,true_positive,internal lateral movement: spraying accounts from one host
+10.3.4.238,true_positive,internal lateral movement: spraying accounts from one host
+10.4.1.88,true_positive,internal lateral movement: spraying accounts from one host
+10.0.4.10,true_positive,internal lateral movement: spraying accounts from one host
+10.1.3.13,true_positive,internal lateral movement: spraying accounts from one host
+10.2.4.180,true_positive,internal lateral movement: spraying accounts from one host
+10.4.3.132,true_positive,internal lateral movement: spraying accounts from one host
+10.4.0.113,true_positive,internal lateral movement: spraying accounts from one host
+45.157.137.59,true_positive,"scanner recon: connection probes only, no auth attempted"
+163.56.30.243,true_positive,"scanner recon: connection probes only, no auth attempted"
+134.60.179.102,true_positive,"scanner recon: connection probes only, no auth attempted"
+134.251.50.177,true_positive,"scanner recon: connection probes only, no auth attempted"
+163.163.226.246,true_positive,"scanner recon: connection probes only, no auth attempted"
+221.9.207.178,true_positive,"scanner recon: connection probes only, no auth attempted"
+194.69.127.86,true_positive,"scanner recon: connection probes only, no auth attempted"
+109.237.214.241,true_positive,"scanner recon: connection probes only, no auth attempted"
+80.64.202.231,true_positive,"scanner recon: connection probes only, no auth attempted"
+121.187.140.116,true_positive,"scanner recon: connection probes only, no auth attempted"
+194.83.104.50,true_positive,"scanner recon: connection probes only, no auth attempted"
+37.80.47.83,true_positive,"scanner recon: connection probes only, no auth attempted"
+217.64.88.34,true_positive,"scanner recon: connection probes only, no auth attempted"
+146.12.130.49,true_positive,"scanner recon: connection probes only, no auth attempted"
+212.68.33.39,true_positive,"scanner recon: connection probes only, no auth attempted"
+178.40.183.210,true_positive,"scanner recon: connection probes only, no auth attempted"
+171.15.69.103,true_positive,"scanner recon: connection probes only, no auth attempted"
+163.201.73.171,true_positive,"scanner recon: connection probes only, no auth attempted"
+37.95.22.111,true_positive,"scanner recon: connection probes only, no auth attempted"
+80.152.82.117,true_positive,"scanner recon: connection probes only, no auth attempted"
+89.193.183.112,true_positive,"scanner recon: connection probes only, no auth attempted"
+185.122.166.141,true_positive,"scanner recon: connection probes only, no auth attempted"
+37.91.215.8,true_positive,"scanner recon: connection probes only, no auth attempted"
+221.52.98.229,true_positive,"scanner recon: connection probes only, no auth attempted"
+62.146.178.99,true_positive,"scanner recon: connection probes only, no auth attempted"
+163.159.217.145,true_positive,"scanner recon: connection probes only, no auth attempted"
+89.148.225.71,true_positive,"scanner recon: connection probes only, no auth attempted"
+178.220.239.71,true_positive,"scanner recon: connection probes only, no auth attempted"
+121.87.120.206,true_positive,"scanner recon: connection probes only, no auth attempted"
+212.30.52.189,true_positive,"scanner recon: connection probes only, no auth attempted"
+171.77.48.68,true_positive,SSH key scanning: failed publickey attempts across hosts
+37.120.67.50,true_positive,SSH key scanning: failed publickey attempts across hosts
+89.51.64.106,true_positive,SSH key scanning: failed publickey attempts across hosts
+194.227.139.120,true_positive,SSH key scanning: failed publickey attempts across hosts
+121.252.176.143,true_positive,SSH key scanning: failed publickey attempts across hosts
+146.6.205.44,true_positive,SSH key scanning: failed publickey attempts across hosts
+103.30.18.84,true_positive,SSH key scanning: failed publickey attempts across hosts
+45.58.167.139,true_positive,SSH key scanning: failed publickey attempts across hosts
+134.77.228.4,true_positive,SSH key scanning: failed publickey attempts across hosts
+209.125.240.132,true_positive,SSH key scanning: failed publickey attempts across hosts
+141.109.104.7,true_positive,SSH key scanning: failed publickey attempts across hosts
+80.40.169.131,true_positive,SSH key scanning: failed publickey attempts across hosts
+171.134.25.221,true_positive,SSH key scanning: failed publickey attempts across hosts
+212.44.156.224,true_positive,SSH key scanning: failed publickey attempts across hosts
+37.245.130.51,true_positive,SSH key scanning: failed publickey attempts across hosts
+103.142.154.232,true_positive,SSH key scanning: failed publickey attempts across hosts
+141.252.221.62,true_positive,SSH key scanning: failed publickey attempts across hosts
+152.42.106.226,true_positive,SSH key scanning: failed publickey attempts across hosts
+121.157.152.113,true_positive,SSH key scanning: failed publickey attempts across hosts
+109.187.89.57,true_positive,SSH key scanning: failed publickey attempts across hosts
+62.183.219.82,true_positive,SSH key scanning: failed publickey attempts across hosts
+89.126.130.138,true_positive,SSH key scanning: failed publickey attempts across hosts
+77.32.113.179,true_positive,SSH key scanning: failed publickey attempts across hosts
+31.137.152.143,true_positive,SSH key scanning: failed publickey attempts across hosts
+221.36.76.137,true_positive,SSH key scanning: failed publickey attempts across hosts
+31.95.80.39,true_positive,SSH key scanning: failed publickey attempts across hosts
+212.103.35.236,true_positive,SSH key scanning: failed publickey attempts across hosts
+121.89.202.226,true_positive,SSH key scanning: failed publickey attempts across hosts
+31.229.26.161,true_positive,SSH key scanning: failed publickey attempts across hosts
+141.127.102.68,true_positive,SSH key scanning: failed publickey attempts across hosts
+89.188.59.56,true_positive,SSH key scanning: failed publickey attempts across hosts
+80.41.69.97,true_positive,SSH key scanning: failed publickey attempts across hosts
+103.98.134.112,true_positive,SSH key scanning: failed publickey attempts across hosts
+209.105.202.30,true_positive,SSH key scanning: failed publickey attempts across hosts
+178.70.193.23,true_positive,SSH key scanning: failed publickey attempts across hosts
+152.75.158.218,true_positive,SSH key scanning: failed publickey attempts across hosts
+178.248.135.107,true_positive,SSH key scanning: failed publickey attempts across hosts
+134.205.0.7,true_positive,SSH key scanning: failed publickey attempts across hosts
+45.134.225.23,true_positive,SSH key scanning: failed publickey attempts across hosts
+146.38.183.15,true_positive,SSH key scanning: failed publickey attempts across hosts
+103.106.79.90,true_positive,HARD: distributed spray node (103.106.79.0/24) vs 'administrator'
+103.106.79.19,true_positive,HARD: distributed spray node (103.106.79.0/24) vs 'administrator'
+103.106.79.228,true_positive,HARD: distributed spray node (103.106.79.0/24) vs 'administrator'
+103.106.79.119,true_positive,HARD: distributed spray node (103.106.79.0/24) vs 'administrator'
+103.106.79.91,true_positive,HARD: distributed spray node (103.106.79.0/24) vs 'administrator'
+171.112.192.246,true_positive,HARD: distributed spray node (171.112.192.0/24) vs 'root'
+171.112.192.109,true_positive,HARD: distributed spray node (171.112.192.0/24) vs 'root'
+171.112.192.91,true_positive,HARD: distributed spray node (171.112.192.0/24) vs 'root'
+171.112.192.119,true_positive,HARD: distributed spray node (171.112.192.0/24) vs 'root'
+171.112.192.240,true_positive,HARD: distributed spray node (171.112.192.0/24) vs 'root'
+171.131.219.77,true_positive,HARD: distributed spray node (171.131.219.0/24) vs 'root'
+171.131.219.11,true_positive,HARD: distributed spray node (171.131.219.0/24) vs 'root'
+171.131.219.15,true_positive,HARD: distributed spray node (171.131.219.0/24) vs 'root'
+171.131.219.88,true_positive,HARD: distributed spray node (171.131.219.0/24) vs 'root'
+171.131.219.33,true_positive,HARD: distributed spray node (171.131.219.0/24) vs 'root'
+141.129.223.187,true_positive,HARD: distributed spray node (141.129.223.0/24) vs 'admin'
+141.129.223.223,true_positive,HARD: distributed spray node (141.129.223.0/24) vs 'admin'
+141.129.223.222,true_positive,HARD: distributed spray node (141.129.223.0/24) vs 'admin'
+141.129.223.3,true_positive,HARD: distributed spray node (141.129.223.0/24) vs 'admin'
+141.129.223.17,true_positive,HARD: distributed spray node (141.129.223.0/24) vs 'admin'
+103.77.235.63,true_positive,HARD: distributed spray node (103.77.235.0/24) vs 'root'
+103.77.235.193,true_positive,HARD: distributed spray node (103.77.235.0/24) vs 'root'
+103.77.235.131,true_positive,HARD: distributed spray node (103.77.235.0/24) vs 'root'
+141.58.86.182,true_positive,HARD: distributed spray node (141.58.86.0/24) vs 'admin'
+141.58.86.37,true_positive,HARD: distributed spray node (141.58.86.0/24) vs 'admin'
+141.58.86.53,true_positive,HARD: distributed spray node (141.58.86.0/24) vs 'admin'
+141.58.86.75,true_positive,HARD: distributed spray node (141.58.86.0/24) vs 'admin'
+103.42.248.151,true_positive,HARD: distributed spray node (103.42.248.0/24) vs 'administrator'
+103.42.248.172,true_positive,HARD: distributed spray node (103.42.248.0/24) vs 'administrator'
+103.42.248.149,true_positive,HARD: distributed spray node (103.42.248.0/24) vs 'administrator'
+103.42.248.39,true_positive,HARD: distributed spray node (103.42.248.0/24) vs 'administrator'
+193.29.158.149,true_positive,HARD: distributed spray node (193.29.158.0/24) vs 'admin'
+193.29.158.60,true_positive,HARD: distributed spray node (193.29.158.0/24) vs 'admin'
+193.29.158.180,true_positive,HARD: distributed spray node (193.29.158.0/24) vs 'admin'
+193.29.158.142,true_positive,HARD: distributed spray node (193.29.158.0/24) vs 'admin'
+193.29.158.129,true_positive,HARD: distributed spray node (193.29.158.0/24) vs 'admin'
+103.142.86.37,true_positive,HARD: distributed spray node (103.142.86.0/24) vs 'root'
+103.142.86.41,true_positive,HARD: distributed spray node (103.142.86.0/24) vs 'root'
+103.142.86.77,true_positive,HARD: distributed spray node (103.142.86.0/24) vs 'root'
+103.142.86.119,true_positive,HARD: distributed spray node (103.142.86.0/24) vs 'root'
+171.82.78.6,true_positive,HARD: distributed spray node (171.82.78.0/24) vs 'administrator'
+171.82.78.14,true_positive,HARD: distributed spray node (171.82.78.0/24) vs 'administrator'
+171.82.78.111,true_positive,HARD: distributed spray node (171.82.78.0/24) vs 'administrator'

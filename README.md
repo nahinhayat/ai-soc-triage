@@ -102,19 +102,25 @@ distributed botnet sprays (2 attempts per IP), stolen-credential logins with
 compromises, and misconfigured cron jobs that look like internal attacks.
 
 ```bash
-python generate_dataset.py            # new random dataset each run
+python generate_dataset.py            # new random ~500-alert dataset each run
 python generate_dataset.py --seed 42  # reproduce the committed benchmark
+python generate_dataset.py --scale 1  # smaller ~50-alert dataset
 python main.py data/large_auth.log --llm --json results.json
 python evaluate.py results.json data/large_labels.csv
 ```
 
-Committed benchmark (`--seed 42`): 359 log lines → 52 alerts (26 attacks,
-26 benign, 17 hard cases) across 5 hosts:
+Committed benchmark (`--seed 42`): 3,912 log lines → 523 alerts
+(263 attacks, 260 benign, 173 hard cases) across 5 hosts:
 
-| Engine | Precision | Recall | False alarms | Benign cleared | Dangerous misses |
+| Engine | Dataset | Precision | Recall | False alarms | Dangerous misses |
 |---|---|---|---|---|---|
-| Heuristic baseline | 80% | 62% | 4 | 18/26 | 0 |
-| Claude (`claude-opus-4-8`) | **100%** | **85%** | **0** | 20/26 | 0 |
+| Heuristic baseline | 523 alerts | 80% | 61% | 40 | 0 |
+| Claude (`claude-opus-4-8`) | 52-alert subset* | **100%** | **85%** | **0** | 0 |
+
+*The Claude run was measured on the earlier 52-alert (`--scale 1`) version
+of this benchmark; the heuristic scores were stable across both scales
+(80/62 at 52 alerts vs 80/61 at 523). A full 523-alert Claude run costs
+~$10 in API usage — reproduce with the commands above.
 
 Scoring is SOC-shaped: punting an attack to "needs investigation" costs
 recall, and explicitly clearing an attack counts as a dangerous miss

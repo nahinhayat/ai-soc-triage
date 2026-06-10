@@ -66,8 +66,9 @@ SCANNER_TAG_SETS = [["ssh-bruteforce", "mass-scanner"], ["botnet-node", "ssh-bru
 
 
 class Generator:
-    def __init__(self, seed):
+    def __init__(self, seed, scale=10):
         self.rng = random.Random(seed)
+        self.scale = scale
         self.lines = []    # (datetime, line)
         self.labels = []   # (ip, verdict, notes)
         self.intel = {}    # ip -> enrichment entry
@@ -96,8 +97,15 @@ class Generator:
                 return ip
 
     def person(self):
-        while True:
+        for _ in range(50):
             user = self.rng.choice(FIRST_NAMES) + self.rng.choice(LAST_NAMES)
+            if user not in self._used_users:
+                self._used_users.add(user)
+                return user
+        # Name pool exhausted at large scales — disambiguate with a suffix
+        while True:
+            user = (self.rng.choice(FIRST_NAMES) + self.rng.choice(LAST_NAMES)
+                    + str(self.rng.randint(2, 999)))
             if user not in self._used_users:
                 self._used_users.add(user)
                 return user
@@ -330,9 +338,10 @@ class Generator:
             (self.r2_key_scanning, self.rng.randint(2, 4)),
         ]
         for scenario, count in plan:
-            for _ in range(count):
+            for _ in range(max(1, round(count * self.scale))):
                 scenario()
-        self.a4_distributed_spray(self.rng.randint(3, 5))
+        for _ in range(max(1, round(self.scale))):
+            self.a4_distributed_spray(self.rng.randint(3, 5))
 
     def write(self):
         self.lines.sort(key=lambda x: x[0])
@@ -351,10 +360,12 @@ def main():
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--seed", type=int, default=None,
                     help="Seed for reproducibility (default: random each run)")
+    ap.add_argument("--scale", type=float, default=10,
+                    help="Volume multiplier; 10 ≈ 500 alerts, 1 ≈ 50 (default: 10)")
     args = ap.parse_args()
 
     seed = args.seed if args.seed is not None else random.SystemRandom().randint(0, 2**31)
-    gen = Generator(seed)
+    gen = Generator(seed, scale=args.scale)
     gen.build()
     gen.write()
 
@@ -363,7 +374,7 @@ def main():
     n_hard = sum(1 for _, _, note in gen.labels if note.startswith("HARD"))
     print(f"seed {seed}: {len(gen.lines)} log lines, {len(gen.labels)} alerts "
           f"({n_tp} attacks, {n_fp} benign, {n_hard} hard cases)")
-    print(f"reproduce with: python generate_dataset.py --seed {seed}")
+    print(f"reproduce with: python generate_dataset.py --seed {seed} --scale {args.scale:g}")
 
 
 if __name__ == "__main__":

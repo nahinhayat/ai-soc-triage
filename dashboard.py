@@ -29,7 +29,7 @@ _load_dotenv()
 
 DATASETS = {
     "Sample SSH log (7 alerts)": ("data/sample_auth.log", "data/labels.csv"),
-    "Benchmark (52 alerts, 5 hosts)": ("data/large_auth.log", "data/large_labels.csv"),
+    "Benchmark (523 alerts, 5 hosts)": ("data/large_auth.log", "data/large_labels.csv"),
 }
 
 SEVERITY_RANK = {s: i for i, s in enumerate(
@@ -102,6 +102,16 @@ else:
         log_text = f.read()
 
 # ---------------------------------------------------------------- pipeline
+n_lines = len(log_text.splitlines())
+if n_lines > 600 and not st.session_state.get("large_run_ok"):
+    st.info(f"This dataset has {n_lines:,} log lines — likely several hundred "
+            f"alerts. Claude triage costs roughly $0.02 per alert and takes a "
+            f"few minutes (results are cached afterwards).")
+    if st.button("Triage with Claude"):
+        st.session_state["large_run_ok"] = True
+        st.rerun()
+    st.stop()
+
 with st.spinner("Claude is triaging alerts..."):
     results, enriched, raw_events = run_pipeline(log_text, model)
 
@@ -127,17 +137,31 @@ c3.metric("Benign cleared", len(benign))
 c4.metric("Critical", len(critical))
 
 # ---------------------------------------------------------------- activity chart
+st.subheader("Most active sources")
 chart_df = pd.DataFrame(
     [{"source IP": a["src_ip"],
       "failed logins": a["failed_logins"],
-      "successful logins": a["successful_logins"]} for a in enriched]
-).set_index("source IP")
-st.subheader("Login activity by source")
-st.bar_chart(chart_df, color=["#e24b4a", "#1d9e75"], height=240)
+      "successful logins": a["successful_logins"],
+      "probes (no auth)": a.get("connection_probes_no_auth", 0)} for a in enriched]
+)
+chart_df["total"] = chart_df.drop(columns="source IP").sum(axis=1)
+top = chart_df.nlargest(15, "total")
+if len(chart_df) > 15:
+    st.caption(f"Top 15 of {len(chart_df)} sources by event volume")
+st.bar_chart(
+    top.set_index("source IP")[["failed logins", "successful logins", "probes (no auth)"]],
+    color=["#e24b4a", "#1d9e75", "#ba7517"],
+    horizontal=True,
+    height=max(240, 28 * len(top)),
+)
 
 # ---------------------------------------------------------------- queue
 st.subheader("Ranked queue")
-for i, r in enumerate(results, 1):
+MAX_SHOWN = 30
+if len(results) > MAX_SHOWN:
+    st.caption(f"Showing the top {MAX_SHOWN} of {len(results)} alerts — "
+               f"export the full queue with `python main.py --llm --json`")
+for i, r in enumerate(results[:MAX_SHOWN], 1):
     sev = Severity(r["severity"])
     verdict = VERDICT_LABEL[Verdict(r["verdict"])]
     if r["mitre_technique_name"] not in ("N/A", ""):
