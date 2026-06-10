@@ -12,7 +12,7 @@ import streamlit as st
 
 from src.enrich import enrich_alert
 from src.parser import parse_log
-from src.triage import Severity, Verdict, heuristic_triage, llm_triage
+from src.triage import Severity, Verdict, llm_triage
 
 def _load_dotenv(path=".env"):
     """Tiny .env loader so the dashboard picks up keys without exports."""
@@ -51,8 +51,8 @@ st.set_page_config(page_title="AI SOC Triage", page_icon="🛡️", layout="wide
 
 
 @st.cache_data(show_spinner=False)
-def run_pipeline(log_text: str, engine: str, model: str):
-    """Parse, enrich, and triage. Cached so reruns (widget clicks) are free."""
+def run_pipeline(log_text: str, model: str):
+    """Parse, enrich, and triage with Claude. Cached so reruns are free."""
     with tempfile.NamedTemporaryFile("w", suffix=".log", delete=False) as f:
         f.write(log_text)
         path = f.name
@@ -64,10 +64,7 @@ def run_pipeline(log_text: str, engine: str, model: str):
     enriched = [enrich_alert(a.summary_dict()) for a in alerts]
     raw_events = {a.src_ip: [e.raw for e in a.events] for a in alerts}
 
-    if engine == "claude":
-        results = llm_triage(enriched, model=model)
-    else:
-        results = heuristic_triage(enriched)
+    results = llm_triage(enriched, model=model)
     return [r.model_dump() for r in results], enriched, raw_events
 
 
@@ -86,20 +83,15 @@ with st.sidebar:
     dataset_choice = st.radio("Dataset", list(DATASETS.keys()))
     uploaded = st.file_uploader("...or upload an sshd auth log", type=["log", "txt"])
 
-    engine_choice = st.radio("Triage engine", ["Heuristic baseline", "Claude (LLM)"])
-    engine = "claude" if engine_choice.startswith("Claude") else "heuristic"
-
-    model = "claude-opus-4-8"
-    if engine == "claude":
-        model = st.selectbox("Model", ["claude-opus-4-8", "claude-sonnet-4-6", "claude-haiku-4-5"])
-        if not os.environ.get("ANTHROPIC_API_KEY"):
-            key = st.text_input("Anthropic API key", type="password",
-                                help="Stored only in this session's environment")
-            if key:
-                os.environ["ANTHROPIC_API_KEY"] = key
-        if not os.environ.get("ANTHROPIC_API_KEY"):
-            st.warning("Set an API key to use the LLM engine.")
-            st.stop()
+    model = st.selectbox("Model", ["claude-opus-4-8", "claude-sonnet-4-6", "claude-haiku-4-5"])
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        key = st.text_input("Anthropic API key", type="password",
+                            help="Stored only in this session's environment")
+        if key:
+            os.environ["ANTHROPIC_API_KEY"] = key
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        st.warning("Set an Anthropic API key to triage alerts.")
+        st.stop()
 
 if uploaded is not None:
     log_text = uploaded.getvalue().decode("utf-8", errors="replace")
@@ -110,8 +102,8 @@ else:
         log_text = f.read()
 
 # ---------------------------------------------------------------- pipeline
-with st.spinner("Triaging alerts..."):
-    results, enriched, raw_events = run_pipeline(log_text, engine, model)
+with st.spinner("Claude is triaging alerts..."):
+    results, enriched, raw_events = run_pipeline(log_text, model)
 
 if not results:
     st.error("No SSH auth events found in this log.")
@@ -126,8 +118,7 @@ critical = [r for r in results if r["severity"] == "critical"]
 
 # ---------------------------------------------------------------- header
 st.title("Alert triage queue")
-engine_label = f"Claude ({model})" if engine == "claude" else "heuristic baseline"
-st.caption(f"Engine: {engine_label}  ·  {len(log_text.splitlines())} log lines → {len(results)} alerts")
+st.caption(f"Engine: Claude ({model})  ·  {len(log_text.splitlines())} log lines → {len(results)} alerts")
 
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("Alerts triaged", len(results))
@@ -149,8 +140,14 @@ st.subheader("Ranked queue")
 for i, r in enumerate(results, 1):
     sev = Severity(r["severity"])
     verdict = VERDICT_LABEL[Verdict(r["verdict"])]
+    if r["mitre_technique_name"] not in ("N/A", ""):
+        attack = f"{r['mitre_technique_name']} ({r['mitre_technique_id']})"
+    elif r["verdict"] == "false_positive":
+        attack = "benign activity"
+    else:
+        attack = "unclear pattern"
     header = (f"**#{i}**  ·  `{r['src_ip']}`  ·  {SEVERITY_BADGE[sev]}  ·  "
-              f"{verdict}  ·  {r['confidence']}% confidence  ·  {r['mitre_technique_id']}")
+              f"**{attack}**  ·  {verdict}  ·  {r['confidence']}%")
     with st.expander(header, expanded=(i == 1)):
         left, right = st.columns([3, 2])
         with left:
