@@ -127,14 +127,23 @@ benign = [r for r in results if r["verdict"] == "false_positive"]
 critical = [r for r in results if r["severity"] == "critical"]
 
 # ---------------------------------------------------------------- header
-st.title("Alert triage queue")
-st.caption(f"Engine: Claude ({model})  ·  {len(log_text.splitlines())} log lines → {len(results)} alerts")
+hosts = sorted({h for a in enriched for h in a.get("hosts_targeted", [])})
+firsts = [a["first_seen"] for a in enriched if a.get("first_seen")]
+lasts = [a["last_seen"] for a in enriched if a.get("last_seen")]
+
+st.title("🛡️ SOC alert triage")
+st.markdown(
+    f"**{n_lines:,} log events** from **{len(hosts)} host{'s' if len(hosts) != 1 else ''}** "
+    f"correlated into **{len(results)} alerts** — triaged by Claude and ranked worst-first."
+)
+if firsts and lasts:
+    st.caption(f"Activity window: {min(firsts)} → {max(lasts)}  ·  model: {model}")
 
 c1, c2, c3, c4 = st.columns(4)
-c1.metric("Alerts triaged", len(results))
-c2.metric("Attacks detected", len(attacks))
-c3.metric("Benign cleared", len(benign))
-c4.metric("Critical", len(critical))
+c1.metric("Alerts in queue", len(results))
+c2.metric("Confirmed attacks", len(attacks))
+c3.metric("Cleared as benign", len(benign))
+c4.metric("Critical — act now", len(critical))
 
 # ---------------------------------------------------------------- activity chart
 st.subheader("Most active sources")
@@ -156,7 +165,7 @@ st.bar_chart(
 )
 
 # ---------------------------------------------------------------- queue
-st.subheader("Ranked queue")
+st.subheader("Analyst queue — highest risk first")
 MAX_SHOWN = 30
 if len(results) > MAX_SHOWN:
     st.caption(f"Showing the top {MAX_SHOWN} of {len(results)} alerts — "
