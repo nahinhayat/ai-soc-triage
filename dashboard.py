@@ -14,8 +14,23 @@ from src.enrich import enrich_alert
 from src.parser import parse_log
 from src.triage import Severity, Verdict, heuristic_triage, llm_triage
 
-SAMPLE_LOG = "data/sample_auth.log"
-LABELS_CSV = "data/labels.csv"
+def _load_dotenv(path=".env"):
+    """Tiny .env loader so the dashboard picks up keys without exports."""
+    if os.path.exists(path):
+        with open(path) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    key, value = line.split("=", 1)
+                    os.environ.setdefault(key.strip(), value.strip())
+
+
+_load_dotenv()
+
+DATASETS = {
+    "Sample SSH log (7 alerts)": ("data/sample_auth.log", "data/labels.csv"),
+    "Benchmark (52 alerts, 5 hosts)": ("data/large_auth.log", "data/large_labels.csv"),
+}
 
 SEVERITY_RANK = {s: i for i, s in enumerate(
     [Severity.critical, Severity.high, Severity.medium, Severity.low, Severity.informational])}
@@ -56,10 +71,10 @@ def run_pipeline(log_text: str, engine: str, model: str):
     return [r.model_dump() for r in results], enriched, raw_events
 
 
-def load_labels() -> dict:
-    if not os.path.exists(LABELS_CSV):
+def load_labels(path) -> dict:
+    if not path or not os.path.exists(path):
         return {}
-    with open(LABELS_CSV) as f:
+    with open(path) as f:
         return {row["src_ip"]: row["verdict"] for row in csv.DictReader(f)}
 
 
@@ -68,10 +83,8 @@ with st.sidebar:
     st.title("🛡️ AI SOC Triage")
     st.caption("SSH auth logs → enriched, AI-triaged, ranked alert queue")
 
-    uploaded = st.file_uploader("Upload an sshd auth log", type=["log", "txt"])
-    using_sample = uploaded is None
-    if using_sample:
-        st.info("Using the bundled sample log", icon="📄")
+    dataset_choice = st.radio("Dataset", list(DATASETS.keys()))
+    uploaded = st.file_uploader("...or upload an sshd auth log", type=["log", "txt"])
 
     engine_choice = st.radio("Triage engine", ["Heuristic baseline", "Claude (LLM)"])
     engine = "claude" if engine_choice.startswith("Claude") else "heuristic"
@@ -90,8 +103,10 @@ with st.sidebar:
 
 if uploaded is not None:
     log_text = uploaded.getvalue().decode("utf-8", errors="replace")
+    labels_path = None
 else:
-    with open(SAMPLE_LOG) as f:
+    log_path, labels_path = DATASETS[dataset_choice]
+    with open(log_path) as f:
         log_text = f.read()
 
 # ---------------------------------------------------------------- pipeline
@@ -156,8 +171,8 @@ for i, r in enumerate(results, 1):
         st.code("\n".join(raw_events[r["src_ip"]]), language="text")
 
 # ---------------------------------------------------------------- evaluation
-labels = load_labels()
-if using_sample and labels:
+labels = load_labels(labels_path)
+if labels:
     st.subheader("Evaluation against ground truth")
     rows = []
     for ip, truth in labels.items():
