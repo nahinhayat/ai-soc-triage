@@ -115,6 +115,14 @@ python main.py data/large_auth.log --llm --json results.json
 python evaluate.py results.json data/large_labels.csv
 ```
 
+![Benchmark run in the dashboard](docs/dashboard_benchmark.png)
+
+*The full benchmark in the dashboard: 523 alerts triaged by Claude Sonnet,
+50 criticals surfaced — including stolen-credential logins (T1078) that
+volume-based rules can't see. The committed results
+(`data/benchmark_results_sonnet.json`) load instantly in the dashboard, no
+API key needed.*
+
 Committed benchmark (`--seed 42`): 3,912 log lines → 523 alerts
 (263 attacks, 260 benign, 173 hard cases) across 5 hosts:
 

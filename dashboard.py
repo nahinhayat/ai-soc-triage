@@ -4,6 +4,7 @@ Run with:
     streamlit run dashboard.py
 """
 import csv
+import json
 import os
 import tempfile
 
@@ -27,9 +28,12 @@ def _load_dotenv(path=".env"):
 
 _load_dotenv()
 
+# (log file, ground-truth labels, optional precomputed triage results)
 DATASETS = {
-    "Sample SSH log (7 alerts)": ("data/sample_auth.log", "data/labels.csv"),
-    "Benchmark (523 alerts, 5 hosts)": ("data/large_auth.log", "data/large_labels.csv"),
+    "Sample SSH log (7 alerts)":
+        ("data/sample_auth.log", "data/labels.csv", None),
+    "Benchmark (523 alerts, 5 hosts)":
+        ("data/large_auth.log", "data/large_labels.csv", "data/benchmark_results_sonnet.json"),
 }
 
 SEVERITY_RANK = {s: i for i, s in enumerate(
@@ -51,8 +55,8 @@ st.set_page_config(page_title="AI SOC Triage", page_icon="🛡️", layout="wide
 
 
 @st.cache_data(show_spinner=False)
-def run_pipeline(log_text: str, model: str):
-    """Parse, enrich, and triage with Claude. Cached so reruns are free."""
+def parse_and_enrich(log_text: str):
+    """Parse and enrich without any LLM calls. Cached."""
     with tempfile.NamedTemporaryFile("w", suffix=".log", delete=False) as f:
         f.write(log_text)
         path = f.name
@@ -63,9 +67,14 @@ def run_pipeline(log_text: str, model: str):
 
     enriched = [enrich_alert(a.summary_dict()) for a in alerts]
     raw_events = {a.src_ip: [e.raw for e in a.events] for a in alerts}
+    return enriched, raw_events
 
-    results = llm_triage(enriched, model=model)
-    return [r.model_dump() for r in results], enriched, raw_events
+
+@st.cache_data(show_spinner=False)
+def triage_with_claude(log_text: str, model: str):
+    """Claude triage. Cached so engine/model reruns are free."""
+    enriched, _ = parse_and_enrich(log_text)
+    return [r.model_dump() for r in llm_triage(enriched, model=model)]
 
 
 def load_labels(path) -> dict:
@@ -80,7 +89,8 @@ with st.sidebar:
     st.title("🛡️ AI SOC Triage")
     st.caption("SSH auth logs → enriched, AI-triaged, ranked alert queue")
 
-    dataset_choice = st.radio("Dataset", list(DATASETS.keys()))
+    preselect = 1 if st.query_params.get("dataset") == "benchmark" else 0
+    dataset_choice = st.radio("Dataset", list(DATASETS.keys()), index=preselect)
     uploaded = st.file_uploader("...or upload an sshd auth log", type=["log", "txt"])
 
     model = st.selectbox("Model", ["claude-opus-4-8", "claude-sonnet-4-6", "claude-haiku-4-5"])
@@ -95,25 +105,32 @@ with st.sidebar:
 
 if uploaded is not None:
     log_text = uploaded.getvalue().decode("utf-8", errors="replace")
-    labels_path = None
+    labels_path = results_path = None
 else:
-    log_path, labels_path = DATASETS[dataset_choice]
+    log_path, labels_path, results_path = DATASETS[dataset_choice]
     with open(log_path) as f:
         log_text = f.read()
 
 # ---------------------------------------------------------------- pipeline
+enriched, raw_events = parse_and_enrich(log_text)
 n_lines = len(log_text.splitlines())
-if n_lines > 600 and not st.session_state.get("large_run_ok"):
-    st.info(f"This dataset has {n_lines:,} log lines — likely several hundred "
-            f"alerts. Claude triage costs roughly $0.02 per alert and takes a "
-            f"few minutes (results are cached afterwards).")
-    if st.button("Triage with Claude"):
-        st.session_state["large_run_ok"] = True
-        st.rerun()
-    st.stop()
 
-with st.spinner("Claude is triaging alerts..."):
-    results, enriched, raw_events = run_pipeline(log_text, model)
+if results_path and os.path.exists(results_path):
+    with open(results_path) as f:
+        results = json.load(f)
+    engine_label = "claude-sonnet-4-6 · precomputed benchmark run"
+else:
+    if n_lines > 600 and not st.session_state.get("large_run_ok"):
+        st.info(f"This dataset has {n_lines:,} log lines — likely several hundred "
+                f"alerts. Claude triage costs roughly $0.02 per alert and takes a "
+                f"few minutes (results are cached afterwards).")
+        if st.button("Triage with Claude"):
+            st.session_state["large_run_ok"] = True
+            st.rerun()
+        st.stop()
+    with st.spinner("Claude is triaging alerts..."):
+        results = triage_with_claude(log_text, model)
+    engine_label = model
 
 if not results:
     st.error("No SSH auth events found in this log.")
@@ -137,7 +154,7 @@ st.markdown(
     f"correlated into **{len(results)} alerts** — triaged by Claude and ranked worst-first."
 )
 if firsts and lasts:
-    st.caption(f"Activity window: {min(firsts)} → {max(lasts)}  ·  model: {model}")
+    st.caption(f"Activity window: {min(firsts)} → {max(lasts)}  ·  model: {engine_label}")
 
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("Alerts in queue", len(results))
