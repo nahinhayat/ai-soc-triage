@@ -86,27 +86,53 @@ python main.py --llm --json results.json
 python evaluate.py results.json
 ```
 
-### Results on the labeled sample
+### Benchmark: 50 labeled alerts, 17 deliberately hard cases
 
-| Engine | Precision | Recall | Benign cleared | Punted |
-|---|---|---|---|---|
-| Heuristic baseline | 100% | 100% | 3/3 | 0 |
-| Claude (`claude-opus-4-8`) | 100% | 100% | 3/3 | 0 |
+`generate_dataset.py` builds a reproducible (seeded) benchmark of 50 alerts
+— 23 attacks, 27 benign — including hard cases designed to break naive
+rules: slow-and-low brute force, distributed botnet sprays (2 attempts per
+IP), stolen-credential logins with *zero* failures, employees logging in
+from home IPs that *look* like compromises, and misconfigured cron jobs
+that look like internal attacks.
 
-Both engines get every verdict right on this (deliberately small) dataset —
-the difference is in the quality of the analysis. The heuristic emits
-template sentences; Claude produces analyst-grade output: it reasons about
-attack **timing** ("6 failed attempts in ~50 seconds, then success"),
-calibrates severity to outcome (blocked brute force → medium, successful
-login → critical), recommends control hardening specific to what it saw
-(`PermitRootLogin no`, fail2ban, key-only auth, MFA on the compromised
-account), and even suggests alert-tuning to reduce future noise — for the
-same verdict. It was also notably better calibrated on confidence: 80% on
-the compromise (the IP had no threat-intel record) vs. 92% on the
-intel-corroborated brute force.
+```bash
+python generate_dataset.py
+python main.py data/large_auth.log --llm --json results.json
+python evaluate.py results.json data/large_labels.csv
+```
 
-The honest caveat: 7 alerts is a smoke test, not a benchmark. Scaling the
-labeled dataset is the highest-value next step.
+| Engine | Precision | Recall | False alarms | Benign cleared | Dangerous misses |
+|---|---|---|---|---|---|
+| Heuristic baseline | 82% | 61% | 3 | 19/27 | 0 |
+| Claude (`claude-opus-4-8`) | **100%** | **87%** | **0** | **27/27** | 0 |
+
+Scoring is SOC-shaped: punting an attack to "needs investigation" costs
+recall, and explicitly clearing an attack counts as a dangerous miss
+(neither engine had any).
+
+Where the gap comes from — the hard cases:
+
+- **Employee home logins** (typo then success from a residential IP): the
+  heuristic raises CRITICAL false alarms on all 3; Claude cleared all 3,
+  reasoning that "low-volume, single-account, no invalid users, clean
+  intel" fits a typo, not an attack.
+- **Stolen credentials** (clean login from infostealer infrastructure, zero
+  failures): invisible to failure-counting rules; Claude flagged it
+  CRITICAL and mapped it to **T1078 Valid Accounts** — the correct
+  technique, not brute force.
+- **Distributed spray** (botnet /24, 2 attempts per IP): under every
+  per-IP threshold; Claude caught all 4 nodes from intel context.
+- **Slow-and-low** (3 root failures spread over hours): under the volume
+  threshold; Claude flagged all 3 using reputation + targeting pattern.
+
+Claude's 3 recall misses were all conservative punts to
+needs_investigation (with the correct T1110.003 hypothesis attached), not
+cleared attacks — defensible Tier 1 behavior. On the small hand-built
+sample (`data/sample_auth.log` + `data/labels.csv`) both engines score
+7/7; that set is kept as a quick smoke test.
+
+A full 50-alert Claude run takes ~90 seconds (4 parallel workers) and
+costs roughly $1 in API usage.
 
 ## What the sample log contains
 

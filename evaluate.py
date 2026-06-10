@@ -1,8 +1,17 @@
 """Evaluate triage results against hand-labeled ground truth.
 
 Usage:
-    python main.py --llm --json results.json
-    python evaluate.py results.json
+    python evaluate.py results.json [labels.csv]
+
+Defaults to data/labels.csv (the small sample). For the generated benchmark:
+    python main.py data/large_auth.log --llm --json results.json
+    python evaluate.py results.json data/large_labels.csv
+
+Scoring is deliberately SOC-shaped:
+  - recall counts ALL labeled attacks in the denominator, so punting an
+    attack to needs_investigation still costs recall
+  - explicitly clearing an attack (predicting false_positive) is reported
+    separately as a DANGEROUS MISS — the worst possible outcome
 """
 import csv
 import json
@@ -10,49 +19,57 @@ import sys
 from collections import Counter
 
 
-def load_labels(path: str = "data/labels.csv") -> dict:
-    with open(path) as f:
-        return {row["src_ip"]: row["verdict"] for row in csv.DictReader(f)}
-
-
 def main() -> int:
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         print(__doc__)
         return 1
+    results_path = sys.argv[1]
+    labels_path = sys.argv[2] if len(sys.argv) > 2 else "data/labels.csv"
 
-    with open(sys.argv[1]) as f:
+    with open(results_path) as f:
         results = {r["src_ip"]: r["verdict"] for r in json.load(f)}
-    labels = load_labels()
+    with open(labels_path) as f:
+        labels = {row["src_ip"]: row["verdict"] for row in csv.DictReader(f)}
 
-    # needs_investigation counts as neither correct nor incorrect for
-    # accuracy, but is tracked so we can see how often the engine punts.
-    tp = fp = fn = correct_fp = punted = 0
-    rows = []
-    for ip, truth in labels.items():
-        pred = results.get(ip, "missing")
-        if pred == "needs_investigation":
-            punted += 1
-        elif truth == "true_positive" and pred == "true_positive":
-            tp += 1
-        elif truth == "true_positive":
-            fn += 1
-        elif truth == "false_positive" and pred == "false_positive":
-            correct_fp += 1
-        elif truth == "false_positive" and pred == "true_positive":
-            fp += 1
-        rows.append((ip, truth, pred, "OK" if pred == truth else "MISS"))
+    truth_tp = {ip for ip, v in labels.items() if v == "true_positive"}
+    truth_fp = {ip for ip, v in labels.items() if v == "false_positive"}
+    flagged = {ip for ip, v in results.items() if v == "true_positive"}
+    cleared = {ip for ip, v in results.items() if v == "false_positive"}
+    punted = {ip for ip, v in results.items() if v == "needs_investigation"}
 
-    precision = tp / (tp + fp) if (tp + fp) else 0.0
-    recall = tp / (tp + fn) if (tp + fn) else 0.0
+    tp = flagged & truth_tp            # attack correctly flagged
+    fp = flagged & truth_fp            # benign wrongly flagged (analyst time wasted)
+    dangerous = cleared & truth_tp     # attack explicitly cleared (worst case)
+    benign_ok = cleared & truth_fp
+    punted_attacks = punted & truth_tp
+    punted_benign = punted & truth_fp
 
-    print(f"{'source IP':<18} {'truth':<16} {'predicted':<20} result")
-    print("-" * 64)
-    for row in rows:
-        print(f"{row[0]:<18} {row[1]:<16} {row[2]:<20} {row[3]}")
-    print("-" * 64)
-    print(f"Attack detection — precision: {precision:.0%}  recall: {recall:.0%}")
-    print(f"Benign correctly cleared: {correct_fp}  |  punted to investigation: {punted}")
-    print(f"Verdict distribution: {dict(Counter(results.values()))}")
+    precision = len(tp) / len(flagged) if flagged else 0.0
+    recall = len(tp) / len(truth_tp) if truth_tp else 0.0
+
+    mismatches = [(ip, labels[ip], results.get(ip, "missing"))
+                  for ip in labels if results.get(ip) != labels[ip]]
+
+    print(f"Alerts: {len(labels)} labeled ({len(truth_tp)} attacks, {len(truth_fp)} benign)")
+    print(f"Verdicts: {dict(Counter(results.values()))}\n")
+    print(f"Precision (flagged attacks that were real): {precision:.0%}")
+    print(f"Recall    (real attacks that were flagged): {recall:.0%}")
+    print(f"Benign correctly cleared: {len(benign_ok)}/{len(truth_fp)}")
+    print(f"False alarms raised:      {len(fp)}")
+    print(f"Punted to investigation:  {len(punted_attacks)} attacks, {len(punted_benign)} benign")
+
+    if dangerous:
+        print(f"\nDANGEROUS MISSES — attacks explicitly cleared as benign ({len(dangerous)}):")
+        for ip in sorted(dangerous):
+            print(f"  {ip}")
+    else:
+        print("\nNo dangerous misses (no attack was explicitly cleared as benign).")
+
+    if mismatches:
+        print(f"\nAll disagreements with ground truth ({len(mismatches)}):")
+        print(f"  {'source IP':<18} {'truth':<16} predicted")
+        for ip, truth, pred in sorted(mismatches):
+            print(f"  {ip:<18} {truth:<16} {pred}")
     return 0
 
 

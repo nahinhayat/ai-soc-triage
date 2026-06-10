@@ -1,0 +1,214 @@
+{
+  "141.98.10.60": {
+    "geo": "CN \u2014 Hangzhou (AS37963 Alibaba)",
+    "reports_90d": 740,
+    "reputation": "suspicious",
+    "tags": [
+      "ssh-bruteforce",
+      "mass-scanner"
+    ]
+  },
+  "141.98.10.62": {
+    "geo": "CN \u2014 Hangzhou (AS37963 Alibaba)",
+    "reports_90d": 1383,
+    "reputation": "malicious",
+    "tags": [
+      "ssh-bruteforce",
+      "mass-scanner"
+    ]
+  },
+  "141.98.10.63": {
+    "geo": "BR \u2014 S\u00e3o Paulo (AS28573)",
+    "reports_90d": 1214,
+    "reputation": "suspicious",
+    "tags": [
+      "ssh-bruteforce",
+      "mass-scanner"
+    ]
+  },
+  "141.98.10.64": {
+    "geo": "BR \u2014 S\u00e3o Paulo (AS28573)",
+    "reports_90d": 1085,
+    "reputation": "malicious",
+    "tags": [
+      "ssh-bruteforce",
+      "mass-scanner"
+    ]
+  },
+  "146.70.85.90": {
+    "geo": "PA \u2014 Panama City (AS213412 VPN egress)",
+    "reports_90d": 209,
+    "reputation": "malicious",
+    "tags": [
+      "infostealer-infra",
+      "anonymizing-vpn"
+    ]
+  },
+  "146.70.85.91": {
+    "geo": "PA \u2014 Panama City (AS213412 VPN egress)",
+    "reports_90d": 470,
+    "reputation": "malicious",
+    "tags": [
+      "infostealer-infra",
+      "anonymizing-vpn"
+    ]
+  },
+  "171.25.193.10": {
+    "geo": "SE \u2014 Stockholm (AS198093 relay hosting)",
+    "reports_90d": 834,
+    "reputation": "malicious",
+    "tags": [
+      "botnet-node",
+      "ssh-bruteforce"
+    ]
+  },
+  "171.25.193.11": {
+    "geo": "SE \u2014 Stockholm (AS198093 relay hosting)",
+    "reports_90d": 227,
+    "reputation": "malicious",
+    "tags": [
+      "botnet-node",
+      "ssh-bruteforce"
+    ]
+  },
+  "171.25.193.12": {
+    "geo": "SE \u2014 Stockholm (AS198093 relay hosting)",
+    "reports_90d": 110,
+    "reputation": "malicious",
+    "tags": [
+      "botnet-node",
+      "ssh-bruteforce"
+    ]
+  },
+  "171.25.193.13": {
+    "geo": "SE \u2014 Stockholm (AS198093 relay hosting)",
+    "reports_90d": 813,
+    "reputation": "malicious",
+    "tags": [
+      "botnet-node",
+      "ssh-bruteforce"
+    ]
+  },
+  "185.196.8.70": {
+    "geo": "BR \u2014 S\u00e3o Paulo (AS28573)",
+    "reports_90d": 58,
+    "reputation": "no records",
+    "tags": []
+  },
+  "185.196.8.71": {
+    "geo": "CN \u2014 Hangzhou (AS37963 Alibaba)",
+    "reports_90d": 5,
+    "reputation": "suspicious",
+    "tags": [
+      "recent-bruteforce-reports"
+    ]
+  },
+  "185.196.8.72": {
+    "geo": "IR \u2014 Tehran (AS58224)",
+    "reports_90d": 32,
+    "reputation": "suspicious",
+    "tags": []
+  },
+  "194.26.29.66": {
+    "geo": "NL \u2014 Amsterdam (AS202425 hosting)",
+    "reports_90d": 960,
+    "reputation": "suspicious",
+    "tags": [
+      "ssh-bruteforce",
+      "mass-scanner"
+    ]
+  },
+  "34.74.10.50": {
+    "geo": "US \u2014 Iowa (AS396982 Google Cloud)",
+    "reports_90d": 0,
+    "reputation": "no records",
+    "tags": []
+  },
+  "34.74.10.51": {
+    "geo": "US \u2014 Iowa (AS396982 Google Cloud)",
+    "reports_90d": 0,
+    "reputation": "no records",
+    "tags": []
+  },
+  "45.155.205.61": {
+    "geo": "NL \u2014 Amsterdam (AS202425 hosting)",
+    "reports_90d": 1953,
+    "reputation": "suspicious",
+    "tags": [
+      "ssh-bruteforce",
+      "mass-scanner"
+    ]
+  },
+  "73.158.22.40": {
+    "geo": "US \u2014 Chicago (AS7922 Comcast residential)",
+    "reports_90d": 0,
+    "reputation": "no records",
+    "tags": []
+  },
+  "73.158.22.41": {
+    "geo": "US \u2014 Chicago (AS7922 Comcast residential)",
+    "reports_90d": 0,
+    "reputation": "no records",
+    "tags": []
+  },
+  "73.158.22.42": {
+    "geo": "US \u2014 Chicago (AS7922 Comcast residential)",
+    "reports_90d": 0,
+    "reputation": "no records",
+    "tags": []
+  },
+  "80.94.95.80": {
+    "geo": "NL \u2014 Amsterdam (AS202425 hosting)",
+    "reports_90d": 930,
+    "reputation": "malicious",
+    "tags": [
+      "ssh-bruteforce",
+      "slow-scanner"
+    ]
+  },
+  "80.94.95.81": {
+    "geo": "RU \u2014 Moscow (AS49505 SELECTEL)",
+    "reports_90d": 618,
+    "reputation": "malicious",
+    "tags": [
+      "ssh-bruteforce",
+      "slow-scanner"
+    ]
+  },
+  "80.94.95.82": {
+    "geo": "NL \u2014 Amsterdam (AS202425 hosting)",
+    "reports_90d": 516,
+    "reputation": "malicious",
+    "tags": [
+      "ssh-bruteforce",
+      "slow-scanner"
+    ]
+  },
+  "92.255.85.65": {
+    "geo": "VN \u2014 Hanoi (AS45899 VNPT)",
+    "reports_90d": 641,
+    "reputation": "malicious",
+    "tags": [
+      "ssh-bruteforce",
+      "mass-scanner"
+    ]
+  },
+  "92.255.85.67": {
+    "geo": "IR \u2014 Tehran (AS58224)",
+    "reports_90d": 1187,
+    "reputation": "malicious",
+    "tags": [
+      "ssh-bruteforce",
+      "mass-scanner"
+    ]
+  },
+  "92.255.85.68": {
+    "geo": "NL \u2014 Amsterdam (AS202425 hosting)",
+    "reports_90d": 1361,
+    "reputation": "suspicious",
+    "tags": [
+      "ssh-bruteforce",
+      "mass-scanner"
+    ]
+  }
+}

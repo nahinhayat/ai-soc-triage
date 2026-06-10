@@ -5,7 +5,17 @@ Swapping in live lookups (AbuseIPDB, VirusTotal, MaxMind GeoIP) only
 requires replacing the two lookup functions below.
 """
 import ipaddress
+import json
+import os
 from typing import Optional
+
+# Generated datasets ship their own intel/geo table (see generate_dataset.py);
+# entries there take precedence over the built-in static tables below.
+_INTEL_JSON = os.path.join("data", "intel.json")
+DYNAMIC_INTEL = {}
+if os.path.exists(_INTEL_JSON):
+    with open(_INTEL_JSON) as f:
+        DYNAMIC_INTEL = json.load(f)
 
 # Static threat-intel table standing in for a live reputation feed.
 THREAT_INTEL = {
@@ -56,6 +66,8 @@ def is_internal(ip: str) -> bool:
 def geo_lookup(ip: str) -> str:
     if is_internal(ip):
         return "internal network (RFC1918)"
+    if ip in DYNAMIC_INTEL and DYNAMIC_INTEL[ip].get("geo"):
+        return DYNAMIC_INTEL[ip]["geo"]
     for prefix, location in GEO_PREFIXES.items():
         if ip.startswith(prefix):
             return location
@@ -63,6 +75,9 @@ def geo_lookup(ip: str) -> str:
 
 
 def intel_lookup(ip: str) -> Optional[dict]:
+    if ip in DYNAMIC_INTEL:
+        entry = DYNAMIC_INTEL[ip]
+        return {k: entry.get(k) for k in ("reputation", "tags", "reports_90d")}
     return THREAT_INTEL.get(ip)
 
 

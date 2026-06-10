@@ -58,12 +58,14 @@ class TriageResult(BaseModel):
     recommended_actions: List[str] = Field(description="Ordered, specific next steps")
 
 
-def llm_triage(enriched_alerts: List[dict], model: str = "claude-opus-4-8") -> List[TriageResult]:
+def llm_triage(enriched_alerts: List[dict], model: str = "claude-opus-4-8",
+               max_workers: int = 4) -> List[TriageResult]:
     import anthropic
+    from concurrent.futures import ThreadPoolExecutor
 
     client = anthropic.Anthropic()
-    results = []
-    for alert in enriched_alerts:
+
+    def triage_one(alert: dict) -> TriageResult:
         response = client.messages.parse(
             model=model,
             max_tokens=2048,
@@ -78,8 +80,12 @@ def llm_triage(enriched_alerts: List[dict], model: str = "claude-opus-4-8") -> L
             }],
             output_format=TriageResult,
         )
-        results.append(response.parsed_output)
-    return results
+        return response.parsed_output
+
+    # The client is thread-safe; parallelism is bounded to stay under rate
+    # limits. executor.map preserves input order.
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        return list(executor.map(triage_one, enriched_alerts))
 
 
 def heuristic_triage(enriched_alerts: List[dict]) -> List[TriageResult]:
