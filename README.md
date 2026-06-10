@@ -10,6 +10,12 @@ Built to address the #1 pain point in security operations: **alert fatigue**.
 Analysts drown in raw events; this pipeline turns them into a short, ranked
 list of what actually matters.
 
+![SOC triage dashboard](docs/dashboard_hero.png)
+
+*The Streamlit dashboard: correlated alerts ranked worst-first, with Claude's
+analyst summary, prioritized response actions, threat-intel enrichment, and
+the raw log evidence per alert ([full-page screenshot](docs/dashboard.png)).*
+
 ## Pipeline
 
 ```

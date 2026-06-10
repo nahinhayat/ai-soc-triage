@@ -29,6 +29,8 @@ def main() -> int:
                     help="Use Claude for triage (requires ANTHROPIC_API_KEY)")
     ap.add_argument("--model", default="claude-opus-4-8",
                     help="Claude model to use with --llm")
+    ap.add_argument("--workers", type=int, default=4,
+                    help="Parallel triage calls with --llm (default 4)")
     ap.add_argument("--json", metavar="PATH",
                     help="Write ranked results to a JSON file")
     args = ap.parse_args()
@@ -68,7 +70,7 @@ def main() -> int:
             print("ANTHROPIC_API_KEY is not set. Run without --llm for the "
                   "heuristic engine, or export your key first.", file=sys.stderr)
             return 1
-        results = llm_triage(enriched, model=args.model)
+        results = llm_triage(enriched, model=args.model, max_workers=args.workers)
         engine = f"Claude ({args.model})"
     else:
         results = heuristic_triage(enriched)

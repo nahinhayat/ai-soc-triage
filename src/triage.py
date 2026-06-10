@@ -73,12 +73,14 @@ def llm_triage(enriched_alerts: List[dict], model: str = "claude-opus-4-8",
     import anthropic
     from concurrent.futures import ThreadPoolExecutor
 
-    client = anthropic.Anthropic()
+    # Generous retry budget: on lower API tiers, large batches hit per-minute
+    # token limits and must wait out the window (the SDK honors retry-after).
+    client = anthropic.Anthropic(max_retries=10)
 
     def triage_one(alert: dict) -> TriageResult:
         response = client.messages.parse(
             model=model,
-            max_tokens=2048,
+            max_tokens=1024,
             system=[{
                 "type": "text",
                 "text": SYSTEM_PROMPT,
