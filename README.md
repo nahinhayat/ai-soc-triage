@@ -121,12 +121,24 @@ Committed benchmark (`--seed 42`): 3,912 log lines → 523 alerts
 | Engine | Dataset | Precision | Recall | False alarms | Dangerous misses |
 |---|---|---|---|---|---|
 | Heuristic baseline | 523 alerts | 80% | 61% | 40 | 0 |
-| Claude (`claude-opus-4-8`) | 52-alert subset* | **100%** | **85%** | **0** | 0 |
+| Claude Sonnet (`claude-sonnet-4-6`) | 523 alerts | 94% | **98%** | 17 | 0 |
+| Claude Opus (`claude-opus-4-8`) | 52-alert subset* | **100%** | 85% | **0** | 0 |
 
-*The Claude run was measured on the earlier 52-alert (`--scale 1`) version
-of this benchmark; the heuristic scores were stable across both scales
-(80/62 at 52 alerts vs 80/61 at 523). A full 523-alert Claude run costs
-~$10 in API usage — reproduce with the commands above.
+**The two Claude tiers fail in opposite directions**, and the benchmark
+makes that tradeoff measurable. Sonnet is recall-oriented: it caught 257 of
+263 attacks and never cleared a real attack as benign — but it is noisy,
+raising 17 false alarms and punting 97 benign alerts to investigation
+(~114 alerts an analyst touches unnecessarily). Opus is precision-oriented:
+zero false alarms and confident benign clears, at the cost of more
+conservative recall. A one-analyst team drowns in Sonnet's punts; a staffed
+SOC might happily pay that noise for a 13-point recall gain. Model choice
+is an operational decision, not a leaderboard decision.
+
+*Opus was measured on the earlier 52-alert (`--scale 1`) version of this
+benchmark (a full 523-alert Opus run costs ~$10 in API usage). The
+heuristic's scores were stable across both scales (80/62 at 52 alerts vs
+80/61 at 523). The Sonnet run: 523 alerts, ~40 minutes (tier-1 API rate
+limits), ~$4.
 
 Scoring is SOC-shaped: punting an attack to "needs investigation" costs
 recall, and explicitly clearing an attack counts as a dangerous miss
