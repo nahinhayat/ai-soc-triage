@@ -1,0 +1,170 @@
+"""Streamlit dashboard for the AI SOC triage pipeline.
+
+Run with:
+    streamlit run dashboard.py
+"""
+import csv
+import os
+import tempfile
+
+import pandas as pd
+import streamlit as st
+
+from src.enrich import enrich_alert
+from src.parser import parse_log
+from src.triage import Severity, Verdict, heuristic_triage, llm_triage
+
+SAMPLE_LOG = "data/sample_auth.log"
+LABELS_CSV = "data/labels.csv"
+
+SEVERITY_RANK = {s: i for i, s in enumerate(
+    [Severity.critical, Severity.high, Severity.medium, Severity.low, Severity.informational])}
+SEVERITY_BADGE = {
+    Severity.critical: ":red-background[CRITICAL]",
+    Severity.high: ":red[HIGH]",
+    Severity.medium: ":orange[MEDIUM]",
+    Severity.low: ":blue[LOW]",
+    Severity.informational: ":gray[INFO]",
+}
+VERDICT_LABEL = {
+    Verdict.true_positive: "true positive",
+    Verdict.false_positive: "false positive",
+    Verdict.needs_investigation: "needs investigation",
+}
+
+st.set_page_config(page_title="AI SOC Triage", page_icon="🛡️", layout="wide")
+
+
+@st.cache_data(show_spinner=False)
+def run_pipeline(log_text: str, engine: str, model: str):
+    """Parse, enrich, and triage. Cached so reruns (widget clicks) are free."""
+    with tempfile.NamedTemporaryFile("w", suffix=".log", delete=False) as f:
+        f.write(log_text)
+        path = f.name
+    try:
+        alerts = parse_log(path)
+    finally:
+        os.unlink(path)
+
+    enriched = [enrich_alert(a.summary_dict()) for a in alerts]
+    raw_events = {a.src_ip: [e.raw for e in a.events] for a in alerts}
+
+    if engine == "claude":
+        results = llm_triage(enriched, model=model)
+    else:
+        results = heuristic_triage(enriched)
+    return [r.model_dump() for r in results], enriched, raw_events
+
+
+def load_labels() -> dict:
+    if not os.path.exists(LABELS_CSV):
+        return {}
+    with open(LABELS_CSV) as f:
+        return {row["src_ip"]: row["verdict"] for row in csv.DictReader(f)}
+
+
+# ---------------------------------------------------------------- sidebar
+with st.sidebar:
+    st.title("🛡️ AI SOC Triage")
+    st.caption("SSH auth logs → enriched, AI-triaged, ranked alert queue")
+
+    uploaded = st.file_uploader("Upload an sshd auth log", type=["log", "txt"])
+    using_sample = uploaded is None
+    if using_sample:
+        st.info("Using the bundled sample log", icon="📄")
+
+    engine_choice = st.radio("Triage engine", ["Heuristic baseline", "Claude (LLM)"])
+    engine = "claude" if engine_choice.startswith("Claude") else "heuristic"
+
+    model = "claude-opus-4-8"
+    if engine == "claude":
+        model = st.selectbox("Model", ["claude-opus-4-8", "claude-sonnet-4-6", "claude-haiku-4-5"])
+        if not os.environ.get("ANTHROPIC_API_KEY"):
+            key = st.text_input("Anthropic API key", type="password",
+                                help="Stored only in this session's environment")
+            if key:
+                os.environ["ANTHROPIC_API_KEY"] = key
+        if not os.environ.get("ANTHROPIC_API_KEY"):
+            st.warning("Set an API key to use the LLM engine.")
+            st.stop()
+
+if uploaded is not None:
+    log_text = uploaded.getvalue().decode("utf-8", errors="replace")
+else:
+    with open(SAMPLE_LOG) as f:
+        log_text = f.read()
+
+# ---------------------------------------------------------------- pipeline
+with st.spinner("Triaging alerts..."):
+    results, enriched, raw_events = run_pipeline(log_text, engine, model)
+
+if not results:
+    st.error("No SSH auth events found in this log.")
+    st.stop()
+
+results.sort(key=lambda r: (SEVERITY_RANK[Severity(r["severity"])], -r["confidence"]))
+enriched_by_ip = {a["src_ip"]: a for a in enriched}
+
+attacks = [r for r in results if r["verdict"] == "true_positive"]
+benign = [r for r in results if r["verdict"] == "false_positive"]
+critical = [r for r in results if r["severity"] == "critical"]
+
+# ---------------------------------------------------------------- header
+st.title("Alert triage queue")
+engine_label = f"Claude ({model})" if engine == "claude" else "heuristic baseline"
+st.caption(f"Engine: {engine_label}  ·  {len(log_text.splitlines())} log lines → {len(results)} alerts")
+
+c1, c2, c3, c4 = st.columns(4)
+c1.metric("Alerts triaged", len(results))
+c2.metric("Attacks detected", len(attacks))
+c3.metric("Benign cleared", len(benign))
+c4.metric("Critical", len(critical))
+
+# ---------------------------------------------------------------- activity chart
+chart_df = pd.DataFrame(
+    [{"source IP": a["src_ip"],
+      "failed logins": a["failed_logins"],
+      "successful logins": a["successful_logins"]} for a in enriched]
+).set_index("source IP")
+st.subheader("Login activity by source")
+st.bar_chart(chart_df, color=["#e24b4a", "#1d9e75"], height=240)
+
+# ---------------------------------------------------------------- queue
+st.subheader("Ranked queue")
+for i, r in enumerate(results, 1):
+    sev = Severity(r["severity"])
+    verdict = VERDICT_LABEL[Verdict(r["verdict"])]
+    header = (f"**#{i}**  ·  `{r['src_ip']}`  ·  {SEVERITY_BADGE[sev]}  ·  "
+              f"{verdict}  ·  {r['confidence']}% confidence  ·  {r['mitre_technique_id']}")
+    with st.expander(header, expanded=(i == 1)):
+        left, right = st.columns([3, 2])
+        with left:
+            st.markdown(f"**Analyst summary** — {r['summary']}")
+            st.markdown("**Recommended actions**")
+            for n, action in enumerate(r["recommended_actions"], 1):
+                st.markdown(f"{n}. {action}")
+        with right:
+            ctx = enriched_by_ip[r["src_ip"]]["enrichment"]
+            intel = ctx["threat_intel"]
+            st.markdown("**Enrichment**")
+            st.markdown(f"- Geolocation: {ctx['geolocation']}")
+            st.markdown(f"- Reputation: {intel.get('reputation', 'no records')}")
+            if intel.get("tags"):
+                st.markdown(f"- Intel tags: {', '.join(intel['tags'])}")
+            st.markdown(f"- ATT&CK: `{r['mitre_technique_id']}` {r['mitre_technique_name']}")
+        st.markdown("**Raw events**")
+        st.code("\n".join(raw_events[r["src_ip"]]), language="text")
+
+# ---------------------------------------------------------------- evaluation
+labels = load_labels()
+if using_sample and labels:
+    st.subheader("Evaluation against ground truth")
+    rows = []
+    for ip, truth in labels.items():
+        pred = next((r["verdict"] for r in results if r["src_ip"] == ip), "missing")
+        rows.append({"source IP": ip, "ground truth": truth, "predicted": pred,
+                     "result": "✅" if pred == truth else "❌"})
+    eval_df = pd.DataFrame(rows)
+    correct = (eval_df["ground truth"] == eval_df["predicted"]).sum()
+    st.markdown(f"**{correct}/{len(eval_df)}** verdicts match the hand-labeled ground truth.")
+    st.dataframe(eval_df, width="stretch", hide_index=True)

@@ -1,0 +1,13 @@
+{"preview":false,"result":{"_time":"2026-06-09T09:12:01.000+00:00","host":"DC01","EventCode":"4625","account":"j.smith","src":"10.0.0.99","Logon_Type":"3","Sub_Status":"0xC000006A"}}
+{"preview":false,"result":{"_time":"2026-06-09T09:12:14.000+00:00","host":"DC01","EventCode":"4625","account":"a.jones","src":"10.0.0.99","Logon_Type":"3","Sub_Status":"0xC000006A"}}
+{"preview":false,"result":{"_time":"2026-06-09T09:12:27.000+00:00","host":"DC01","EventCode":"4625","account":"svc-sql","src":"10.0.0.99","Logon_Type":"3","Sub_Status":"0xC000006A"}}
+{"preview":false,"result":{"_time":"2026-06-09T09:12:40.000+00:00","host":"DC01","EventCode":"4625","account":"administrator","src":"10.0.0.99","Logon_Type":"3","Sub_Status":"0xC000006A"}}
+{"preview":false,"result":{"_time":"2026-06-09T09:12:55.000+00:00","host":"DC01","EventCode":"4625","account":"backup-admin","src":"10.0.0.99","Logon_Type":"3","Sub_Status":"0xC0000064"}}
+{"preview":false,"result":{"_time":"2026-06-09T10:30:11.000+00:00","host":"FS02","EventCode":"4625","account":"m.garcia","src":"203.0.113.45","Logon_Type":"3","Sub_Status":"0xC000006A"}}
+{"preview":false,"result":{"_time":"2026-06-09T10:30:25.000+00:00","host":"FS02","EventCode":"4625","account":"m.garcia","src":"203.0.113.45","Logon_Type":"3","Sub_Status":"0xC000006A"}}
+{"preview":false,"result":{"_time":"2026-06-09T10:30:39.000+00:00","host":"FS02","EventCode":"4625","account":"m.garcia","src":"203.0.113.45","Logon_Type":"3","Sub_Status":"0xC000006A"}}
+{"preview":false,"result":{"_time":"2026-06-09T10:30:52.000+00:00","host":"FS02","EventCode":"4625","account":"m.garcia","src":"203.0.113.45","Logon_Type":"10","Sub_Status":"0xC000006A"}}
+{"preview":false,"result":{"_time":"2026-06-09T10:31:08.000+00:00","host":"FS02","EventCode":"4624","account":"m.garcia","src":"203.0.113.45","Logon_Type":"10"}}
+{"preview":false,"result":{"_time":"2026-06-09T11:02:33.000+00:00","host":"FS02","EventCode":"4624","account":"k.osei","src":"10.0.0.44","Logon_Type":"3"}}
+{"preview":false,"result":{"_time":"2026-06-09T11:45:10.000+00:00","host":"DC01","EventCode":"4625","account":"k.osei","src":"10.0.0.44","Logon_Type":"3","Sub_Status":"0xC000006A"}}
+{"preview":false,"result":{"_time":"2026-06-09T11:45:31.000+00:00","host":"DC01","EventCode":"4624","account":"k.osei","src":"10.0.0.44","Logon_Type":"3"}}

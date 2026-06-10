@@ -1,0 +1,8 @@
+src_ip,verdict,notes
+203.0.113.45,true_positive,blocked brute force across many usernames
+198.51.100.23,true_positive,success after repeated failures - account compromise
+10.0.0.5,false_positive,routine admin publickey logins
+10.0.0.12,false_positive,user typo then successful login
+185.220.101.7,true_positive,root brute force from Tor exit node
+91.240.118.172,true_positive,credential spraying against service accounts
+10.0.0.31,false_positive,service account with one failed then successful login
