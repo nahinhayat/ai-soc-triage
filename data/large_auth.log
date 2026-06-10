@@ -1,353 +1,359 @@
-Jun  8 00:04:25 web-01 sshd[27114]: Accepted password for ecastro from 10.0.0.22 port 40155 ssh2
-Jun  8 00:04:32 web-01 sshd[92936]: Accepted publickey for ecastro from 10.0.0.22 port 37096 ssh2: RSA SHA256:10C8b53B
-Jun  8 00:07:54 web-01 sshd[7322]: Failed password for invalid user administrator from 171.25.193.13 port 46824 ssh2
-Jun  8 00:09:29 web-01 sshd[43108]: Failed password for invalid user administrator from 171.25.193.11 port 50856 ssh2
-Jun  8 00:10:30 web-01 sshd[75034]: Failed password for invalid user administrator from 171.25.193.11 port 54987 ssh2
-Jun  8 00:12:36 web-01 sshd[67055]: Failed password for invalid user administrator from 171.25.193.13 port 50230 ssh2
-Jun  8 00:52:38 web-01 sshd[84989]: Failed password for invalid user administrator from 171.25.193.12 port 51784 ssh2
-Jun  8 00:54:53 web-01 sshd[31430]: Failed password for invalid user administrator from 171.25.193.12 port 58203 ssh2
-Jun  8 01:12:10 web-01 sshd[30312]: Failed password for invalid user mysql from 141.98.10.60 port 37265 ssh2
-Jun  8 01:12:17 web-01 sshd[48723]: Failed password for invalid user www-data from 141.98.10.60 port 54327 ssh2
-Jun  8 01:12:22 web-01 sshd[84738]: Failed password for invalid user git from 141.98.10.60 port 55950 ssh2
-Jun  8 01:12:29 web-01 sshd[12311]: Failed password for invalid user nagios from 141.98.10.60 port 56519 ssh2
-Jun  8 01:12:44 web-01 sshd[54871]: Failed password for invalid user guest from 141.98.10.60 port 32145 ssh2
-Jun  8 01:12:47 web-01 sshd[84490]: Failed password for invalid user nagios from 141.98.10.60 port 50905 ssh2
-Jun  8 01:12:57 web-01 sshd[15701]: Failed password for invalid user guest from 141.98.10.60 port 55136 ssh2
-Jun  8 01:13:12 web-01 sshd[48873]: Failed password for invalid user www-data from 141.98.10.60 port 55254 ssh2
-Jun  8 01:13:24 web-01 sshd[74164]: Failed password for invalid user mysql from 141.98.10.60 port 44712 ssh2
-Jun  8 01:13:32 web-01 sshd[37194]: Failed password for invalid user nagios from 141.98.10.60 port 53214 ssh2
-Jun  8 01:13:44 web-01 sshd[29471]: Failed password for invalid user guest from 141.98.10.60 port 30069 ssh2
-Jun  8 01:50:15 web-01 sshd[26765]: Accepted password for slee from 10.0.0.12 port 39336 ssh2
-Jun  8 01:50:46 web-01 sshd[29003]: Accepted publickey for slee from 10.0.0.12 port 40069 ssh2: RSA SHA256:a8B0fb93
-Jun  8 01:55:26 web-01 sshd[84845]: Accepted publickey for lzhang from 10.0.0.18 port 48044 ssh2: RSA SHA256:1CdE2ebe
-Jun  8 02:04:13 web-01 sshd[8408]: Failed password for invalid user administrator from 171.25.193.10 port 51398 ssh2
-Jun  8 02:05:48 web-01 sshd[31529]: Failed password for invalid user administrator from 171.25.193.10 port 55619 ssh2
-Jun  8 02:34:29 web-01 sshd[42159]: Failed password for slee from 10.0.3.100 port 40591 ssh2
-Jun  8 02:35:44 web-01 sshd[71316]: Failed password for ecastro from 10.0.3.100 port 43745 ssh2
-Jun  8 02:37:18 web-01 sshd[81212]: Failed password for lzhang from 10.0.3.100 port 33831 ssh2
-Jun  8 02:38:11 web-01 sshd[57245]: Failed password for rtaylor from 10.0.3.100 port 30111 ssh2
-Jun  8 02:40:07 web-01 sshd[19547]: Failed password for anguyen from 10.0.3.100 port 45127 ssh2
-Jun  8 02:45:37 web-01 sshd[51604]: Failed password for psingh from 10.0.3.101 port 52019 ssh2
-Jun  8 02:47:29 web-01 sshd[72145]: Failed password for lzhang from 10.0.3.101 port 55083 ssh2
-Jun  8 02:49:01 web-01 sshd[81365]: Failed password for gmiller from 10.0.3.101 port 39489 ssh2
-Jun  8 02:50:08 web-01 sshd[66538]: Failed password for rtaylor from 10.0.3.101 port 56646 ssh2
-Jun  8 02:50:32 web-01 sshd[1872]: Failed password for nali from 10.0.3.101 port 40718 ssh2
-Jun  8 02:57:11 web-01 sshd[88902]: Failed password for backup from 185.196.8.70 port 51273 ssh2
-Jun  8 02:57:31 web-01 sshd[43622]: Failed password for backup from 185.196.8.70 port 56968 ssh2
-Jun  8 02:57:44 web-01 sshd[53745]: Failed password for backup from 185.196.8.70 port 54444 ssh2
-Jun  8 02:58:02 web-01 sshd[30406]: Failed password for backup from 185.196.8.70 port 54830 ssh2
-Jun  8 02:58:13 web-01 sshd[51187]: Failed password for backup from 185.196.8.70 port 44487 ssh2
-Jun  8 02:58:28 web-01 sshd[16734]: Failed password for backup from 185.196.8.70 port 47880 ssh2
-Jun  8 02:58:35 web-01 sshd[32306]: Failed password for backup from 185.196.8.70 port 55657 ssh2
-Jun  8 02:58:48 web-01 sshd[25353]: Failed password for backup from 185.196.8.70 port 33812 ssh2
-Jun  8 02:59:05 web-01 sshd[88598]: Failed password for backup from 185.196.8.70 port 47004 ssh2
-Jun  8 02:59:12 web-01 sshd[94464]: Accepted password for backup from 185.196.8.70 port 38499 ssh2
-Jun  8 02:59:31 web-01 sshd[75284]: Failed password for svc-sync1 from 10.0.2.31 port 51284 ssh2
-Jun  8 03:26:45 web-01 sshd[38603]: Failed password for svc-sync1 from 10.0.2.31 port 46846 ssh2
-Jun  8 03:58:01 web-01 sshd[7923]: Failed password for svc-sync1 from 10.0.2.31 port 55789 ssh2
-Jun  8 04:12:25 web-01 sshd[33961]: Failed password for root from 80.94.95.82 port 45827 ssh2
-Jun  8 04:33:56 web-01 sshd[81101]: Failed password for svc-sync1 from 10.0.2.31 port 49154 ssh2
-Jun  8 05:04:17 web-01 sshd[99720]: Failed password for svc-sync1 from 10.0.2.31 port 45898 ssh2
-Jun  8 05:08:35 web-01 sshd[66486]: Failed password for ecastro from 73.158.22.41 port 36858 ssh2
-Jun  8 05:08:50 web-01 sshd[73897]: Accepted password for ecastro from 73.158.22.41 port 53428 ssh2
-Jun  8 05:30:36 web-01 sshd[72751]: Failed password for svc-sync1 from 10.0.2.31 port 38755 ssh2
-Jun  8 05:32:50 web-01 sshd[18348]: Accepted publickey for svc-backup4 from 10.0.1.24 port 46414 ssh2: RSA SHA256:4B7E1e9B
-Jun  8 05:50:07 web-01 sshd[9778]: Failed password for invalid user git from 141.98.10.64 port 37407 ssh2
-Jun  8 05:50:21 web-01 sshd[38589]: Failed password for invalid user oracle from 141.98.10.64 port 38247 ssh2
-Jun  8 05:50:26 web-01 sshd[34790]: Failed password for invalid user oracle from 141.98.10.64 port 52419 ssh2
-Jun  8 05:50:31 web-01 sshd[90052]: Failed password for invalid user nagios from 141.98.10.64 port 50761 ssh2
-Jun  8 05:50:42 web-01 sshd[11328]: Failed password for invalid user guest from 141.98.10.64 port 47457 ssh2
-Jun  8 05:50:44 web-01 sshd[92075]: Failed password for invalid user nagios from 141.98.10.64 port 36372 ssh2
-Jun  8 05:50:59 web-01 sshd[98643]: Failed password for invalid user ubnt from 141.98.10.64 port 33501 ssh2
-Jun  8 05:51:01 web-01 sshd[89746]: Failed password for invalid user ubnt from 141.98.10.64 port 46800 ssh2
-Jun  8 05:51:16 web-01 sshd[18261]: Failed password for invalid user ubnt from 141.98.10.64 port 54930 ssh2
-Jun  8 05:51:18 web-01 sshd[99109]: Failed password for invalid user mysql from 141.98.10.64 port 58956 ssh2
-Jun  8 05:51:30 web-01 sshd[6759]: Failed password for invalid user oracle from 141.98.10.64 port 53521 ssh2
-Jun  8 05:51:37 web-01 sshd[29162]: Failed password for admin from 141.98.10.64 port 35217 ssh2
-Jun  8 05:51:49 web-01 sshd[59809]: Failed password for invalid user git from 141.98.10.64 port 58774 ssh2
-Jun  8 05:51:53 web-01 sshd[69861]: Failed password for invalid user nagios from 141.98.10.64 port 47872 ssh2
-Jun  8 05:52:05 web-01 sshd[35976]: Failed password for invalid user oracle from 141.98.10.64 port 43475 ssh2
-Jun  8 05:52:19 web-01 sshd[63481]: Failed password for invalid user postgres from 141.98.10.64 port 33599 ssh2
-Jun  8 05:52:28 web-01 sshd[24332]: Failed password for invalid user oracle from 141.98.10.64 port 46535 ssh2
-Jun  8 05:52:39 web-01 sshd[43059]: Failed password for invalid user oracle from 141.98.10.64 port 41354 ssh2
-Jun  8 05:52:41 web-01 sshd[9306]: Failed password for invalid user postgres from 141.98.10.64 port 39011 ssh2
-Jun  8 05:52:49 web-01 sshd[14111]: Failed password for invalid user nagios from 141.98.10.64 port 32868 ssh2
-Jun  8 05:52:52 web-01 sshd[42995]: Failed password for admin from 141.98.10.64 port 43993 ssh2
-Jun  8 05:53:06 web-01 sshd[42803]: Failed password for invalid user guest from 141.98.10.64 port 54648 ssh2
-Jun  8 05:53:20 web-01 sshd[83027]: Failed password for admin from 141.98.10.64 port 44918 ssh2
-Jun  8 06:05:56 web-01 sshd[16002]: Accepted publickey for svc-backup4 from 10.0.1.24 port 39361 ssh2: RSA SHA256:9F9fF9fc
-Jun  8 06:06:07 web-01 sshd[41634]: Failed password for svc-sync1 from 10.0.2.31 port 34648 ssh2
-Jun  8 06:10:14 web-01 sshd[57871]: Failed password for invalid user pi from 141.98.10.63 port 32177 ssh2
-Jun  8 06:10:27 web-01 sshd[59366]: Failed password for invalid user guest from 141.98.10.63 port 57085 ssh2
-Jun  8 06:10:31 web-01 sshd[9159]: Failed password for invalid user mysql from 141.98.10.63 port 45081 ssh2
-Jun  8 06:10:33 web-01 sshd[81453]: Failed password for invalid user pi from 141.98.10.63 port 30757 ssh2
-Jun  8 06:10:36 web-01 sshd[25246]: Failed password for dkim from 10.0.0.13 port 47316 ssh2
-Jun  8 06:10:42 web-01 sshd[65836]: Failed password for dkim from 10.0.0.13 port 54456 ssh2
-Jun  8 06:10:42 web-01 sshd[36763]: Failed password for invalid user test from 141.98.10.63 port 55267 ssh2
-Jun  8 06:10:46 web-01 sshd[23297]: Accepted publickey for dkim from 10.0.0.13 port 31930 ssh2: RSA SHA256:F28452f3
-Jun  8 06:10:50 web-01 sshd[17641]: Failed password for invalid user mysql from 141.98.10.63 port 59927 ssh2
-Jun  8 06:10:56 web-01 sshd[24868]: Failed password for invalid user pi from 141.98.10.63 port 37782 ssh2
-Jun  8 06:11:07 web-01 sshd[17648]: Failed password for invalid user pi from 141.98.10.63 port 41136 ssh2
-Jun  8 06:11:09 web-01 sshd[58600]: Accepted password for dkim from 10.0.0.13 port 36287 ssh2
-Jun  8 06:11:17 web-01 sshd[96145]: Failed password for invalid user mysql from 141.98.10.63 port 51523 ssh2
-Jun  8 06:11:24 web-01 sshd[39746]: Failed password for invalid user test from 141.98.10.63 port 54221 ssh2
-Jun  8 06:11:35 web-01 sshd[38201]: Failed password for invalid user mysql from 141.98.10.63 port 53658 ssh2
-Jun  8 06:11:46 web-01 sshd[8334]: Accepted publickey for dkim from 10.0.0.13 port 35097 ssh2: RSA SHA256:70D178D4
-Jun  8 06:11:46 web-01 sshd[99894]: Failed password for invalid user www-data from 141.98.10.63 port 56331 ssh2
-Jun  8 06:11:53 web-01 sshd[35581]: Failed password for invalid user pi from 141.98.10.63 port 41554 ssh2
-Jun  8 06:12:04 web-01 sshd[36305]: Failed password for invalid user oracle from 141.98.10.63 port 51297 ssh2
-Jun  8 06:12:15 web-01 sshd[46607]: Failed password for invalid user mysql from 141.98.10.63 port 59885 ssh2
-Jun  8 06:12:18 web-01 sshd[73459]: Accepted publickey for dkim from 10.0.0.13 port 44076 ssh2: RSA SHA256:Ce22fecC
-Jun  8 06:12:21 web-01 sshd[64881]: Failed password for invalid user test from 141.98.10.63 port 57345 ssh2
-Jun  8 06:12:32 web-01 sshd[18965]: Failed password for invalid user test from 141.98.10.63 port 53185 ssh2
-Jun  8 06:12:37 web-01 sshd[19966]: Failed password for invalid user test from 141.98.10.63 port 42725 ssh2
-Jun  8 06:12:47 web-01 sshd[86447]: Failed password for invalid user guest from 141.98.10.63 port 32228 ssh2
-Jun  8 06:12:50 web-01 sshd[32333]: Failed password for invalid user guest from 141.98.10.63 port 57990 ssh2
-Jun  8 06:13:04 web-01 sshd[76744]: Failed password for invalid user postgres from 141.98.10.63 port 59612 ssh2
-Jun  8 06:18:41 web-01 sshd[23437]: Accepted publickey for svc-backup4 from 10.0.1.24 port 58946 ssh2: RSA SHA256:ae4AA7cd
-Jun  8 06:23:42 web-01 sshd[41311]: Failed password for svc-sync0 from 10.0.2.30 port 46329 ssh2
-Jun  8 06:35:17 web-01 sshd[57334]: Accepted publickey for svc-backup4 from 10.0.1.24 port 30783 ssh2: RSA SHA256:FB14dfFf
-Jun  8 06:36:11 web-01 sshd[23172]: Failed password for svc-sync1 from 10.0.2.31 port 55278 ssh2
-Jun  8 06:36:11 web-01 sshd[34469]: Failed password for webadmin from 185.196.8.72 port 47026 ssh2
-Jun  8 06:36:31 web-01 sshd[24677]: Failed password for webadmin from 185.196.8.72 port 43247 ssh2
-Jun  8 06:36:37 web-01 sshd[20308]: Failed password for webadmin from 185.196.8.72 port 30966 ssh2
-Jun  8 06:36:51 web-01 sshd[65463]: Failed password for webadmin from 185.196.8.72 port 37319 ssh2
-Jun  8 06:37:00 web-01 sshd[82456]: Failed password for webadmin from 185.196.8.72 port 41078 ssh2
-Jun  8 06:37:10 web-01 sshd[64611]: Failed password for webadmin from 185.196.8.72 port 33212 ssh2
-Jun  8 06:37:30 web-01 sshd[67954]: Failed password for webadmin from 185.196.8.72 port 51468 ssh2
-Jun  8 06:37:50 web-01 sshd[61265]: Failed password for webadmin from 185.196.8.72 port 54843 ssh2
-Jun  8 06:37:55 web-01 sshd[61751]: Failed password for webadmin from 185.196.8.72 port 38462 ssh2
-Jun  8 06:38:13 web-01 sshd[82213]: Accepted password for webadmin from 185.196.8.72 port 41262 ssh2
-Jun  8 06:39:41 web-01 sshd[16888]: Failed password for root from 80.94.95.82 port 55092 ssh2
-Jun  8 06:53:12 web-01 sshd[91268]: Failed password for svc-sync0 from 10.0.2.30 port 59677 ssh2
-Jun  8 07:05:46 web-01 sshd[98731]: Failed password for svc-sync1 from 10.0.2.31 port 42414 ssh2
-Jun  8 07:24:40 web-01 sshd[82379]: Failed password for svc-sync0 from 10.0.2.30 port 33845 ssh2
-Jun  8 07:33:13 web-01 sshd[48209]: Failed password for root from 80.94.95.81 port 56140 ssh2
-Jun  8 07:35:42 web-01 sshd[46707]: Failed password for svc-sync2 from 10.0.2.32 port 37924 ssh2
-Jun  8 07:40:18 web-01 sshd[25230]: Failed password for svc-sync1 from 10.0.2.31 port 53565 ssh2
-Jun  8 07:56:32 web-01 sshd[89448]: Failed password for root from 80.94.95.80 port 33947 ssh2
-Jun  8 07:59:11 web-01 sshd[69838]: Failed password for svc-sync0 from 10.0.2.30 port 58453 ssh2
-Jun  8 08:06:12 web-01 sshd[80681]: Failed password for svc-sync2 from 10.0.2.32 port 47533 ssh2
-Jun  8 08:28:34 web-01 sshd[24896]: Failed password for svc-sync0 from 10.0.2.30 port 58184 ssh2
-Jun  8 08:31:27 web-01 sshd[49684]: Failed password for svc-sync2 from 10.0.2.32 port 54656 ssh2
-Jun  8 08:37:24 web-01 sshd[4963]: Accepted publickey for anguyen from 10.0.0.14 port 31290 ssh2: RSA SHA256:15988311
-Jun  8 08:38:01 web-01 sshd[58341]: Accepted password for anguyen from 10.0.0.14 port 51014 ssh2
-Jun  8 08:46:23 web-01 sshd[23510]: Failed password for nali from 73.158.22.40 port 30835 ssh2
-Jun  8 08:46:59 web-01 sshd[16797]: Failed password for nali from 73.158.22.40 port 40481 ssh2
-Jun  8 08:47:22 web-01 sshd[7822]: Accepted password for nali from 73.158.22.40 port 53480 ssh2
-Jun  8 08:58:57 web-01 sshd[69669]: Failed password for svc-sync0 from 10.0.2.30 port 46590 ssh2
-Jun  8 09:02:29 web-01 sshd[36483]: Accepted publickey for deploy from 34.74.10.51 port 50871 ssh2: RSA SHA256:5bE16ace
-Jun  8 09:03:33 web-01 sshd[10183]: Failed password for psingh from 10.0.0.21 port 41102 ssh2
-Jun  8 09:03:49 web-01 sshd[79654]: Accepted password for psingh from 10.0.0.21 port 57010 ssh2
-Jun  8 09:04:07 web-01 sshd[31416]: Failed password for svc-sync2 from 10.0.2.32 port 58554 ssh2
-Jun  8 09:04:22 web-01 sshd[93337]: Accepted publickey for psingh from 10.0.0.21 port 34757 ssh2: RSA SHA256:552Af447
-Jun  8 09:04:35 web-01 sshd[87597]: Accepted password for psingh from 10.0.0.21 port 31432 ssh2
-Jun  8 09:29:37 web-01 sshd[60914]: Failed password for svc-sync0 from 10.0.2.30 port 46245 ssh2
-Jun  8 09:37:20 web-01 sshd[97110]: Failed password for root from 80.94.95.82 port 44883 ssh2
-Jun  8 09:40:02 web-01 sshd[44791]: Failed password for svc-sync2 from 10.0.2.32 port 47226 ssh2
-Jun  8 09:56:49 web-01 sshd[98773]: Failed password for svc-sync0 from 10.0.2.30 port 44173 ssh2
-Jun  8 09:57:44 web-01 sshd[70749]: Accepted publickey for deploy from 34.74.10.51 port 43962 ssh2: RSA SHA256:Bf76ddff
-Jun  8 10:06:17 web-01 sshd[35639]: Failed password for root from 80.94.95.81 port 31076 ssh2
-Jun  8 10:15:42 web-01 sshd[77731]: Failed password for svc-sync2 from 10.0.2.32 port 45715 ssh2
-Jun  8 10:25:51 web-01 sshd[90529]: Failed password for root from 80.94.95.80 port 32654 ssh2
-Jun  8 10:28:23 web-01 sshd[53742]: Failed password for rtaylor from 10.0.0.15 port 55585 ssh2
-Jun  8 10:28:48 web-01 sshd[41013]: Failed password for rtaylor from 10.0.0.15 port 37375 ssh2
-Jun  8 10:29:28 web-01 sshd[45891]: Accepted publickey for rtaylor from 10.0.0.15 port 30094 ssh2: RSA SHA256:9C1A4C3E
-Jun  8 10:29:36 web-01 sshd[15900]: Accepted publickey for rtaylor from 10.0.0.15 port 44559 ssh2: RSA SHA256:E679a80e
-Jun  8 10:29:54 web-01 sshd[67299]: Accepted publickey for rtaylor from 10.0.0.15 port 34998 ssh2: RSA SHA256:b5eF80c6
-Jun  8 10:30:34 web-01 sshd[74457]: Accepted password for rtaylor from 10.0.0.15 port 51007 ssh2
-Jun  8 10:39:01 web-01 sshd[43126]: Accepted publickey for deploy from 34.74.10.51 port 48043 ssh2: RSA SHA256:a88DB1DB
-Jun  8 10:47:41 web-01 sshd[17707]: Failed password for svc-sync2 from 10.0.2.32 port 37583 ssh2
-Jun  8 11:12:26 web-01 sshd[21615]: Accepted publickey for deploy from 34.74.10.51 port 34272 ssh2: RSA SHA256:b7fFF998
-Jun  8 11:16:04 web-01 sshd[34695]: Failed password for invalid user mysql from 92.255.85.65 port 31408 ssh2
-Jun  8 11:16:19 web-01 sshd[6689]: Failed password for invalid user guest from 92.255.85.65 port 36252 ssh2
-Jun  8 11:16:28 web-01 sshd[38211]: Failed password for invalid user mysql from 92.255.85.65 port 48505 ssh2
-Jun  8 11:16:36 web-01 sshd[34687]: Failed password for svc-sync2 from 10.0.2.32 port 41685 ssh2
-Jun  8 11:16:40 web-01 sshd[77619]: Failed password for invalid user git from 92.255.85.65 port 49906 ssh2
-Jun  8 11:16:50 web-01 sshd[26507]: Failed password for admin from 92.255.85.65 port 58641 ssh2
-Jun  8 11:16:54 web-01 sshd[3063]: Failed password for invalid user guest from 92.255.85.65 port 34541 ssh2
-Jun  8 11:17:09 web-01 sshd[22121]: Failed password for invalid user mysql from 92.255.85.65 port 37873 ssh2
-Jun  8 11:17:19 web-01 sshd[65214]: Failed password for invalid user mysql from 92.255.85.65 port 50109 ssh2
-Jun  8 11:17:24 web-01 sshd[32791]: Failed password for invalid user mysql from 92.255.85.65 port 59615 ssh2
-Jun  8 11:17:32 web-01 sshd[87349]: Failed password for invalid user guest from 92.255.85.65 port 32055 ssh2
-Jun  8 11:17:40 web-01 sshd[26307]: Failed password for root from 92.255.85.65 port 36465 ssh2
-Jun  8 11:17:47 web-01 sshd[1786]: Failed password for invalid user guest from 92.255.85.65 port 54045 ssh2
-Jun  8 11:18:01 web-01 sshd[94716]: Failed password for admin from 92.255.85.65 port 55045 ssh2
-Jun  8 11:18:13 web-01 sshd[26579]: Failed password for invalid user guest from 92.255.85.65 port 41890 ssh2
-Jun  8 11:18:24 web-01 sshd[22004]: Failed password for invalid user git from 92.255.85.65 port 42679 ssh2
-Jun  8 11:18:32 web-01 sshd[56005]: Failed password for admin from 92.255.85.65 port 47096 ssh2
-Jun  8 11:18:35 web-01 sshd[36876]: Failed password for root from 92.255.85.65 port 30870 ssh2
-Jun  8 11:18:45 web-01 sshd[13719]: Failed password for invalid user git from 92.255.85.65 port 53034 ssh2
-Jun  8 11:18:58 web-01 sshd[64106]: Failed password for invalid user guest from 92.255.85.65 port 54579 ssh2
-Jun  8 11:19:06 web-01 sshd[40736]: Failed password for admin from 92.255.85.65 port 50715 ssh2
-Jun  8 11:19:21 web-01 sshd[13483]: Failed password for invalid user git from 92.255.85.65 port 34130 ssh2
-Jun  8 11:19:24 web-01 sshd[27585]: Failed password for invalid user mysql from 92.255.85.65 port 42549 ssh2
-Jun  8 11:19:38 web-01 sshd[12279]: Failed password for invalid user mysql from 92.255.85.65 port 54212 ssh2
-Jun  8 11:21:03 web-01 sshd[97674]: Failed password for invalid user nagios from 92.255.85.67 port 58600 ssh2
-Jun  8 11:21:13 web-01 sshd[43470]: Failed password for invalid user test from 92.255.85.67 port 30361 ssh2
-Jun  8 11:21:25 web-01 sshd[87891]: Failed password for invalid user git from 92.255.85.67 port 55572 ssh2
-Jun  8 11:21:36 web-01 sshd[74574]: Failed password for invalid user test from 92.255.85.67 port 45202 ssh2
-Jun  8 11:21:49 web-01 sshd[7274]: Failed password for invalid user pi from 92.255.85.67 port 37921 ssh2
-Jun  8 11:22:02 web-01 sshd[65683]: Failed password for root from 92.255.85.67 port 44121 ssh2
-Jun  8 11:22:04 web-01 sshd[15450]: Failed password for invalid user pi from 92.255.85.67 port 55887 ssh2
-Jun  8 11:22:14 web-01 sshd[51999]: Failed password for invalid user test from 92.255.85.67 port 42360 ssh2
-Jun  8 11:22:15 web-01 sshd[18685]: Failed password for invalid user guest from 141.98.10.62 port 58630 ssh2
-Jun  8 11:22:19 web-01 sshd[14254]: Failed password for invalid user nagios from 141.98.10.62 port 33381 ssh2
-Jun  8 11:22:27 web-01 sshd[72574]: Failed password for invalid user postgres from 92.255.85.67 port 40024 ssh2
-Jun  8 11:22:28 web-01 sshd[70795]: Failed password for invalid user guest from 141.98.10.62 port 31776 ssh2
-Jun  8 11:22:29 web-01 sshd[20241]: Failed password for root from 92.255.85.67 port 47637 ssh2
-Jun  8 11:22:31 web-01 sshd[49153]: Failed password for invalid user guest from 141.98.10.62 port 56282 ssh2
-Jun  8 11:22:33 web-01 sshd[56559]: Failed password for invalid user jenkins from 141.98.10.62 port 59769 ssh2
-Jun  8 11:22:41 web-01 sshd[8305]: Failed password for invalid user nagios from 141.98.10.62 port 49152 ssh2
-Jun  8 11:22:46 web-01 sshd[57123]: Failed password for invalid user guest from 141.98.10.62 port 51451 ssh2
-Jun  8 11:22:58 web-01 sshd[34951]: Failed password for invalid user www-data from 141.98.10.62 port 46958 ssh2
-Jun  8 11:23:04 web-01 sshd[26504]: Failed password for invalid user jenkins from 141.98.10.62 port 40444 ssh2
-Jun  8 11:23:06 web-01 sshd[95640]: Failed password for invalid user guest from 141.98.10.62 port 35775 ssh2
-Jun  8 11:23:20 web-01 sshd[19847]: Failed password for invalid user jenkins from 141.98.10.62 port 49445 ssh2
-Jun  8 11:23:29 web-01 sshd[30657]: Failed password for invalid user www-data from 141.98.10.62 port 50228 ssh2
-Jun  8 11:23:32 web-01 sshd[96440]: Failed password for invalid user nagios from 141.98.10.62 port 47905 ssh2
-Jun  8 11:23:43 web-01 sshd[23567]: Failed password for invalid user nagios from 141.98.10.62 port 31075 ssh2
-Jun  8 11:23:57 web-01 sshd[50204]: Failed password for invalid user git from 141.98.10.62 port 58565 ssh2
-Jun  8 11:24:07 web-01 sshd[67730]: Failed password for invalid user www-data from 141.98.10.62 port 41391 ssh2
-Jun  8 11:24:18 web-01 sshd[89076]: Failed password for invalid user nagios from 141.98.10.62 port 37461 ssh2
-Jun  8 11:24:32 web-01 sshd[56818]: Failed password for invalid user guest from 141.98.10.62 port 44163 ssh2
-Jun  8 11:24:47 web-01 sshd[50781]: Failed password for invalid user jenkins from 141.98.10.62 port 39996 ssh2
-Jun  8 11:24:52 web-01 sshd[89890]: Failed password for invalid user git from 141.98.10.62 port 58231 ssh2
-Jun  8 11:25:03 web-01 sshd[19791]: Failed password for invalid user www-data from 141.98.10.62 port 59812 ssh2
-Jun  8 11:25:09 web-01 sshd[28901]: Failed password for invalid user www-data from 141.98.10.62 port 56015 ssh2
-Jun  8 11:25:14 web-01 sshd[18846]: Failed password for invalid user www-data from 141.98.10.62 port 41144 ssh2
-Jun  8 11:25:26 web-01 sshd[61100]: Failed password for invalid user www-data from 141.98.10.62 port 47782 ssh2
-Jun  8 11:25:40 web-01 sshd[67335]: Failed password for invalid user guest from 141.98.10.62 port 32273 ssh2
-Jun  8 11:45:05 web-01 sshd[90079]: Failed password for svc-sync2 from 10.0.2.32 port 34712 ssh2
-Jun  8 11:45:09 web-01 sshd[93599]: Accepted publickey for svc-patching2 from 10.0.1.22 port 30140 ssh2: RSA SHA256:F9CcDf4b
-Jun  8 11:52:28 web-01 sshd[97671]: Failed password for mpatel from 10.0.0.11 port 56267 ssh2
-Jun  8 11:52:32 web-01 sshd[27343]: Accepted publickey for mpatel from 10.0.0.11 port 38678 ssh2: RSA SHA256:1E95A38E
-Jun  8 11:53:10 web-01 sshd[69870]: Accepted password for mpatel from 10.0.0.11 port 50917 ssh2
-Jun  8 11:53:49 web-01 sshd[54407]: Accepted password for mpatel from 10.0.0.11 port 32367 ssh2
-Jun  8 12:15:11 web-01 sshd[74246]: Failed password for svc-sync2 from 10.0.2.32 port 52251 ssh2
-Jun  8 12:26:07 web-01 sshd[47252]: Failed password for root from 80.94.95.80 port 33667 ssh2
-Jun  8 12:38:30 web-01 sshd[18482]: Failed password for root from 80.94.95.81 port 36006 ssh2
-Jun  8 12:44:11 web-01 sshd[58457]: Accepted publickey for svc-patching2 from 10.0.1.22 port 40274 ssh2: RSA SHA256:FC40fda2
-Jun  8 12:44:13 web-01 sshd[28911]: Failed password for psingh from 73.158.22.42 port 37619 ssh2
-Jun  8 12:44:31 web-01 sshd[76339]: Failed password for psingh from 73.158.22.42 port 30679 ssh2
-Jun  8 12:45:08 web-01 sshd[25488]: Accepted password for psingh from 73.158.22.42 port 41503 ssh2
-Jun  8 12:48:22 web-01 sshd[54103]: Failed password for svc-sync2 from 10.0.2.32 port 51718 ssh2
-Jun  8 12:56:03 web-01 sshd[77072]: Accepted publickey for svc-patching2 from 10.0.1.22 port 38688 ssh2: RSA SHA256:20FCB45F
-Jun  8 13:24:36 web-01 sshd[7439]: Failed password for svc-sync2 from 10.0.2.32 port 55466 ssh2
-Jun  8 13:37:09 web-01 sshd[5684]: Accepted publickey for svc-patching2 from 10.0.1.22 port 49007 ssh2: RSA SHA256:ADFa2AE1
-Jun  8 13:48:18 web-01 sshd[8716]: Failed password for fhassan from 10.0.0.17 port 59961 ssh2
-Jun  8 13:48:48 web-01 sshd[90203]: Failed password for fhassan from 10.0.0.17 port 37452 ssh2
-Jun  8 13:49:12 web-01 sshd[90011]: Accepted publickey for fhassan from 10.0.0.17 port 56495 ssh2: RSA SHA256:Eeb62B0a
-Jun  8 13:49:30 web-01 sshd[73117]: Accepted password for fhassan from 10.0.0.17 port 47690 ssh2
-Jun  8 13:49:40 web-01 sshd[88060]: Accepted publickey for fhassan from 10.0.0.17 port 31267 ssh2: RSA SHA256:9F8d86DE
-Jun  8 13:50:03 web-01 sshd[80014]: Accepted password for fhassan from 10.0.0.17 port 54775 ssh2
-Jun  8 14:01:22 web-01 sshd[32171]: Accepted password for mpatel from 146.70.85.91 port 36078 ssh2
-Jun  8 14:49:47 web-01 sshd[59504]: Accepted password for mpatel from 146.70.85.90 port 41254 ssh2
-Jun  8 16:19:08 web-01 sshd[54605]: Failed password for invalid user www-data from 45.155.205.61 port 38607 ssh2
-Jun  8 16:19:15 web-01 sshd[12733]: Failed password for root from 45.155.205.61 port 30940 ssh2
-Jun  8 16:19:29 web-01 sshd[2969]: Failed password for invalid user www-data from 45.155.205.61 port 37278 ssh2
-Jun  8 16:19:37 web-01 sshd[31167]: Failed password for invalid user www-data from 45.155.205.61 port 31206 ssh2
-Jun  8 16:19:50 web-01 sshd[72964]: Failed password for invalid user www-data from 45.155.205.61 port 38567 ssh2
-Jun  8 16:20:02 web-01 sshd[37024]: Failed password for invalid user www-data from 45.155.205.61 port 37989 ssh2
-Jun  8 16:20:07 web-01 sshd[7721]: Failed password for root from 45.155.205.61 port 47640 ssh2
-Jun  8 16:20:14 web-01 sshd[93745]: Failed password for invalid user oracle from 45.155.205.61 port 45821 ssh2
-Jun  8 16:20:16 web-01 sshd[79723]: Failed password for root from 45.155.205.61 port 50053 ssh2
-Jun  8 16:20:25 web-01 sshd[42882]: Failed password for root from 45.155.205.61 port 54789 ssh2
-Jun  8 16:20:31 web-01 sshd[38722]: Failed password for invalid user guest from 45.155.205.61 port 56293 ssh2
-Jun  8 16:20:34 web-01 sshd[96151]: Failed password for invalid user guest from 45.155.205.61 port 39300 ssh2
-Jun  8 16:20:40 web-01 sshd[83526]: Failed password for root from 45.155.205.61 port 57144 ssh2
-Jun  8 16:20:52 web-01 sshd[51775]: Failed password for invalid user oracle from 45.155.205.61 port 31308 ssh2
-Jun  8 16:21:07 web-01 sshd[25838]: Failed password for invalid user www-data from 45.155.205.61 port 47248 ssh2
-Jun  8 16:21:19 web-01 sshd[5701]: Failed password for invalid user www-data from 45.155.205.61 port 57465 ssh2
-Jun  8 16:21:24 web-01 sshd[71241]: Failed password for invalid user guest from 45.155.205.61 port 50567 ssh2
-Jun  8 16:56:04 web-01 sshd[20416]: Failed password for bwilson from 10.0.0.16 port 34872 ssh2
-Jun  8 16:56:12 web-01 sshd[58757]: Accepted publickey for bwilson from 10.0.0.16 port 56188 ssh2: RSA SHA256:84a5d423
-Jun  8 16:56:44 web-01 sshd[40225]: Accepted publickey for bwilson from 10.0.0.16 port 59740 ssh2: RSA SHA256:24aD5cd3
-Jun  8 16:56:59 web-01 sshd[26801]: Accepted password for bwilson from 10.0.0.16 port 52421 ssh2
-Jun  8 16:57:08 web-01 sshd[73095]: Accepted password for bwilson from 10.0.0.16 port 35225 ssh2
-Jun  8 17:10:43 web-01 sshd[73422]: Accepted publickey for svc-deployer3 from 10.0.1.23 port 49337 ssh2: RSA SHA256:68AdE66F
-Jun  8 17:48:10 web-01 sshd[15953]: Failed password for backup from 185.196.8.71 port 35065 ssh2
-Jun  8 17:48:18 web-01 sshd[59721]: Failed password for backup from 185.196.8.71 port 34382 ssh2
-Jun  8 17:48:25 web-01 sshd[10455]: Failed password for backup from 185.196.8.71 port 35136 ssh2
-Jun  8 17:48:44 web-01 sshd[9912]: Failed password for backup from 185.196.8.71 port 42054 ssh2
-Jun  8 17:49:04 web-01 sshd[92967]: Failed password for backup from 185.196.8.71 port 31520 ssh2
-Jun  8 17:49:12 web-01 sshd[90006]: Failed password for backup from 185.196.8.71 port 49113 ssh2
-Jun  8 17:49:20 web-01 sshd[59996]: Failed password for backup from 185.196.8.71 port 43128 ssh2
-Jun  8 17:49:26 web-01 sshd[45018]: Failed password for backup from 185.196.8.71 port 37896 ssh2
-Jun  8 17:49:35 web-01 sshd[36056]: Failed password for backup from 185.196.8.71 port 32538 ssh2
-Jun  8 17:49:52 web-01 sshd[7559]: Accepted password for backup from 185.196.8.71 port 38243 ssh2
-Jun  8 17:51:17 web-01 sshd[66726]: Accepted password for tokafor from 10.0.0.19 port 37323 ssh2
-Jun  8 17:51:31 web-01 sshd[65301]: Accepted publickey for tokafor from 10.0.0.19 port 53250 ssh2: RSA SHA256:a9F4c8Bb
-Jun  8 17:51:57 web-01 sshd[91359]: Accepted publickey for tokafor from 10.0.0.19 port 43178 ssh2: RSA SHA256:aB18e7a8
-Jun  8 17:52:31 web-01 sshd[67992]: Failed password for gmiller from 10.0.0.20 port 48399 ssh2
-Jun  8 17:52:33 web-01 sshd[79267]: Accepted publickey for tokafor from 10.0.0.19 port 40530 ssh2: RSA SHA256:95a2293b
-Jun  8 17:52:47 web-01 sshd[61212]: Failed password for gmiller from 10.0.0.20 port 32933 ssh2
-Jun  8 17:53:13 web-01 sshd[20156]: Accepted password for gmiller from 10.0.0.20 port 34741 ssh2
-Jun  8 17:53:22 web-01 sshd[82370]: Accepted password for gmiller from 10.0.0.20 port 56287 ssh2
-Jun  8 17:53:51 web-01 sshd[27390]: Accepted password for gmiller from 10.0.0.20 port 34450 ssh2
-Jun  8 17:56:04 web-01 sshd[10624]: Failed password for invalid user guest from 92.255.85.68 port 45961 ssh2
-Jun  8 17:56:12 web-01 sshd[6227]: Failed password for invalid user www-data from 92.255.85.68 port 37119 ssh2
-Jun  8 17:56:22 web-01 sshd[27859]: Failed password for invalid user guest from 92.255.85.68 port 39381 ssh2
-Jun  8 17:56:30 web-01 sshd[77909]: Failed password for invalid user jenkins from 92.255.85.68 port 35497 ssh2
-Jun  8 17:56:36 web-01 sshd[4731]: Failed password for invalid user guest from 92.255.85.68 port 48372 ssh2
-Jun  8 17:56:38 web-01 sshd[49682]: Failed password for invalid user git from 92.255.85.68 port 54692 ssh2
-Jun  8 17:56:40 web-01 sshd[32132]: Failed password for invalid user guest from 92.255.85.68 port 52663 ssh2
-Jun  8 17:56:42 web-01 sshd[33201]: Accepted publickey for svc-deployer3 from 10.0.1.23 port 48396 ssh2: RSA SHA256:DaBc9Cc7
-Jun  8 17:56:52 web-01 sshd[58614]: Failed password for invalid user www-data from 92.255.85.68 port 36921 ssh2
-Jun  8 17:56:59 web-01 sshd[1393]: Failed password for invalid user git from 92.255.85.68 port 57001 ssh2
-Jun  8 17:57:14 web-01 sshd[74384]: Failed password for invalid user pi from 92.255.85.68 port 45113 ssh2
-Jun  8 17:57:21 web-01 sshd[2745]: Failed password for invalid user www-data from 92.255.85.68 port 40096 ssh2
-Jun  8 17:57:26 web-01 sshd[51517]: Failed password for invalid user pi from 92.255.85.68 port 31058 ssh2
-Jun  8 17:57:38 web-01 sshd[63584]: Failed password for invalid user www-data from 92.255.85.68 port 42661 ssh2
-Jun  8 17:57:41 web-01 sshd[67638]: Failed password for invalid user guest from 92.255.85.68 port 51889 ssh2
-Jun  8 17:57:48 web-01 sshd[64444]: Failed password for invalid user guest from 92.255.85.68 port 55850 ssh2
-Jun  8 17:57:52 web-01 sshd[3431]: Failed password for invalid user pi from 92.255.85.68 port 36253 ssh2
-Jun  8 17:57:55 web-01 sshd[16878]: Failed password for invalid user jenkins from 92.255.85.68 port 57477 ssh2
-Jun  8 17:58:01 web-01 sshd[34895]: Failed password for invalid user jenkins from 92.255.85.68 port 53850 ssh2
-Jun  8 17:58:07 web-01 sshd[47817]: Failed password for invalid user jenkins from 92.255.85.68 port 52135 ssh2
-Jun  8 17:58:13 web-01 sshd[34923]: Failed password for invalid user www-data from 92.255.85.68 port 31712 ssh2
-Jun  8 17:58:15 web-01 sshd[63005]: Failed password for invalid user guest from 92.255.85.68 port 50209 ssh2
-Jun  8 17:58:30 web-01 sshd[88711]: Failed password for invalid user jenkins from 92.255.85.68 port 35933 ssh2
-Jun  8 17:58:42 web-01 sshd[14716]: Failed password for invalid user pi from 92.255.85.68 port 52414 ssh2
-Jun  8 17:58:50 web-01 sshd[60445]: Failed password for invalid user git from 92.255.85.68 port 57476 ssh2
-Jun  8 17:58:53 web-01 sshd[51990]: Failed password for invalid user pi from 92.255.85.68 port 51399 ssh2
-Jun  8 17:58:58 web-01 sshd[87813]: Failed password for invalid user jenkins from 92.255.85.68 port 58688 ssh2
-Jun  8 17:59:12 web-01 sshd[73687]: Failed password for invalid user git from 92.255.85.68 port 41583 ssh2
-Jun  8 17:59:15 web-01 sshd[98335]: Failed password for invalid user jenkins from 92.255.85.68 port 57827 ssh2
-Jun  8 17:59:30 web-01 sshd[12684]: Failed password for invalid user www-data from 92.255.85.68 port 55490 ssh2
-Jun  8 18:02:03 web-01 sshd[3422]: Failed password for invalid user oracle from 194.26.29.66 port 44388 ssh2
-Jun  8 18:02:17 web-01 sshd[94425]: Failed password for root from 194.26.29.66 port 57751 ssh2
-Jun  8 18:02:19 web-01 sshd[35260]: Failed password for invalid user test from 194.26.29.66 port 41298 ssh2
-Jun  8 18:02:31 web-01 sshd[87919]: Failed password for invalid user git from 194.26.29.66 port 55515 ssh2
-Jun  8 18:02:45 web-01 sshd[76824]: Failed password for invalid user guest from 194.26.29.66 port 53129 ssh2
-Jun  8 18:02:51 web-01 sshd[17512]: Failed password for invalid user git from 194.26.29.66 port 48424 ssh2
-Jun  8 18:03:02 web-01 sshd[6270]: Failed password for invalid user www-data from 194.26.29.66 port 42323 ssh2
-Jun  8 18:03:11 web-01 sshd[34114]: Failed password for invalid user oracle from 194.26.29.66 port 35123 ssh2
-Jun  8 18:03:15 web-01 sshd[25321]: Failed password for invalid user guest from 194.26.29.66 port 50525 ssh2
-Jun  8 18:03:21 web-01 sshd[12720]: Failed password for invalid user oracle from 194.26.29.66 port 46503 ssh2
-Jun  8 18:03:25 web-01 sshd[71593]: Failed password for invalid user guest from 194.26.29.66 port 38570 ssh2
-Jun  8 18:03:35 web-01 sshd[49937]: Failed password for admin from 194.26.29.66 port 37221 ssh2
-Jun  8 18:03:45 web-01 sshd[93253]: Failed password for invalid user test from 194.26.29.66 port 45590 ssh2
-Jun  8 18:04:00 web-01 sshd[93973]: Failed password for root from 194.26.29.66 port 30441 ssh2
-Jun  8 18:04:06 web-01 sshd[28677]: Failed password for invalid user www-data from 194.26.29.66 port 48975 ssh2
-Jun  8 18:04:18 web-01 sshd[17292]: Failed password for invalid user guest from 194.26.29.66 port 53625 ssh2
-Jun  8 18:04:25 web-01 sshd[1449]: Failed password for invalid user guest from 194.26.29.66 port 55229 ssh2
-Jun  8 18:04:36 web-01 sshd[6123]: Failed password for invalid user test from 194.26.29.66 port 30551 ssh2
-Jun  8 18:04:50 web-01 sshd[47359]: Failed password for invalid user oracle from 194.26.29.66 port 57766 ssh2
-Jun  8 18:06:09 web-01 sshd[78189]: Accepted publickey for nali from 10.0.0.23 port 47728 ssh2: RSA SHA256:0A78fB32
-Jun  8 18:06:29 web-01 sshd[79820]: Accepted publickey for nali from 10.0.0.23 port 35545 ssh2: RSA SHA256:aB68D720
-Jun  8 18:12:39 web-01 sshd[96930]: Failed password for jchen from 10.0.0.10 port 49195 ssh2
-Jun  8 18:13:03 web-01 sshd[84256]: Accepted publickey for jchen from 10.0.0.10 port 43942 ssh2: RSA SHA256:1B9C347C
-Jun  8 18:13:31 web-01 sshd[92646]: Accepted password for jchen from 10.0.0.10 port 46560 ssh2
-Jun  8 18:19:02 web-01 sshd[74748]: Accepted publickey for svc-patching0 from 10.0.1.20 port 43362 ssh2: RSA SHA256:be3CA5E1
-Jun  8 18:22:13 web-01 sshd[29054]: Accepted publickey for svc-deployer3 from 10.0.1.23 port 33649 ssh2: RSA SHA256:CdDeBEba
-Jun  8 18:59:57 web-01 sshd[94353]: Accepted publickey for svc-patching0 from 10.0.1.20 port 38868 ssh2: RSA SHA256:91C4dfc2
-Jun  8 19:19:20 web-01 sshd[5605]: Accepted publickey for svc-deployer3 from 10.0.1.23 port 57847 ssh2: RSA SHA256:3fFD226c
-Jun  8 19:45:42 web-01 sshd[46472]: Accepted publickey for svc-patching0 from 10.0.1.20 port 52901 ssh2: RSA SHA256:fceBDF2F
-Jun  8 19:50:58 web-01 sshd[21085]: Accepted publickey for svc-patching1 from 10.0.1.21 port 55359 ssh2: RSA SHA256:8c31Eab0
-Jun  8 20:16:46 web-01 sshd[4488]: Accepted publickey for svc-patching1 from 10.0.1.21 port 50164 ssh2: RSA SHA256:3348b1b9
-Jun  8 20:21:48 web-01 sshd[40675]: Accepted publickey for deploy from 34.74.10.50 port 56268 ssh2: RSA SHA256:63c0CaAD
-Jun  8 20:56:54 web-01 sshd[46317]: Accepted publickey for deploy from 34.74.10.50 port 42536 ssh2: RSA SHA256:4E1FDBC3
-Jun  8 21:05:50 web-01 sshd[81103]: Accepted publickey for svc-patching1 from 10.0.1.21 port 40088 ssh2: RSA SHA256:3Ad6f1AB
-Jun  8 21:48:58 web-01 sshd[15263]: Accepted publickey for deploy from 34.74.10.50 port 59943 ssh2: RSA SHA256:1E3cBBeD
-Jun  8 22:44:56 web-01 sshd[43508]: Accepted publickey for deploy from 34.74.10.50 port 44800 ssh2: RSA SHA256:2bce5C75
+Jun  6 03:23:29 app-03 sshd[21866]: Accepted password for rtaylor from 10.1.1.223 port 18509 ssh2
+Jun  6 03:23:38 app-03 sshd[37517]: Accepted publickey for rtaylor from 10.1.1.223 port 22536 ssh2: RSA SHA256:76e5EA5fae
+Jun  6 03:23:45 app-03 sshd[15208]: Accepted publickey for rtaylor from 10.1.1.223 port 3531 ssh2: RSA SHA256:BF26Ba7f09
+Jun  6 04:27:15 db-01 sshd[11077]: Failed password for psingh from 10.2.2.100 port 30118 ssh2
+Jun  6 04:28:10 db-01 sshd[86139]: Failed password for pcastro from 10.2.2.100 port 21627 ssh2
+Jun  6 04:29:41 db-01 sshd[97426]: Failed password for fkim from 10.2.2.100 port 2722 ssh2
+Jun  6 04:30:48 db-01 sshd[74619]: Failed password for civanov from 10.2.2.100 port 26385 ssh2
+Jun  6 04:31:38 db-01 sshd[59493]: Failed password for lzhang from 10.2.2.100 port 47163 ssh2
+Jun  6 04:55:40 web-02 sshd[20410]: Failed password for dlee from 10.3.4.4 port 37234 ssh2
+Jun  6 04:56:02 web-02 sshd[99235]: Accepted publickey for dlee from 10.3.4.4 port 41699 ssh2: RSA SHA256:7567efc57C
+Jun  6 05:29:14 web-02 sshd[63094]: Failed publickey for deploy from 185.131.102.130 port 22850 ssh2
+Jun  6 05:29:33 db-01 sshd[86394]: Failed password for jzhang from 91.7.23.60 port 35034 ssh2
+Jun  6 05:29:43 db-01 sshd[43987]: Failed publickey for deploy from 185.131.102.130 port 10184 ssh2
+Jun  6 05:30:04 db-01 sshd[37458]: Accepted password for jzhang from 91.7.23.60 port 61059 ssh2
+Jun  6 05:30:33 web-02 sshd[97904]: Failed publickey for git from 185.131.102.130 port 41426 ssh2
+Jun  6 08:00:19 app-03 sshd[99038]: Accepted publickey for cwilson from 10.1.3.126 port 5018 ssh2: RSA SHA256:A3452Eeeb4
+Jun  6 08:00:42 app-03 sshd[77569]: Accepted password for cwilson from 10.1.3.126 port 4310 ssh2
+Jun  6 08:01:15 app-03 sshd[67562]: Accepted password for cwilson from 10.1.3.126 port 4751 ssh2
+Jun  6 08:01:23 app-03 sshd[78992]: Accepted password for cwilson from 10.1.3.126 port 5514 ssh2
+Jun  6 08:21:54 bastion-01 sshd[54242]: Accepted password for nzhang from 146.11.186.224 port 42804 ssh2
+Jun  6 08:38:14 bastion-01 sshd[99167]: Failed password for svc-metrics2 from 10.1.5.40 port 40020 ssh2
+Jun  6 09:12:56 bastion-01 sshd[38828]: Failed password for svc-metrics2 from 10.1.5.40 port 61395 ssh2
+Jun  6 09:45:25 bastion-01 sshd[62433]: Failed password for svc-metrics2 from 10.1.5.40 port 9173 ssh2
+Jun  6 09:57:11 bastion-01 sshd[36811]: Failed password for root from 212.166.48.75 port 22777 ssh2
+Jun  6 10:17:03 web-02 sshd[58961]: Failed password for invalid user pi from 91.51.44.156 port 31755 ssh2
+Jun  6 10:17:17 web-02 sshd[78518]: Failed password for invalid user es from 91.51.44.156 port 19025 ssh2
+Jun  6 10:17:24 web-02 sshd[10724]: Failed password for invalid user support from 91.51.44.156 port 34272 ssh2
+Jun  6 10:17:33 web-02 sshd[5929]: Failed password for invalid user es from 91.51.44.156 port 30640 ssh2
+Jun  6 10:17:40 web-02 sshd[38627]: Failed password for invalid user support from 91.51.44.156 port 55530 ssh2
+Jun  6 10:17:52 web-02 sshd[12835]: Failed password for invalid user support from 91.51.44.156 port 57663 ssh2
+Jun  6 10:18:03 web-02 sshd[67462]: error: maximum authentication attempts exceeded for invalid user support from 91.51.44.156 port 39957 ssh2 [preauth]
+Jun  6 10:18:11 web-02 sshd[75928]: Connection closed by invalid user support 91.51.44.156 port 60599 [preauth]
+Jun  6 10:18:18 web-02 sshd[63341]: Failed password for invalid user user from 91.51.44.156 port 40673 ssh2
+Jun  6 10:18:22 web-02 sshd[9109]: Failed password for invalid user administrator from 91.51.44.156 port 63789 ssh2
+Jun  6 10:18:25 web-02 sshd[46015]: Failed password for invalid user pi from 91.51.44.156 port 54171 ssh2
+Jun  6 10:18:35 web-02 sshd[23617]: Failed password for invalid user support from 91.51.44.156 port 43368 ssh2
+Jun  6 10:18:40 web-02 sshd[58377]: Failed password for invalid user support from 91.51.44.156 port 47398 ssh2
+Jun  6 10:18:50 web-02 sshd[80928]: Failed password for invalid user pi from 91.51.44.156 port 35282 ssh2
+Jun  6 10:18:54 web-02 sshd[49870]: error: maximum authentication attempts exceeded for invalid user pi from 91.51.44.156 port 24872 ssh2 [preauth]
+Jun  6 10:19:00 web-02 sshd[83691]: Disconnected from authenticating user pi 91.51.44.156 port 52746 [preauth]
+Jun  6 10:22:10 bastion-01 sshd[92715]: Failed password for svc-metrics2 from 10.1.5.40 port 20952 ssh2
+Jun  6 10:54:02 bastion-01 sshd[36683]: Failed password for svc-metrics2 from 10.1.5.40 port 62803 ssh2
+Jun  6 11:27:34 bastion-01 sshd[65722]: Failed password for svc-metrics2 from 10.1.5.40 port 36412 ssh2
+Jun  6 12:00:02 bastion-01 sshd[79385]: Failed password for svc-metrics2 from 10.1.5.40 port 6295 ssh2
+Jun  6 12:10:50 bastion-01 sshd[49237]: Failed password for root from 212.166.48.75 port 53409 ssh2
+Jun  6 12:25:42 bastion-01 sshd[57626]: Failed password for svc-metrics2 from 10.1.5.40 port 59313 ssh2
+Jun  6 13:03:14 bastion-01 sshd[80129]: Failed password for svc-metrics2 from 10.1.5.40 port 22147 ssh2
+Jun  6 15:07:09 bastion-01 sshd[53431]: Failed password for root from 212.166.48.75 port 59317 ssh2
+Jun  6 15:08:20 app-03 sshd[71261]: Failed password for deploy from 141.164.203.161 port 40131 ssh2
+Jun  6 15:08:25 app-03 sshd[68551]: Failed password for deploy from 141.164.203.161 port 42439 ssh2
+Jun  6 15:08:48 app-03 sshd[95181]: Failed password for deploy from 141.164.203.161 port 16879 ssh2
+Jun  6 15:08:57 app-03 sshd[57261]: Failed password for deploy from 141.164.203.161 port 20112 ssh2
+Jun  6 15:09:02 app-03 sshd[47244]: Failed password for deploy from 141.164.203.161 port 41316 ssh2
+Jun  6 15:09:14 app-03 sshd[55600]: Failed password for deploy from 141.164.203.161 port 38423 ssh2
+Jun  6 15:09:24 app-03 sshd[88584]: error: maximum authentication attempts exceeded for deploy from 141.164.203.161 port 44564 ssh2 [preauth]
+Jun  6 15:09:31 app-03 sshd[48265]: Failed password for deploy from 141.164.203.161 port 35331 ssh2
+Jun  6 15:09:38 app-03 sshd[69951]: Failed password for deploy from 141.164.203.161 port 63506 ssh2
+Jun  6 15:10:00 app-03 sshd[67535]: Failed password for deploy from 141.164.203.161 port 34272 ssh2
+Jun  6 15:10:22 app-03 sshd[52177]: Failed password for deploy from 141.164.203.161 port 2356 ssh2
+Jun  6 15:10:42 app-03 sshd[84318]: Accepted password for deploy from 141.164.203.161 port 3877 ssh2
+Jun  6 17:00:35 bastion-01 sshd[88410]: Failed password for gsantos from 10.0.5.237 port 21293 ssh2
+Jun  6 17:00:56 bastion-01 sshd[56108]: Accepted password for gsantos from 10.0.5.237 port 13596 ssh2
+Jun  6 17:01:23 bastion-01 sshd[75593]: Accepted password for gsantos from 10.0.5.237 port 41362 ssh2
+Jun  6 17:01:45 bastion-01 sshd[97463]: Accepted publickey for gsantos from 10.0.5.237 port 60083 ssh2: RSA SHA256:0aAD02EDeE
+Jun  6 17:01:58 bastion-01 sshd[68561]: Accepted password for gsantos from 10.0.5.237 port 19622 ssh2
+Jun  6 19:05:30 web-01 sshd[49353]: Did not receive identification string from 89.32.252.53 port 38528
+Jun  6 19:13:33 db-01 sshd[12300]: Did not receive identification string from 89.32.252.53 port 58973
+Jun  6 19:14:45 bastion-01 sshd[95223]: Did not receive identification string from 89.32.252.53 port 48008
+Jun  6 20:31:08 bastion-01 sshd[78993]: Failed password for invalid user pi from 171.174.98.74 port 9474 ssh2
+Jun  6 20:31:11 bastion-01 sshd[74259]: Failed password for invalid user pi from 171.174.98.74 port 21312 ssh2
+Jun  6 20:31:23 bastion-01 sshd[44054]: Failed password for invalid user git from 171.174.98.74 port 52906 ssh2
+Jun  6 20:31:35 bastion-01 sshd[97832]: Failed password for invalid user es from 171.174.98.74 port 47084 ssh2
+Jun  6 20:31:45 bastion-01 sshd[85675]: Failed password for invalid user pi from 171.174.98.74 port 7148 ssh2
+Jun  6 20:31:53 bastion-01 sshd[48425]: Failed password for invalid user pi from 171.174.98.74 port 34348 ssh2
+Jun  6 20:31:55 bastion-01 sshd[41483]: error: maximum authentication attempts exceeded for invalid user pi from 171.174.98.74 port 24787 ssh2 [preauth]
+Jun  6 20:31:59 bastion-01 sshd[26166]: Connection reset by 171.174.98.74 port 63130 [preauth]
+Jun  6 20:32:03 bastion-01 sshd[11114]: Failed password for invalid user es from 171.174.98.74 port 11178 ssh2
+Jun  6 20:32:18 bastion-01 sshd[14256]: Failed password for invalid user oracle from 171.174.98.74 port 52674 ssh2
+Jun  6 20:32:32 bastion-01 sshd[97815]: Failed password for invalid user ubnt from 171.174.98.74 port 36398 ssh2
+Jun  6 20:32:34 bastion-01 sshd[45140]: Failed password for invalid user ubnt from 171.174.98.74 port 44404 ssh2
+Jun  6 20:32:38 bastion-01 sshd[50377]: Failed password for invalid user ubnt from 171.174.98.74 port 40165 ssh2
+Jun  6 20:32:42 bastion-01 sshd[91812]: Failed password for invalid user es from 171.174.98.74 port 12875 ssh2
+Jun  6 20:32:56 bastion-01 sshd[22697]: error: maximum authentication attempts exceeded for invalid user es from 171.174.98.74 port 41966 ssh2 [preauth]
+Jun  6 20:33:09 bastion-01 sshd[95317]: Disconnected from invalid user es 171.174.98.74 port 45350 [preauth]
+Jun  6 20:33:18 bastion-01 sshd[38346]: Failed password for invalid user es from 171.174.98.74 port 41039 ssh2
+Jun  6 20:33:32 bastion-01 sshd[31671]: Failed password for invalid user pi from 171.174.98.74 port 30444 ssh2
+Jun  6 20:33:37 bastion-01 sshd[62474]: Failed password for invalid user ubnt from 171.174.98.74 port 21305 ssh2
+Jun  6 20:33:44 bastion-01 sshd[75766]: Failed password for invalid user es from 171.174.98.74 port 45477 ssh2
+Jun  6 20:33:53 bastion-01 sshd[37932]: Failed password for invalid user git from 171.174.98.74 port 51449 ssh2
+Jun  6 20:34:03 bastion-01 sshd[55874]: Failed password for invalid user git from 171.174.98.74 port 35591 ssh2
+Jun  6 20:34:07 bastion-01 sshd[27174]: error: maximum authentication attempts exceeded for invalid user git from 171.174.98.74 port 54559 ssh2 [preauth]
+Jun  6 20:34:21 bastion-01 sshd[85040]: Received disconnect from 171.174.98.74 port 58237:11: Bye Bye [preauth]
+Jun  6 20:34:36 bastion-01 sshd[73684]: Failed password for invalid user git from 171.174.98.74 port 25351 ssh2
+Jun  6 20:34:49 bastion-01 sshd[68621]: Failed password for invalid user test from 171.174.98.74 port 56460 ssh2
+Jun  6 20:34:55 bastion-01 sshd[22012]: Failed password for invalid user test from 171.174.98.74 port 6520 ssh2
+Jun  6 20:35:04 bastion-01 sshd[68286]: Failed password for invalid user oracle from 171.174.98.74 port 60354 ssh2
+Jun  6 20:35:19 bastion-01 sshd[13021]: Failed password for invalid user es from 171.174.98.74 port 29694 ssh2
+Jun  6 20:35:34 bastion-01 sshd[46820]: Failed password for invalid user es from 171.174.98.74 port 30589 ssh2
+Jun  6 20:35:36 bastion-01 sshd[7980]: error: maximum authentication attempts exceeded for invalid user es from 171.174.98.74 port 28214 ssh2 [preauth]
+Jun  6 20:35:44 bastion-01 sshd[50140]: Received disconnect from 171.174.98.74 port 16475:11: Bye Bye [preauth]
+Jun  6 20:35:46 bastion-01 sshd[13987]: Failed password for invalid user es from 171.174.98.74 port 21909 ssh2
+Jun  6 20:35:58 bastion-01 sshd[20142]: Failed password for invalid user pi from 171.174.98.74 port 22997 ssh2
+Jun  6 20:36:00 bastion-01 sshd[62925]: Failed password for invalid user es from 171.174.98.74 port 19824 ssh2
+Jun  6 20:36:15 bastion-01 sshd[93476]: Failed password for invalid user pi from 171.174.98.74 port 10119 ssh2
+Jun  6 20:36:24 bastion-01 sshd[1688]: Failed password for invalid user git from 171.174.98.74 port 41351 ssh2
+Jun  6 20:36:26 bastion-01 sshd[29266]: Failed password for invalid user test from 171.174.98.74 port 17796 ssh2
+Jun  6 20:36:41 bastion-01 sshd[72932]: error: maximum authentication attempts exceeded for invalid user test from 171.174.98.74 port 10822 ssh2 [preauth]
+Jun  6 20:36:54 bastion-01 sshd[32147]: Connection reset by 171.174.98.74 port 8310 [preauth]
+Jun  6 21:07:15 web-02 sshd[82490]: Failed password for invalid user www-data from 121.27.147.131 port 37787 ssh2
+Jun  6 21:07:17 web-02 sshd[87223]: Failed password for invalid user ubnt from 121.27.147.131 port 40935 ssh2
+Jun  6 21:07:19 web-02 sshd[36818]: Failed password for invalid user administrator from 121.27.147.131 port 12847 ssh2
+Jun  6 21:07:26 web-02 sshd[1800]: Failed password for invalid user administrator from 121.27.147.131 port 24028 ssh2
+Jun  6 21:07:41 web-02 sshd[75228]: Failed password for invalid user guest from 121.27.147.131 port 10412 ssh2
+Jun  6 21:07:44 web-02 sshd[98120]: Failed password for invalid user www-data from 121.27.147.131 port 10321 ssh2
+Jun  6 21:07:56 web-02 sshd[5018]: error: maximum authentication attempts exceeded for invalid user www-data from 121.27.147.131 port 64712 ssh2 [preauth]
+Jun  6 21:07:59 web-02 sshd[60460]: Connection reset by 121.27.147.131 port 25678 [preauth]
+Jun  6 21:08:03 web-02 sshd[41846]: Failed password for root from 121.27.147.131 port 25275 ssh2
+Jun  6 21:08:17 web-02 sshd[75395]: Failed password for root from 121.27.147.131 port 62720 ssh2
+Jun  6 21:08:19 web-02 sshd[21632]: Failed password for invalid user jenkins from 121.27.147.131 port 11220 ssh2
+Jun  6 21:08:31 web-02 sshd[36665]: Failed password for invalid user support from 121.27.147.131 port 6370 ssh2
+Jun  6 21:08:43 web-02 sshd[64656]: Failed password for invalid user oracle from 121.27.147.131 port 28812 ssh2
+Jun  6 21:08:51 web-02 sshd[29255]: Failed password for invalid user oracle from 121.27.147.131 port 18926 ssh2
+Jun  6 21:09:05 web-02 sshd[15918]: error: maximum authentication attempts exceeded for invalid user oracle from 121.27.147.131 port 34601 ssh2 [preauth]
+Jun  6 21:09:12 web-02 sshd[88442]: Disconnected from invalid user oracle 121.27.147.131 port 35557 [preauth]
+Jun  6 21:09:14 web-02 sshd[52807]: Failed password for invalid user administrator from 121.27.147.131 port 15475 ssh2
+Jun  6 21:09:16 web-02 sshd[40507]: Failed password for invalid user support from 121.27.147.131 port 14421 ssh2
+Jun  6 21:09:30 web-02 sshd[34491]: Failed password for invalid user git from 121.27.147.131 port 10017 ssh2
+Jun  6 21:53:57 web-02 sshd[10838]: Failed password for svc-inventory2 from 10.0.1.162 port 37199 ssh2
+Jun  6 22:21:37 web-02 sshd[54545]: Failed password for svc-inventory2 from 10.0.1.162 port 1199 ssh2
+Jun  6 22:32:36 app-03 sshd[80507]: Failed password for anguyen from 10.3.0.252 port 58199 ssh2
+Jun  6 22:33:13 app-03 sshd[41857]: Accepted password for anguyen from 10.3.0.252 port 47747 ssh2
+Jun  6 22:33:41 app-03 sshd[9834]: Accepted publickey for anguyen from 10.3.0.252 port 16027 ssh2: RSA SHA256:DFceB0feb1
+Jun  6 22:38:22 bastion-01 sshd[40529]: Accepted publickey for svc-metrics2 from 10.3.5.67 port 46715 ssh2: RSA SHA256:0807C8e16f
+Jun  6 22:54:18 web-02 sshd[78832]: Failed password for svc-inventory2 from 10.0.1.162 port 46202 ssh2
+Jun  6 23:27:19 web-02 sshd[5278]: Failed password for svc-inventory2 from 10.0.1.162 port 20111 ssh2
+Jun  6 23:35:04 bastion-01 sshd[65251]: Accepted publickey for svc-metrics2 from 10.3.5.67 port 54916 ssh2: RSA SHA256:1c95BDCFB6
+Jun  6 23:52:16 bastion-01 sshd[64372]: Accepted publickey for svc-metrics2 from 10.3.5.67 port 51790 ssh2: RSA SHA256:DB7EddF218
+Jun  6 23:56:16 web-02 sshd[93662]: Failed password for svc-inventory2 from 10.0.1.162 port 19905 ssh2
+Jun  7 00:26:05 web-02 sshd[60510]: Failed password for svc-inventory2 from 10.0.1.162 port 47094 ssh2
+Jun  7 00:34:00 bastion-01 sshd[45092]: Accepted publickey for svc-metrics2 from 10.3.5.67 port 25861 ssh2: RSA SHA256:D4f66b7fE1
+Jun  7 00:45:57 bastion-01 sshd[12221]: Accepted publickey for svc-metrics2 from 10.3.5.67 port 13545 ssh2: RSA SHA256:EBEBfA170F
+Jun  7 00:52:17 web-02 sshd[31595]: Failed password for svc-inventory2 from 10.0.1.162 port 46072 ssh2
+Jun  7 01:21:47 web-02 sshd[82927]: Failed password for svc-inventory2 from 10.0.1.162 port 52655 ssh2
+Jun  7 01:56:50 web-02 sshd[26928]: Failed password for svc-inventory2 from 10.0.1.162 port 44355 ssh2
+Jun  7 02:29:05 web-02 sshd[72376]: Failed password for svc-inventory2 from 10.0.1.162 port 8545 ssh2
+Jun  7 03:11:18 web-02 sshd[60692]: Received disconnect from 10.4.2.25 port 41084:11: Bye Bye [preauth]
+Jun  7 03:11:57 web-02 sshd[92272]: Accepted password for fokafor from 10.4.2.25 port 48101 ssh2
+Jun  7 03:12:24 web-02 sshd[7582]: Accepted publickey for fokafor from 10.4.2.25 port 31468 ssh2: RSA SHA256:Cd37675e53
+Jun  7 03:13:02 web-02 sshd[16906]: Accepted password for fokafor from 10.4.2.25 port 61151 ssh2
+Jun  7 03:13:34 web-02 sshd[61901]: Accepted password for fokafor from 10.4.2.25 port 53545 ssh2
+Jun  7 03:47:38 web-01 sshd[38752]: Failed password for cbrown from 80.133.92.161 port 9610 ssh2
+Jun  7 03:48:09 web-01 sshd[92521]: Failed password for cbrown from 80.133.92.161 port 58751 ssh2
+Jun  7 03:48:43 web-01 sshd[4783]: Accepted password for cbrown from 80.133.92.161 port 8981 ssh2
+Jun  7 05:15:11 app-03 sshd[75847]: Failed password for fzhang from 10.0.2.20 port 48429 ssh2
+Jun  7 05:15:50 app-03 sshd[32850]: Failed password for fzhang from 10.0.2.20 port 32000 ssh2
+Jun  7 05:16:05 app-03 sshd[87374]: Accepted password for fzhang from 10.0.2.20 port 7376 ssh2
+Jun  7 05:16:35 app-03 sshd[71292]: Accepted publickey for fzhang from 10.0.2.20 port 13489 ssh2: RSA SHA256:DE429cCB6f
+Jun  7 05:17:06 app-03 sshd[25050]: Accepted password for fzhang from 10.0.2.20 port 28672 ssh2
+Jun  7 05:17:26 app-03 sshd[31982]: Accepted publickey for fzhang from 10.0.2.20 port 56644 ssh2: RSA SHA256:f8D60b9698
+Jun  7 07:16:20 web-01 sshd[75341]: Accepted password for fmiller from 10.3.2.238 port 14850 ssh2
+Jun  7 07:16:43 web-01 sshd[66435]: Accepted password for fmiller from 10.3.2.238 port 43978 ssh2
+Jun  7 07:17:11 web-01 sshd[12915]: Accepted publickey for fmiller from 10.3.2.238 port 33367 ssh2: RSA SHA256:dd4F4D0B9d
+Jun  7 07:17:17 web-01 sshd[83240]: Accepted password for fmiller from 10.3.2.238 port 11040 ssh2
+Jun  7 08:55:25 web-01 sshd[77271]: Failed password for webadmin from 209.5.91.203 port 7817 ssh2
+Jun  7 08:55:40 web-01 sshd[6811]: Failed password for webadmin from 209.5.91.203 port 9767 ssh2
+Jun  7 08:55:56 web-01 sshd[45374]: Failed password for webadmin from 209.5.91.203 port 36807 ssh2
+Jun  7 08:56:21 web-01 sshd[90742]: Failed password for webadmin from 209.5.91.203 port 12498 ssh2
+Jun  7 08:56:40 web-01 sshd[63722]: Failed password for webadmin from 209.5.91.203 port 46597 ssh2
+Jun  7 08:57:05 web-01 sshd[18675]: Failed password for webadmin from 209.5.91.203 port 12969 ssh2
+Jun  7 08:57:12 web-01 sshd[60988]: error: maximum authentication attempts exceeded for webadmin from 209.5.91.203 port 47950 ssh2 [preauth]
+Jun  7 08:57:18 web-01 sshd[27422]: Failed password for webadmin from 209.5.91.203 port 20255 ssh2
+Jun  7 08:57:24 web-01 sshd[27144]: Failed password for webadmin from 209.5.91.203 port 52870 ssh2
+Jun  7 08:57:30 web-01 sshd[41642]: Failed password for webadmin from 209.5.91.203 port 21706 ssh2
+Jun  7 08:57:51 web-01 sshd[72176]: Accepted password for webadmin from 209.5.91.203 port 27122 ssh2
+Jun  7 09:36:05 web-01 sshd[11745]: Failed password for fcastro from 10.0.5.222 port 41615 ssh2
+Jun  7 09:36:34 web-01 sshd[77503]: Failed password for fcastro from 10.0.5.222 port 44105 ssh2
+Jun  7 09:36:53 web-01 sshd[94872]: Accepted password for fcastro from 10.0.5.222 port 44915 ssh2
+Jun  7 09:37:16 web-01 sshd[52876]: Accepted password for fcastro from 10.0.5.222 port 18431 ssh2
+Jun  7 09:37:27 web-01 sshd[10016]: Accepted publickey for fcastro from 10.0.5.222 port 23896 ssh2: RSA SHA256:E88a10cFFc
+Jun  7 09:41:52 web-02 sshd[40124]: Failed password for root from 141.108.38.247 port 37598 ssh2
+Jun  7 09:44:17 web-02 sshd[40008]: Failed password for root from 141.108.38.247 port 62725 ssh2
+Jun  7 10:13:04 web-02 sshd[7868]: Failed password for invalid user postgres from 91.220.251.39 port 18415 ssh2
+Jun  7 10:13:17 web-02 sshd[69955]: Failed password for admin from 91.220.251.39 port 28612 ssh2
+Jun  7 10:13:30 web-02 sshd[63422]: Failed password for invalid user guest from 91.220.251.39 port 5189 ssh2
+Jun  7 10:13:44 web-02 sshd[68271]: Failed password for invalid user nagios from 91.220.251.39 port 24750 ssh2
+Jun  7 10:13:47 web-02 sshd[67039]: Failed password for invalid user ubnt from 91.220.251.39 port 30646 ssh2
+Jun  7 10:13:58 web-02 sshd[96321]: Failed password for invalid user oracle from 91.220.251.39 port 3865 ssh2
+Jun  7 10:14:12 web-02 sshd[87363]: error: maximum authentication attempts exceeded for invalid user oracle from 91.220.251.39 port 60579 ssh2 [preauth]
+Jun  7 10:14:22 web-02 sshd[53640]: Connection closed by authenticating user oracle 91.220.251.39 port 32414 [preauth]
+Jun  7 10:14:34 web-02 sshd[65260]: Failed password for invalid user www-data from 91.220.251.39 port 8099 ssh2
+Jun  7 10:14:37 web-02 sshd[11589]: Failed password for invalid user nagios from 91.220.251.39 port 59958 ssh2
+Jun  7 10:14:48 web-02 sshd[9609]: Failed password for invalid user hadoop from 91.220.251.39 port 10745 ssh2
+Jun  7 10:14:54 web-02 sshd[83978]: Failed password for admin from 91.220.251.39 port 41939 ssh2
+Jun  7 10:15:04 web-02 sshd[43622]: Failed password for invalid user ubnt from 91.220.251.39 port 47695 ssh2
+Jun  7 10:15:15 web-02 sshd[39652]: Failed password for invalid user www-data from 91.220.251.39 port 35794 ssh2
+Jun  7 10:15:24 web-02 sshd[80354]: error: maximum authentication attempts exceeded for invalid user www-data from 91.220.251.39 port 34155 ssh2 [preauth]
+Jun  7 10:15:32 web-02 sshd[60186]: Connection closed by authenticating user www-data 91.220.251.39 port 29209 [preauth]
+Jun  7 10:15:40 web-02 sshd[60441]: Failed password for invalid user oracle from 91.220.251.39 port 23236 ssh2
+Jun  7 10:15:48 web-02 sshd[13463]: Failed password for invalid user www-data from 91.220.251.39 port 48839 ssh2
+Jun  7 10:15:56 web-02 sshd[88177]: Failed password for invalid user hadoop from 91.220.251.39 port 21505 ssh2
+Jun  7 10:16:03 web-02 sshd[21006]: Failed password for invalid user deploy from 91.220.251.39 port 63518 ssh2
+Jun  7 10:16:06 web-02 sshd[12188]: Failed password for invalid user nagios from 91.220.251.39 port 7002 ssh2
+Jun  7 10:16:14 web-02 sshd[98594]: Failed password for invalid user guest from 91.220.251.39 port 7352 ssh2
+Jun  7 10:16:27 web-02 sshd[18054]: error: maximum authentication attempts exceeded for invalid user guest from 91.220.251.39 port 25445 ssh2 [preauth]
+Jun  7 10:16:37 web-02 sshd[47346]: Disconnected from authenticating user guest 91.220.251.39 port 27946 [preauth]
+Jun  7 16:55:12 bastion-01 sshd[15366]: Failed publickey for git from 171.126.181.146 port 45182 ssh2
+Jun  7 16:56:36 bastion-01 sshd[91183]: Failed publickey for deploy from 171.126.181.146 port 58177 ssh2
+Jun  7 16:58:02 app-03 sshd[86929]: Failed publickey for git from 171.126.181.146 port 64401 ssh2
+Jun  7 16:59:26 db-01 sshd[7731]: Failed publickey for root from 171.126.181.146 port 48301 ssh2
+Jun  7 16:59:57 db-01 sshd[82230]: Failed publickey for deploy from 171.126.181.146 port 48287 ssh2
+Jun  7 17:00:55 web-02 sshd[5138]: Failed publickey for deploy from 171.126.181.146 port 16896 ssh2
+Jun  7 17:18:36 db-01 sshd[88538]: Failed password for rbrown from 10.1.2.74 port 1536 ssh2
+Jun  7 17:19:14 db-01 sshd[87951]: Failed password for rbrown from 10.1.2.74 port 20644 ssh2
+Jun  7 17:19:25 db-01 sshd[37930]: Connection closed by authenticating user rbrown 10.1.2.74 port 18872 [preauth]
+Jun  7 17:19:49 db-01 sshd[84130]: Accepted password for rbrown from 10.1.2.74 port 46079 ssh2
+Jun  7 17:20:08 db-01 sshd[73309]: Accepted publickey for rbrown from 10.1.2.74 port 29980 ssh2: RSA SHA256:f7b16aBc9d
+Jun  7 18:07:12 web-01 sshd[60930]: Failed publickey for git from 152.132.119.129 port 34148 ssh2
+Jun  7 18:07:49 db-01 sshd[7624]: Failed publickey for git from 152.132.119.129 port 4212 ssh2
+Jun  7 18:09:15 app-03 sshd[15089]: Received disconnect from 152.132.119.129 port 19750:11: Bye Bye [preauth]
+Jun  7 18:10:20 web-02 sshd[48943]: Failed publickey for git from 152.132.119.129 port 48701 ssh2
+Jun  7 18:11:16 web-01 sshd[75747]: Failed publickey for git from 152.132.119.129 port 4376 ssh2
+Jun  7 18:12:12 db-01 sshd[51639]: Failed publickey for git from 152.132.119.129 port 5842 ssh2
+Jun  7 18:13:32 bastion-01 sshd[81090]: Failed publickey for deploy from 152.132.119.129 port 45614 ssh2
+Jun  7 18:13:54 app-03 sshd[74116]: Connection reset by 152.132.119.129 port 53118 [preauth]
+Jun  7 18:20:34 bastion-01 sshd[56851]: Accepted password for gokafor from 221.47.139.77 port 48056 ssh2
+Jun  7 18:36:15 bastion-01 sshd[59183]: Accepted password for gokafor from 221.47.139.77 port 46228 ssh2
+Jun  7 18:56:23 web-01 sshd[53976]: Failed password for mbrown from 103.170.241.104 port 8621 ssh2
+Jun  7 18:56:58 web-01 sshd[1150]: Failed password for mbrown from 103.170.241.104 port 55086 ssh2
+Jun  7 18:57:35 web-01 sshd[55165]: Accepted password for mbrown from 103.170.241.104 port 31300 ssh2
+Jun  7 19:18:20 app-03 sshd[46156]: Did not receive identification string from 221.148.18.34 port 34929
+Jun  7 19:20:36 db-01 sshd[17912]: banner exchange: Connection from 221.148.18.34 port 12949: invalid format
+Jun  7 19:22:42 web-02 sshd[64242]: Accepted publickey for deploy from 185.205.61.183 port 28253 ssh2: RSA SHA256:Ce6c82d8A3
+Jun  7 19:28:04 db-01 sshd[17274]: banner exchange: Connection from 221.148.18.34 port 4655: invalid format
+Jun  7 19:36:59 web-02 sshd[43291]: Did not receive identification string from 221.148.18.34 port 11638
+Jun  7 19:40:54 bastion-01 sshd[38230]: banner exchange: Connection from 221.148.18.34 port 35030: invalid format
+Jun  7 19:42:19 bastion-01 sshd[73199]: Did not receive identification string from 221.148.18.34 port 63699
+Jun  7 19:47:05 web-02 sshd[70924]: banner exchange: Connection from 221.148.18.34 port 41291: invalid format
+Jun  7 20:14:56 web-02 sshd[67550]: Accepted publickey for deploy from 185.205.61.183 port 62250 ssh2: RSA SHA256:f0C8F77A5D
+Jun  7 20:53:10 web-02 sshd[50441]: Accepted publickey for deploy from 185.205.61.183 port 36638 ssh2: RSA SHA256:6AA09EdFB0
+Jun  7 22:05:15 web-01 sshd[85076]: Failed publickey for root from 178.40.43.170 port 4003 ssh2
+Jun  7 22:05:58 web-02 sshd[82016]: Failed publickey for deploy from 178.40.43.170 port 28325 ssh2
+Jun  7 22:07:11 db-01 sshd[40596]: Failed publickey for git from 178.40.43.170 port 43092 ssh2
+Jun  7 22:08:12 bastion-01 sshd[91257]: Failed publickey for git from 178.40.43.170 port 5806 ssh2
+Jun  7 22:09:18 app-03 sshd[45589]: Received disconnect from 178.40.43.170 port 32759:11: Bye Bye [preauth]
+Jun  7 22:10:45 web-02 sshd[95157]: Failed publickey for git from 178.40.43.170 port 57482 ssh2
+Jun  7 22:11:39 app-03 sshd[68499]: Connection reset by 178.40.43.170 port 50874 [preauth]
+Jun  7 22:13:00 web-01 sshd[62141]: Failed publickey for git from 178.40.43.170 port 16866 ssh2
+Jun  7 22:14:07 web-02 sshd[39038]: Received disconnect from 178.40.43.170 port 10256:11: Bye Bye [preauth]
+Jun  7 22:15:06 db-01 sshd[21932]: Failed publickey for git from 178.40.43.170 port 17294 ssh2
+Jun  7 23:30:24 app-03 sshd[88835]: Failed password for clee from 178.112.162.210 port 22064 ssh2
+Jun  7 23:30:33 app-03 sshd[22079]: Failed password for clee from 178.112.162.210 port 57236 ssh2
+Jun  7 23:30:57 app-03 sshd[91921]: Accepted password for clee from 178.112.162.210 port 28001 ssh2
+Jun  8 00:30:13 bastion-01 sshd[61589]: Accepted password for ptaylor from 10.2.3.164 port 11732 ssh2
+Jun  8 03:10:15 bastion-01 sshd[82226]: Failed password for invalid user postgres from 109.204.14.77 port 26094 ssh2
+Jun  8 03:10:20 bastion-01 sshd[77435]: Failed password for invalid user test from 109.204.14.77 port 33639 ssh2
+Jun  8 03:10:25 bastion-01 sshd[84611]: Failed password for invalid user jenkins from 109.204.14.77 port 31245 ssh2
+Jun  8 03:10:34 bastion-01 sshd[88404]: Failed password for invalid user administrator from 109.204.14.77 port 17757 ssh2
+Jun  8 03:10:48 bastion-01 sshd[38700]: Failed password for invalid user oracle from 109.204.14.77 port 31514 ssh2
+Jun  8 03:10:58 bastion-01 sshd[10681]: Failed password for invalid user test from 109.204.14.77 port 11377 ssh2
+Jun  8 03:11:07 bastion-01 sshd[46293]: error: maximum authentication attempts exceeded for invalid user test from 109.204.14.77 port 62970 ssh2 [preauth]
+Jun  8 03:11:18 bastion-01 sshd[40599]: Disconnected from invalid user test 109.204.14.77 port 30963 [preauth]
+Jun  8 03:11:26 bastion-01 sshd[64335]: Failed password for invalid user jenkins from 109.204.14.77 port 56948 ssh2
+Jun  8 03:11:31 bastion-01 sshd[75963]: Failed password for invalid user oracle from 109.204.14.77 port 26017 ssh2
+Jun  8 03:11:42 bastion-01 sshd[92655]: Failed password for invalid user administrator from 109.204.14.77 port 20414 ssh2
+Jun  8 03:11:44 bastion-01 sshd[87275]: Failed password for invalid user administrator from 109.204.14.77 port 55421 ssh2
+Jun  8 03:54:02 web-02 sshd[11205]: Failed password for invalid user nagios from 152.192.110.46 port 31154 ssh2
+Jun  8 03:54:13 web-02 sshd[76156]: Failed password for invalid user mysql from 152.192.110.46 port 29157 ssh2
+Jun  8 03:54:26 web-02 sshd[55747]: Failed password for invalid user nagios from 152.192.110.46 port 42976 ssh2
+Jun  8 03:54:29 web-02 sshd[3733]: Failed password for invalid user test from 152.192.110.46 port 27568 ssh2
+Jun  8 03:54:33 web-02 sshd[82018]: Failed password for invalid user mysql from 152.192.110.46 port 53539 ssh2
+Jun  8 03:54:48 web-02 sshd[48428]: Failed password for invalid user es from 152.192.110.46 port 46218 ssh2
+Jun  8 03:54:51 web-02 sshd[14875]: error: maximum authentication attempts exceeded for invalid user es from 152.192.110.46 port 29644 ssh2 [preauth]
+Jun  8 03:54:56 web-02 sshd[41668]: Disconnected from authenticating user es 152.192.110.46 port 26960 [preauth]
+Jun  8 03:55:01 web-02 sshd[23037]: Failed password for invalid user mysql from 152.192.110.46 port 22851 ssh2
+Jun  8 03:55:11 web-02 sshd[15945]: Failed password for invalid user administrator from 152.192.110.46 port 42523 ssh2
+Jun  8 03:55:25 web-02 sshd[47019]: Failed password for invalid user git from 152.192.110.46 port 23920 ssh2
+Jun  8 05:05:02 web-02 sshd[78356]: Accepted publickey for deploy from 109.223.48.253 port 33942 ssh2: RSA SHA256:a435C269Ea
+Jun  8 05:47:41 web-02 sshd[35737]: Accepted publickey for deploy from 109.223.48.253 port 64541 ssh2: RSA SHA256:77DFE3D2dE
+Jun  8 06:30:47 web-02 sshd[5705]: Accepted publickey for deploy from 109.223.48.253 port 36480 ssh2: RSA SHA256:1CbB2F817E
+Jun  8 06:55:27 web-02 sshd[4794]: Accepted publickey for deploy from 109.223.48.253 port 20649 ssh2: RSA SHA256:f3Afb943cd
+Jun  8 10:55:26 bastion-01 sshd[94525]: Accepted publickey for svc-monitor9 from 10.4.4.154 port 6101 ssh2: RSA SHA256:74Eff24F1A
+Jun  8 11:24:56 bastion-01 sshd[55496]: Accepted publickey for svc-monitor9 from 10.4.4.154 port 31558 ssh2: RSA SHA256:fB7bdCdeDB
+Jun  8 11:39:11 bastion-01 sshd[52116]: Accepted publickey for svc-monitor9 from 10.4.4.154 port 50403 ssh2: RSA SHA256:eD70364CaB
+Jun  8 12:03:18 web-02 sshd[31932]: Accepted password for jnguyen from 163.206.191.175 port 5430 ssh2
+Jun  8 12:17:47 bastion-01 sshd[22632]: Accepted publickey for svc-monitor9 from 10.4.4.154 port 48483 ssh2: RSA SHA256:F457EAEC25
+Jun  8 12:59:41 bastion-01 sshd[50689]: Accepted publickey for svc-monitor9 from 10.4.4.154 port 18073 ssh2: RSA SHA256:89F712bD7d
+Jun  8 13:32:01 bastion-01 sshd[46870]: Accepted publickey for svc-monitor9 from 10.4.4.154 port 63409 ssh2: RSA SHA256:eB4C46fbaF
+Jun  8 13:57:19 bastion-01 sshd[29569]: Accepted publickey for svc-monitor9 from 10.4.4.154 port 37984 ssh2: RSA SHA256:25248eadc2
+Jun  8 15:54:19 app-03 sshd[73512]: Failed password for scastro from 10.1.5.110 port 64664 ssh2
+Jun  8 15:54:22 app-03 sshd[95466]: Failed password for scastro from 10.1.5.110 port 45607 ssh2
+Jun  8 15:54:59 app-03 sshd[15621]: Connection reset by 10.1.5.110 port 43030 [preauth]
+Jun  8 15:55:29 app-03 sshd[1425]: Accepted password for scastro from 10.1.5.110 port 30759 ssh2
+Jun  8 15:55:48 app-03 sshd[14947]: Accepted password for scastro from 10.1.5.110 port 34295 ssh2
+Jun  8 15:56:10 app-03 sshd[50009]: Accepted password for scastro from 10.1.5.110 port 11040 ssh2
+Jun  8 17:22:59 web-02 sshd[42124]: Failed password for root from 141.108.38.171 port 25719 ssh2
+Jun  8 17:24:57 web-02 sshd[70878]: Failed password for root from 141.108.38.171 port 31148 ssh2
+Jun  8 17:28:28 web-02 sshd[80963]: Connection reset by 141.108.38.171 port 48270 [preauth]
+Jun  8 17:40:35 app-03 sshd[47112]: Accepted publickey for svc-archiver4 from 10.1.5.106 port 22702 ssh2: RSA SHA256:5ce3A0EFD4
+Jun  8 18:38:33 app-03 sshd[95972]: Accepted publickey for svc-archiver4 from 10.1.5.106 port 19144 ssh2: RSA SHA256:DAf3A483e4
+Jun  8 18:42:26 bastion-01 sshd[32385]: Connection reset by 10.1.4.246 port 53896 [preauth]
+Jun  8 18:42:44 bastion-01 sshd[96932]: Accepted password for jsantos from 10.1.4.246 port 6637 ssh2
+Jun  8 18:48:12 web-02 sshd[46718]: Failed password for root from 141.108.38.182 port 32468 ssh2
+Jun  8 18:51:02 web-02 sshd[16974]: Failed password for root from 141.108.38.182 port 19884 ssh2
+Jun  8 19:05:10 web-02 sshd[23630]: banner exchange: Connection from 80.157.73.179 port 30649: invalid format
+Jun  8 19:12:50 web-01 sshd[42889]: banner exchange: Connection from 80.157.73.179 port 64434: invalid format
+Jun  8 19:18:50 web-01 sshd[40315]: Did not receive identification string from 80.157.73.179 port 20053
+Jun  8 19:28:47 app-03 sshd[8146]: Accepted publickey for svc-archiver4 from 10.1.5.106 port 64875 ssh2: RSA SHA256:9FAcefdaFA
+Jun  8 19:49:12 web-01 sshd[83242]: Failed password for invalid user git from 194.200.190.251 port 7391 ssh2
+Jun  8 19:49:18 web-01 sshd[58779]: Failed password for invalid user ubnt from 194.200.190.251 port 52706 ssh2
+Jun  8 19:49:29 web-01 sshd[96991]: Failed password for invalid user ubnt from 194.200.190.251 port 24935 ssh2
+Jun  8 19:49:32 web-01 sshd[39680]: Failed password for invalid user git from 194.200.190.251 port 60637 ssh2
+Jun  8 19:49:45 web-01 sshd[24021]: Failed password for invalid user hadoop from 194.200.190.251 port 28254 ssh2
+Jun  8 19:49:49 web-01 sshd[71701]: Failed password for invalid user es from 194.200.190.251 port 52568 ssh2
+Jun  8 19:49:56 web-01 sshd[66771]: error: maximum authentication attempts exceeded for invalid user es from 194.200.190.251 port 35813 ssh2 [preauth]
+Jun  8 19:50:02 web-01 sshd[39684]: Connection reset by 194.200.190.251 port 60927 [preauth]
+Jun  8 19:50:16 web-01 sshd[62385]: Failed password for invalid user hadoop from 194.200.190.251 port 8571 ssh2
+Jun  8 19:50:20 web-01 sshd[30571]: Failed password for invalid user jenkins from 194.200.190.251 port 50448 ssh2
+Jun  8 19:50:35 web-01 sshd[74048]: Failed password for invalid user oracle from 194.200.190.251 port 53753 ssh2
+Jun  8 19:50:38 web-01 sshd[52717]: Failed password for invalid user hadoop from 194.200.190.251 port 52842 ssh2
+Jun  8 19:50:44 web-01 sshd[17199]: Failed password for invalid user ubnt from 194.200.190.251 port 36188 ssh2
+Jun  8 19:50:51 web-01 sshd[99174]: Failed password for invalid user pi from 194.200.190.251 port 45118 ssh2
+Jun  8 19:51:03 web-01 sshd[77619]: error: maximum authentication attempts exceeded for invalid user pi from 194.200.190.251 port 18205 ssh2 [preauth]
+Jun  8 19:51:11 web-01 sshd[89452]: Received disconnect from 194.200.190.251 port 62646:11: Bye Bye [preauth]
+Jun  8 19:51:20 web-01 sshd[82205]: Failed password for invalid user es from 194.200.190.251 port 2664 ssh2
+Jun  8 19:51:27 web-01 sshd[80964]: Failed password for invalid user deploy from 194.200.190.251 port 61006 ssh2
+Jun  8 19:51:39 web-01 sshd[84283]: Failed password for invalid user es from 194.200.190.251 port 5166 ssh2
+Jun  8 19:51:52 web-01 sshd[86097]: Failed password for invalid user pi from 194.200.190.251 port 20828 ssh2
+Jun  8 19:51:55 web-01 sshd[6943]: Failed password for invalid user oracle from 194.200.190.251 port 10184 ssh2
+Jun  8 19:52:01 web-01 sshd[16220]: Failed password for invalid user ubnt from 194.200.190.251 port 33308 ssh2
+Jun  8 19:52:04 web-01 sshd[71457]: error: maximum authentication attempts exceeded for invalid user ubnt from 194.200.190.251 port 16411 ssh2 [preauth]
+Jun  8 19:52:08 web-01 sshd[98290]: Disconnected from invalid user ubnt 194.200.190.251 port 39515 [preauth]
+Jun  8 19:52:16 web-01 sshd[13978]: Failed password for invalid user git from 194.200.190.251 port 43944 ssh2
+Jun  8 19:52:27 web-01 sshd[37666]: Failed password for invalid user pi from 194.200.190.251 port 27770 ssh2
+Jun  8 19:52:40 web-01 sshd[29477]: Failed password for invalid user ubnt from 194.200.190.251 port 25307 ssh2
+Jun  8 19:52:49 web-01 sshd[31947]: Failed password for invalid user pi from 194.200.190.251 port 63319 ssh2
+Jun  8 19:52:52 web-01 sshd[49147]: Failed password for invalid user hadoop from 194.200.190.251 port 45960 ssh2
+Jun  8 19:53:04 web-01 sshd[8936]: Failed password for invalid user deploy from 194.200.190.251 port 24530 ssh2
+Jun  8 19:53:12 web-01 sshd[25878]: error: maximum authentication attempts exceeded for invalid user deploy from 194.200.190.251 port 19104 ssh2 [preauth]
+Jun  8 19:53:15 web-01 sshd[87870]: Received disconnect from 194.200.190.251 port 55038:11: Bye Bye [preauth]
+Jun  8 19:53:27 web-01 sshd[79269]: Failed password for invalid user es from 194.200.190.251 port 42933 ssh2
+Jun  8 19:53:29 web-01 sshd[44713]: Failed password for invalid user ubnt from 194.200.190.251 port 52587 ssh2
+Jun  8 19:53:33 web-01 sshd[75000]: Failed password for invalid user es from 194.200.190.251 port 52599 ssh2
+Jun  8 19:53:36 web-01 sshd[73641]: Failed password for invalid user es from 194.200.190.251 port 55406 ssh2
+Jun  8 19:53:47 web-01 sshd[31539]: Failed password for invalid user es from 194.200.190.251 port 15176 ssh2
+Jun  8 20:16:33 app-03 sshd[63616]: Accepted publickey for svc-archiver4 from 10.1.5.106 port 17570 ssh2: RSA SHA256:A824caAEB9
+Jun  8 20:34:20 app-03 sshd[55548]: Accepted publickey for svc-archiver4 from 10.1.5.106 port 51122 ssh2: RSA SHA256:6Cb1bd0A9c
+Jun  8 20:34:31 web-02 sshd[97447]: Failed password for root from 141.108.38.107 port 58224 ssh2
+Jun  8 20:35:32 web-02 sshd[19098]: Failed password for root from 141.108.38.107 port 47277 ssh2
+Jun  8 20:59:04 web-02 sshd[27062]: Failed password for swilson from 10.3.0.9 port 37805 ssh2
+Jun  8 20:59:41 web-02 sshd[29893]: Failed password for swilson from 10.3.0.9 port 28517 ssh2
+Jun  8 20:59:44 web-02 sshd[56392]: Accepted password for swilson from 10.3.0.9 port 46777 ssh2
+Jun  8 21:00:08 web-02 sshd[50615]: Accepted publickey for swilson from 10.3.0.9 port 64798 ssh2: RSA SHA256:d9Bcc6154F
+Jun  8 21:00:16 web-02 sshd[50823]: Accepted publickey for swilson from 10.3.0.9 port 7643 ssh2: RSA SHA256:61603bfAbf
+Jun  8 21:25:43 app-03 sshd[98004]: Accepted publickey for svc-archiver4 from 10.1.5.106 port 63945 ssh2: RSA SHA256:115C7A0D0b
+Jun  8 21:49:19 db-01 sshd[58154]: Accepted password for gali from 10.4.3.90 port 47474 ssh2
+Jun  8 21:49:22 db-01 sshd[57531]: Accepted password for gali from 10.4.3.90 port 24893 ssh2
+Jun  8 22:41:49 app-03 sshd[69062]: Failed password for root from 134.87.249.49 port 61599 ssh2
+Jun  9 01:14:53 app-03 sshd[11828]: Failed password for root from 134.87.249.49 port 53528 ssh2
+Jun  9 04:50:49 app-03 sshd[11345]: Failed password for root from 134.87.249.49 port 28844 ssh2

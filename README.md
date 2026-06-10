@@ -86,25 +86,35 @@ python main.py --llm --json results.json
 python evaluate.py results.json
 ```
 
-### Benchmark: 50 labeled alerts, 17 deliberately hard cases
+### Benchmark: randomized multi-host dataset with realistic sshd noise
 
-`generate_dataset.py` builds a reproducible (seeded) benchmark of 50 alerts
-— 23 attacks, 27 benign — including hard cases designed to break naive
-rules: slow-and-low brute force, distributed botnet sprays (2 attempts per
-IP), stolen-credential logins with *zero* failures, employees logging in
-from home IPs that *look* like compromises, and misconfigured cron jobs
-that look like internal attacks.
+`generate_dataset.py` builds a fresh benchmark every run — randomized IPs,
+hosts, usernames, volumes, timing, and scenario counts (the seed is printed,
+so any run is reproducible with `--seed`). Beyond failed/accepted passwords
+it emits the noise real sshd logs contain: pre-auth disconnects,
+`maximum authentication attempts exceeded` bursts, failed publickey attempts
+(key scanning), and pure connection probes from scanners that never attempt
+authentication.
+
+Hard cases are designed to break naive rules: slow-and-low brute force,
+distributed botnet sprays (2 attempts per IP), stolen-credential logins with
+*zero* failures, employees logging in from home IPs that *look* like
+compromises, and misconfigured cron jobs that look like internal attacks.
 
 ```bash
-python generate_dataset.py
+python generate_dataset.py            # new random dataset each run
+python generate_dataset.py --seed 42  # reproduce the committed benchmark
 python main.py data/large_auth.log --llm --json results.json
 python evaluate.py results.json data/large_labels.csv
 ```
 
+Committed benchmark (`--seed 42`): 359 log lines → 52 alerts (26 attacks,
+26 benign, 17 hard cases) across 5 hosts:
+
 | Engine | Precision | Recall | False alarms | Benign cleared | Dangerous misses |
 |---|---|---|---|---|---|
-| Heuristic baseline | 82% | 61% | 3 | 19/27 | 0 |
-| Claude (`claude-opus-4-8`) | **100%** | **87%** | **0** | **27/27** | 0 |
+| Heuristic baseline | 80% | 62% | 4 | 18/26 | 0 |
+| Claude (`claude-opus-4-8`) | **100%** | **85%** | **0** | 20/26 | 0 |
 
 Scoring is SOC-shaped: punting an attack to "needs investigation" costs
 recall, and explicitly clearing an attack counts as a dangerous miss
@@ -125,13 +135,15 @@ Where the gap comes from — the hard cases:
 - **Slow-and-low** (3 root failures spread over hours): under the volume
   threshold; Claude flagged all 3 using reputation + targeting pattern.
 
-Claude's 3 recall misses were all conservative punts to
-needs_investigation (with the correct T1110.003 hypothesis attached), not
-cleared attacks — defensible Tier 1 behavior. On the small hand-built
-sample (`data/sample_auth.log` + `data/labels.csv`) both engines score
-7/7; that set is kept as a quick smoke test.
+Every recall miss from Claude was a conservative punt to
+needs_investigation with the correct hypothesis attached — never a cleared
+attack. It also punts ambiguous benign cases (employee home logins, dead
+cron jobs) rather than guessing, which is exactly the Tier 1 behavior you
+want: zero dangerous misses on both sides of the queue. On the small
+hand-built sample (`data/sample_auth.log` + `data/labels.csv`) both engines
+score 7/7; that set is kept as a quick smoke test.
 
-A full 50-alert Claude run takes ~90 seconds (4 parallel workers) and
+A full ~50-alert Claude run takes ~90 seconds (4 parallel workers) and
 costs roughly $1 in API usage.
 
 ## What the sample log contains

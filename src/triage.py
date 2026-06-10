@@ -26,6 +26,16 @@ network location.
 brute-force or credential-spraying activity. Map to MITRE ATT&CK T1110.
 - A successful login AFTER repeated failures from an external IP is the most dangerous \
 pattern: likely account compromise. Treat as critical and recommend containment.
+- Pure connection probes with no authentication attempts (connection_probes_no_auth: \
+banner grabbing, port scanning) are reconnaissance — a true positive, but rate it low \
+or informational severity and map to T1595 Active Scanning.
+- max_auth_exceeded_events means sshd cut the attacker off mid-burst; preauth_disconnects \
+alongside failures are typical of automated brute-force tooling. Both strengthen a \
+brute-force assessment.
+- Failed publickey attempts across accounts suggest SSH key scanning/spraying rather \
+than password guessing.
+- One source IP hitting multiple hosts (hosts_targeted) suggests scanning or spraying \
+across the estate, not a user mistake.
 - Use the threat intelligence reputation to adjust confidence, not to decide alone.
 
 Be precise and avoid alarmism: a blocked brute force with zero successes is lower \
@@ -97,8 +107,19 @@ def heuristic_triage(enriched_alerts: List[dict]) -> List[TriageResult]:
         internal = a["enrichment"]["internal_source"]
         reputation = a["enrichment"]["threat_intel"].get("reputation", "no records")
         failed, accepted = a["failed_logins"], a["successful_logins"]
+        probes = a.get("connection_probes_no_auth", 0)
+        max_auth = a.get("max_auth_exceeded_events", 0)
 
-        if a["success_after_failures"] and not internal:
+        if probes >= 2 and failed == 0 and accepted == 0:
+            verdict, severity, conf = Verdict.true_positive, Severity.low, 75
+            summary = (f"{a['src_ip']} made {probes} connection probes (no banner / "
+                       f"no auth attempt) against {len(a.get('hosts_targeted', []))} "
+                       f"host(s) — scanner reconnaissance, no login attempted.")
+            actions = ["No containment needed; confirm perimeter exposure is intended",
+                       "Add the IP to scanner watchlists",
+                       "Verify SSH is not exposed wider than necessary"]
+            tech, tech_name = "T1595", "Active Scanning"
+        elif a["success_after_failures"] and not internal:
             verdict, severity, conf = Verdict.true_positive, Severity.critical, 90
             summary = (f"External IP {a['src_ip']} failed {failed} logins and then "
                        f"successfully authenticated — likely account compromise.")
@@ -117,6 +138,8 @@ def heuristic_triage(enriched_alerts: List[dict]) -> List[TriageResult]:
         elif (failed >= 4 or (failed >= 2 and len(a["usernames_targeted"]) >= 3)) and not internal:
             verdict, severity = Verdict.true_positive, Severity.high
             conf = 85 if reputation == "malicious" else 70
+            if max_auth:
+                conf = min(95, conf + 5)
             summary = (f"External IP {a['src_ip']} made {failed} failed logins across "
                        f"{len(a['usernames_targeted'])} usernames with no success — "
                        f"brute-force attempt, currently blocked.")

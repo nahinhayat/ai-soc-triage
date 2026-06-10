@@ -1,51 +1,53 @@
 src_ip,verdict,notes
-10.0.0.10,false_positive,"internal user jchen, typos then normal login"
-10.0.0.11,false_positive,"internal user mpatel, typos then normal login"
-10.0.0.12,false_positive,"internal user slee, typos then normal login"
-10.0.0.13,false_positive,"internal user dkim, typos then normal login"
-10.0.0.14,false_positive,"internal user anguyen, typos then normal login"
-10.0.0.15,false_positive,"internal user rtaylor, typos then normal login"
-10.0.0.16,false_positive,"internal user bwilson, typos then normal login"
-10.0.0.17,false_positive,"internal user fhassan, typos then normal login"
-10.0.0.18,false_positive,"internal user lzhang, typos then normal login"
-10.0.0.19,false_positive,"internal user tokafor, typos then normal login"
-10.0.0.20,false_positive,"internal user gmiller, typos then normal login"
-10.0.0.21,false_positive,"internal user psingh, typos then normal login"
-10.0.0.22,false_positive,"internal user ecastro, typos then normal login"
-10.0.0.23,false_positive,"internal user nali, typos then normal login"
-10.0.1.20,false_positive,"internal service account svc-patching0, scheduled jobs"
-10.0.1.21,false_positive,"internal service account svc-patching1, scheduled jobs"
-10.0.1.22,false_positive,"internal service account svc-patching2, scheduled jobs"
-10.0.1.23,false_positive,"internal service account svc-deployer3, scheduled jobs"
-10.0.1.24,false_positive,"internal service account svc-backup4, scheduled jobs"
-10.0.2.30,false_positive,"HARD: internal cron with stale credentials for svc-sync0, fails every ~30min"
-10.0.2.31,false_positive,"HARD: internal cron with stale credentials for svc-sync1, fails every ~30min"
-10.0.2.32,false_positive,"HARD: internal cron with stale credentials for svc-sync2, fails every ~30min"
-73.158.22.40,false_positive,"HARD: employee nali from home IP, typo then success — looks like compromise"
-73.158.22.41,false_positive,"HARD: employee ecastro from home IP, typo then success — looks like compromise"
-73.158.22.42,false_positive,"HARD: employee psingh from home IP, typo then success — looks like compromise"
-34.74.10.50,false_positive,"HARD: CI pipeline deploying from cloud IP, key-based, no failures"
-34.74.10.51,false_positive,"HARD: CI pipeline deploying from cloud IP, key-based, no failures"
-141.98.10.60,true_positive,"classic multi-username brute force, blocked"
-45.155.205.61,true_positive,"classic multi-username brute force, blocked"
-141.98.10.62,true_positive,"classic multi-username brute force, blocked"
-141.98.10.63,true_positive,"classic multi-username brute force, blocked"
-141.98.10.64,true_positive,"classic multi-username brute force, blocked"
-92.255.85.65,true_positive,"classic multi-username brute force, blocked"
-194.26.29.66,true_positive,"classic multi-username brute force, blocked"
-92.255.85.67,true_positive,"classic multi-username brute force, blocked"
-92.255.85.68,true_positive,"classic multi-username brute force, blocked"
-185.196.8.70,true_positive,account compromise: backup success after failures
-185.196.8.71,true_positive,account compromise: backup success after failures
-185.196.8.72,true_positive,account compromise: webadmin success after failures
-80.94.95.80,true_positive,"HARD: slow-and-low — only 3 root failures spread over hours, known-bad IP"
-80.94.95.81,true_positive,"HARD: slow-and-low — only 3 root failures spread over hours, known-bad IP"
-80.94.95.82,true_positive,"HARD: slow-and-low — only 3 root failures spread over hours, known-bad IP"
-171.25.193.10,true_positive,"HARD: distributed spray — 2 attempts/IP across a botnet /24, same account"
-171.25.193.11,true_positive,"HARD: distributed spray — 2 attempts/IP across a botnet /24, same account"
-171.25.193.12,true_positive,"HARD: distributed spray — 2 attempts/IP across a botnet /24, same account"
-171.25.193.13,true_positive,"HARD: distributed spray — 2 attempts/IP across a botnet /24, same account"
-146.70.85.90,true_positive,"HARD: stolen credentials — clean login as mpatel from infostealer infra, zero failures"
-146.70.85.91,true_positive,"HARD: stolen credentials — clean login as mpatel from infostealer infra, zero failures"
-10.0.3.100,true_positive,internal lateral movement: spraying several accounts from one host
-10.0.3.101,true_positive,internal lateral movement: spraying several accounts from one host
+10.3.0.9,false_positive,"internal user swilson, typos then normal login"
+10.2.3.164,false_positive,"internal user ptaylor, typos then normal login"
+10.3.2.238,false_positive,"internal user fmiller, typos then normal login"
+10.1.5.110,false_positive,"internal user scastro, typos then normal login"
+10.1.4.246,false_positive,"internal user jsantos, typos then normal login"
+10.3.0.252,false_positive,"internal user anguyen, typos then normal login"
+10.0.2.20,false_positive,"internal user fzhang, typos then normal login"
+10.1.3.126,false_positive,"internal user cwilson, typos then normal login"
+10.0.5.222,false_positive,"internal user fcastro, typos then normal login"
+10.1.2.74,false_positive,"internal user rbrown, typos then normal login"
+10.3.4.4,false_positive,"internal user dlee, typos then normal login"
+10.1.1.223,false_positive,"internal user rtaylor, typos then normal login"
+10.4.3.90,false_positive,"internal user gali, typos then normal login"
+10.0.5.237,false_positive,"internal user gsantos, typos then normal login"
+10.4.2.25,false_positive,"internal user fokafor, typos then normal login"
+10.4.4.154,false_positive,"internal service account svc-monitor9, scheduled jobs"
+10.3.5.67,false_positive,"internal service account svc-metrics2, scheduled jobs"
+10.1.5.106,false_positive,"internal service account svc-archiver4, scheduled jobs"
+10.0.1.162,false_positive,HARD: internal cron with stale credentials for svc-inventory2
+10.1.5.40,false_positive,HARD: internal cron with stale credentials for svc-metrics2
+91.7.23.60,false_positive,"HARD: employee jzhang from home IP, typo then success"
+178.112.162.210,false_positive,"HARD: employee clee from home IP, typo then success"
+103.170.241.104,false_positive,"HARD: employee mbrown from home IP, typo then success"
+80.133.92.161,false_positive,"HARD: employee cbrown from home IP, typo then success"
+185.205.61.183,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+109.223.48.253,false_positive,"HARD: CI pipeline from cloud IP, key-based, no failures"
+109.204.14.77,true_positive,"classic multi-username brute force, blocked"
+194.200.190.251,true_positive,"classic multi-username brute force, blocked"
+91.220.251.39,true_positive,"classic multi-username brute force, blocked"
+121.27.147.131,true_positive,"classic multi-username brute force, blocked"
+152.192.110.46,true_positive,"classic multi-username brute force, blocked"
+91.51.44.156,true_positive,"classic multi-username brute force, blocked"
+171.174.98.74,true_positive,"classic multi-username brute force, blocked"
+141.164.203.161,true_positive,account compromise: deploy success after failures
+209.5.91.203,true_positive,account compromise: webadmin success after failures
+212.166.48.75,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+134.87.249.49,true_positive,"HARD: slow-and-low — 3 root failures over hours, known-bad IP"
+221.47.139.77,true_positive,"HARD: stolen credentials — clean login as gokafor, zero failures"
+146.11.186.224,true_positive,"HARD: stolen credentials — clean login as nzhang, zero failures"
+163.206.191.175,true_positive,"HARD: stolen credentials — clean login as jnguyen, zero failures"
+10.2.2.100,true_positive,internal lateral movement: spraying accounts from one host
+80.157.73.179,true_positive,"scanner recon: connection probes only, no auth attempted"
+89.32.252.53,true_positive,"scanner recon: connection probes only, no auth attempted"
+221.148.18.34,true_positive,"scanner recon: connection probes only, no auth attempted"
+178.40.43.170,true_positive,SSH key scanning: failed publickey attempts across hosts
+152.132.119.129,true_positive,SSH key scanning: failed publickey attempts across hosts
+185.131.102.130,true_positive,SSH key scanning: failed publickey attempts across hosts
+171.126.181.146,true_positive,SSH key scanning: failed publickey attempts across hosts
+141.108.38.107,true_positive,HARD: distributed spray node (141.108.38.0/24) vs 'root'
+141.108.38.171,true_positive,HARD: distributed spray node (141.108.38.0/24) vs 'root'
+141.108.38.247,true_positive,HARD: distributed spray node (141.108.38.0/24) vs 'root'
+141.108.38.182,true_positive,HARD: distributed spray node (141.108.38.0/24) vs 'root'
