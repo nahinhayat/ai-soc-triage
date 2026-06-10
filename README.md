@@ -86,6 +86,28 @@ python main.py --llm --json results.json
 python evaluate.py results.json
 ```
 
+### Results on the labeled sample
+
+| Engine | Precision | Recall | Benign cleared | Punted |
+|---|---|---|---|---|
+| Heuristic baseline | 100% | 100% | 3/3 | 0 |
+| Claude (`claude-opus-4-8`) | 100% | 100% | 3/3 | 0 |
+
+Both engines get every verdict right on this (deliberately small) dataset —
+the difference is in the quality of the analysis. The heuristic emits
+template sentences; Claude produces analyst-grade output: it reasons about
+attack **timing** ("6 failed attempts in ~50 seconds, then success"),
+calibrates severity to outcome (blocked brute force → medium, successful
+login → critical), recommends control hardening specific to what it saw
+(`PermitRootLogin no`, fail2ban, key-only auth, MFA on the compromised
+account), and even suggests alert-tuning to reduce future noise — for the
+same verdict. It was also notably better calibrated on confidence: 80% on
+the compromise (the IP had no threat-intel record) vs. 92% on the
+intel-corroborated brute force.
+
+The honest caveat: 7 alerts is a smoke test, not a benchmark. Scaling the
+labeled dataset is the highest-value next step.
+
 ## What the sample log contains
 
 The bundled `data/sample_auth.log` simulates one day on an internet-facing
