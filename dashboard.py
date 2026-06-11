@@ -92,6 +92,13 @@ MONTHS = {m: i for i, m in enumerate(calendar.month_abbr) if m}
 TS_RE = re.compile(r"^(\w{3})\s+(\d+)\s(\d\d):(\d\d):\d\d")
 
 
+def _heat_color(frac: float) -> str:
+    """Interpolate the red ramp used for ATT&CK cells (light → dark)."""
+    light, dark = (252, 235, 235), (163, 45, 45)
+    rgb = tuple(round(a + (b - a) * frac) for a, b in zip(light, dark))
+    return f"rgb{rgb}"
+
+
 def timeline_df(raw_events, results):
     """One row per log event with its hour and the parent alert's severity."""
     sev_by_ip = {r["src_ip"]: r["severity"] for r in results}
@@ -495,29 +502,49 @@ with tabs[1]:
     st.markdown("##### MITRE ATT&CK coverage")
     mx_df = attack_matrix_df(results)
     if not mx_df.empty:
-        base = alt.Chart(mx_df).encode(
-            x=alt.X("tactic:N", sort=TACTIC_ORDER, title=None,
-                    axis=alt.Axis(labelAngle=0, orient="top")),
-            y=alt.Y("technique:N", title=None),
-        )
-        heat = base.mark_rect().encode(
-            color=alt.Color("alerts:Q", scale=alt.Scale(scheme="reds"), legend=None))
-        text = base.mark_text(fontWeight="bold").encode(
-            text="alerts:Q",
-            color=alt.condition("datum.alerts > 60", alt.value("white"), alt.value("#501313")))
-        st.altair_chart((heat + text).properties(height=60 + 38 * mx_df["technique"].nunique()),
-                        use_container_width=True)
+        tactics = [t for t in TACTIC_ORDER if t in set(mx_df["tactic"])]
+        max_alerts = int(mx_df["alerts"].max())
+        for col, tactic in zip(st.columns(len(tactics)), tactics):
+            with col:
+                st.markdown(
+                    f"<div style='text-align:center;font-size:13px;opacity:0.65;"
+                    f"padding-bottom:6px;'>{tactic}</div>", unsafe_allow_html=True)
+                sub = mx_df[mx_df["tactic"] == tactic].sort_values("alerts", ascending=False)
+                for _, row in sub.iterrows():
+                    frac = row["alerts"] / max_alerts
+                    bg = _heat_color(frac)
+                    fg = "#ffffff" if frac > 0.45 else "#501313"
+                    tid, _, name = row["technique"].partition(" — ")
+                    st.markdown(
+                        f"<div style='background:{bg};border-radius:8px;"
+                        f"padding:10px 12px;margin-bottom:8px;'>"
+                        f"<div style='font-size:12px;font-weight:600;color:{fg};'>{tid}</div>"
+                        f"<div style='font-size:11.5px;line-height:1.3;color:{fg};'>{name}</div>"
+                        f"<div style='font-size:20px;font-weight:700;color:{fg};"
+                        f"margin-top:4px;'>{row['alerts']}</div></div>",
+                        unsafe_allow_html=True)
     else:
         st.caption("No confirmed attacks to map.")
 
+    st.markdown("")
     e1, e2 = st.columns(2)
     acc_df, host_df = entity_tables(enriched, results)
     with e1:
         st.markdown("##### Most targeted accounts")
-        st.dataframe(acc_df, width="stretch", hide_index=True)
+        if not acc_df.empty:
+            st.dataframe(acc_df, width="stretch", hide_index=True, column_config={
+                "attacking sources": st.column_config.ProgressColumn(
+                    "attacking sources", format="%d", min_value=0,
+                    max_value=int(acc_df["attacking sources"].max())),
+            })
     with e2:
         st.markdown("##### Most targeted hosts")
-        st.dataframe(host_df, width="stretch", hide_index=True)
+        if not host_df.empty:
+            st.dataframe(host_df, width="stretch", hide_index=True, column_config={
+                "attack alerts": st.column_config.ProgressColumn(
+                    "attack alerts", format="%d", min_value=0,
+                    max_value=int(host_df["attack alerts"].max())),
+            })
 
     st.markdown("##### Indicators of compromise")
     iocs = ioc_df(results, enriched_by_ip)
