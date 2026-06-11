@@ -1,149 +1,102 @@
-# AI SOC Triage — LLM-Assisted SSH Alert Triage Pipeline
+# 🛡️ AI SOC Triage
 
-An AI-powered Security Operations Center (SOC) assistant that ingests raw SSH
-authentication logs, enriches them with threat intelligence context, and uses
-**Claude** to triage each alert the way a Tier 2 analyst would — producing a
-ranked queue with verdicts, MITRE ATT&CK mappings, plain-English summaries,
-and prioritized response actions.
+**An AI-powered Security Operations Center console: raw authentication logs
+in — a ranked, explained, actionable alert queue out.**
 
-Built to address the #1 pain point in security operations: **alert fatigue**.
-Analysts drown in raw events; this pipeline turns them into a short, ranked
-list of what actually matters.
+Security teams drown in alerts. A single internet-facing server generates
+thousands of authentication events a day, and somewhere in that noise are
+the events that matter: the brute force that *succeeded*, the stolen
+credential that logged in cleanly, the internal host quietly spraying
+passwords across the estate. This project uses **Claude** to triage that
+firehose the way a senior SOC analyst would — and, critically, **measures
+how well it does it** against a labeled benchmark and a rule-based baseline.
 
-![SOC triage dashboard](docs/dashboard_hero.png)
+![SOC triage dashboard](docs/dashboard_benchmark.png)
 
-*The Streamlit dashboard: correlated alerts ranked worst-first, with Claude's
-analyst summary, prioritized response actions, threat-intel enrichment, and
-the raw log evidence per alert ([full-page screenshot](docs/dashboard.png)).*
-
-### SOC console features
-
-Beyond triage, the dashboard covers the alert lifecycle the way a real SOC
-console does:
-
-- **Case management** — per-alert status (New → Investigating → Contained →
-  Closed), assignee, and investigation notes, persisted across sessions;
-  status shows in the queue row
-- **Analyst feedback loop** — agree/disagree on every AI verdict, exportable
-  as CSV: analyst corrections become new labeled training data
-- **Attack timeline** — hourly event volume colored by severity, for
-  spotting campaigns vs background noise
-- **MITRE ATT&CK coverage matrix** — observed tactics × techniques with
-  alert counts
-- **Entity analytics** — most-targeted accounts and hosts across all
-  confirmed attacks
-- **IOC export** — one-click CSV of attacking IPs (with reputation, tags,
-  ATT&CK) or a plain-text firewall blocklist
-- **AI incident reports** — pick any confirmed attack and Claude writes a
-  formal markdown incident report (executive summary, evidence, impact,
-  remediation, IOCs) ready to download
-
-## Pipeline
+## What it does
 
 ```
-raw auth.log ──> parse & correlate ──> enrich ──> triage ──> ranked report
-                 (group events per     (GeoIP,    (Claude or  (severity-sorted
-                  source IP)           threat     heuristic    queue + actions)
-                                       intel)     baseline)
+raw auth logs ──> parse & correlate ──> enrich ──> AI triage ──> SOC console
+(sshd files,      (events grouped      (GeoIP,    (verdict,      (ranked queue,
+ Splunk/AD)        per source IP)       threat     severity,      case mgmt,
+                                        intel)     ATT&CK,        analytics,
+                                                   actions)       IR reports)
 ```
 
-1. **Parse** — regex-based parser turns `sshd` syslog lines into structured
-   events, correlated into one alert per source IP (failed/successful logins,
-   usernames targeted, success-after-failure detection).
-2. **Enrich** — each alert gets geolocation and threat-intel reputation
-   context (offline static table for the demo; designed to swap in AbuseIPDB /
-   VirusTotal / MaxMind with no other changes).
-3. **Triage** — Claude receives the enriched alert and returns a **schema-validated
-   structured verdict** (Pydantic + the Anthropic structured-outputs API):
-   verdict, severity, confidence, MITRE ATT&CK technique, analyst summary,
-   and ordered response actions. A rule-based heuristic engine serves as an
-   offline fallback and evaluation baseline.
-4. **Report** — results are ranked by severity and confidence into an analyst
-   queue rendered in the terminal.
+1. **Parse** — sshd syslog (and Windows/AD events via Splunk) into
+   structured events: failed/successful logins, pre-auth disconnects,
+   max-auth-exceeded bursts, key-scanning, and pure connection probes —
+   correlated into one alert per source IP.
+2. **Enrich** — geolocation and threat-intel reputation per source
+   (offline tables for the demo, designed to swap in AbuseIPDB/MaxMind).
+3. **Triage** — Claude returns a **schema-validated structured verdict**
+   per alert (Pydantic + the Anthropic structured-outputs API): verdict,
+   severity, confidence, MITRE ATT&CK technique, a plain-English analyst
+   summary, and prioritized response actions. A rule-based heuristic engine
+   provides the offline fallback and the evaluation baseline.
+4. **Work the queue** — a Streamlit console with case management,
+   threat analytics, and AI-written incident reports.
 
-## Quick start
+## The console
 
-```bash
-pip install -r requirements.txt
+### Analyst queue with case management
 
-# No API key needed — heuristic baseline on the bundled sample log
-python main.py
+Every alert is a one-line row — severity, source, ATT&CK technique,
+confidence — that expands into the full investigation: Claude's analyst
+summary, prioritized actions, enrichment, and the raw log evidence.
+Alerts have a **lifecycle** (New → Investigating → Contained → Closed) with
+assignee and notes, persisted across sessions — and an **agree/disagree
+control on every AI verdict**, exportable as new labeled training data.
 
-# Claude-powered triage
-export ANTHROPIC_API_KEY=sk-ant-...
-python main.py --llm
+![Analyst queue and case management](docs/dashboard_case.png)
 
-# Interactive dashboard (upload your own logs, switch engines, view evals)
-streamlit run dashboard.py
-```
+### Attack origins
 
-## Splunk + Active Directory integration
+Confirmed attacks aggregated by source geolocation — bubble size scales
+with attack count.
 
-Instead of flat files, the pipeline can pull live **Windows / Active Directory
-authentication events** (EventCode 4625 failed logon, 4624 successful logon)
-from a Splunk instance via the REST API:
+![Attack origin map](docs/dashboard_map.png)
 
-```bash
-export SPLUNK_HOST=mystack.splunkcloud.com   # or your server IP
-export SPLUNK_TOKEN=eyJr...                  # Settings > Tokens in Splunk Web
-export SPLUNK_INDEX=wineventlog
+### Threat analysis
 
-python main.py --source splunk --earliest -24h@h --llm
-```
+An hourly **attack timeline** (colored by severity — campaigns stand out
+against background noise), a **MITRE ATT&CK coverage matrix** in Navigator
+style, **most-targeted accounts and hosts**, and one-click **IOC export**
+(CSV with reputation/tags/ATT&CK, or a plain-text blocklist).
 
-Splunk events are normalized into the same internal event model as SSH logs,
-so enrichment, triage, and reporting are identical. AD-specific semantics are
-handled in triage: internal sources are not assumed benign — many failures
-from one internal host across multiple accounts is flagged as possible
-lateral movement / internal password spraying (T1110.003).
+![Attack timeline](docs/dashboard_timeline.png)
+![ATT&CK coverage and targeted entities](docs/dashboard_attack_matrix.png)
 
-See `.env.example` for all connection options (basic auth, self-signed
-certs, custom index). The Splunk-to-pipeline mapping is covered by an offline
-fixture (`data/sample_splunk_export.jsonl`) so it can be tested without a
-live instance.
+### AI incident reports
 
-## Evaluation
+Pick any confirmed attack and Claude writes a formal incident report —
+executive summary, evidence with quoted log lines, impact assessment,
+prioritized remediation, IOCs — ready to download as markdown.
 
-The repo includes hand-labeled ground truth (`data/labels.csv`) for every
-source IP in the sample log, and an evaluation harness that measures triage
-precision and recall — because an AI security tool you haven't measured is a
-liability, not an asset.
+![AI-generated incident report](docs/dashboard_report.png)
 
-```bash
-python main.py --llm --json results.json
-python evaluate.py results.json
-```
+### Evaluation, built in
 
-### Benchmark: randomized multi-host dataset with realistic sshd noise
+Triage verdicts are graded against hand-labeled ground truth right in the
+console ([screenshot](docs/dashboard_eval.png)) — because an AI security
+tool you haven't measured is a liability, not an asset.
 
-`generate_dataset.py` builds a fresh benchmark every run — randomized IPs,
-hosts, usernames, volumes, timing, and scenario counts (the seed is printed,
-so any run is reproducible with `--seed`). Beyond failed/accepted passwords
-it emits the noise real sshd logs contain: pre-auth disconnects,
-`maximum authentication attempts exceeded` bursts, failed publickey attempts
-(key scanning), and pure connection probes from scanners that never attempt
-authentication.
+## Benchmark: 523 alerts, deliberately hard
 
-Hard cases are designed to break naive rules: slow-and-low brute force,
-distributed botnet sprays (2 attempts per IP), stolen-credential logins with
-*zero* failures, employees logging in from home IPs that *look* like
+`generate_dataset.py` builds a fresh randomized benchmark every run
+(IPs, hosts, usernames, volumes, timing — seed printed for
+reproducibility) with the noise real sshd logs contain. The hard cases are
+designed to break naive rules: slow-and-low brute force, distributed botnet
+sprays (2 attempts per IP), **stolen-credential logins with zero
+failures**, employees logging in from home IPs that *look* like
 compromises, and misconfigured cron jobs that look like internal attacks.
 
 ```bash
-python generate_dataset.py            # new random ~500-alert dataset each run
+python generate_dataset.py            # new random ~500-alert dataset
 python generate_dataset.py --seed 42  # reproduce the committed benchmark
-python generate_dataset.py --scale 1  # smaller ~50-alert dataset
 python main.py data/large_auth.log --llm --json results.json
 python evaluate.py results.json data/large_labels.csv
 ```
-
-![Benchmark run in the dashboard](docs/dashboard_benchmark.png)
-
-*The full benchmark in the dashboard: 523 alerts triaged by Claude Sonnet,
-50 criticals surfaced — including stolen-credential logins (T1078) that
-volume-based rules can't see. The committed results
-(`data/benchmark_results_sonnet.json`) load instantly in the dashboard, no
-API key needed.*
 
 Committed benchmark (`--seed 42`): 3,912 log lines → 523 alerts
 (263 attacks, 260 benign, 173 hard cases) across 5 hosts:
@@ -154,87 +107,106 @@ Committed benchmark (`--seed 42`): 3,912 log lines → 523 alerts
 | Claude Sonnet (`claude-sonnet-4-6`) | 523 alerts | 94% | **98%** | 17 | 0 |
 | Claude Opus (`claude-opus-4-8`) | 52-alert subset* | **100%** | 85% | **0** | 0 |
 
+Scoring is SOC-shaped: punting an attack to "needs investigation" costs
+recall, and explicitly clearing a real attack counts as a **dangerous
+miss** (neither engine had any).
+
 **The two Claude tiers fail in opposite directions**, and the benchmark
 makes that tradeoff measurable. Sonnet is recall-oriented: it caught 257 of
-263 attacks and never cleared a real attack as benign — but it is noisy,
-raising 17 false alarms and punting 97 benign alerts to investigation
-(~114 alerts an analyst touches unnecessarily). Opus is precision-oriented:
-zero false alarms and confident benign clears, at the cost of more
-conservative recall. A one-analyst team drowns in Sonnet's punts; a staffed
-SOC might happily pay that noise for a 13-point recall gain. Model choice
-is an operational decision, not a leaderboard decision.
+263 attacks — including every stolen-credential login (T1078), a pattern
+failure-counting rules are structurally blind to — but it is noisy, punting
+97 benign alerts to human review. Opus is precision-oriented: zero false
+alarms and confident benign clears (it correctly cleared every
+employee-at-home "compromise lookalike" the rule engine paged on), at the
+cost of more conservative recall. A one-analyst team drowns in Sonnet's
+punts; a staffed SOC might happily pay that noise for the recall. **Model
+choice is an operational decision, not a leaderboard decision.**
 
-*Opus was measured on the earlier 52-alert (`--scale 1`) version of this
-benchmark (a full 523-alert Opus run costs ~$10 in API usage). The
-heuristic's scores were stable across both scales (80/62 at 52 alerts vs
-80/61 at 523). The Sonnet run: 523 alerts, ~40 minutes (tier-1 API rate
-limits), ~$4.
+*Opus measured on the 52-alert (`--scale 1`) version; the heuristic was
+stable across scales (80/62 → 80/61). A full 523-alert Opus run costs ~$10.
 
-Scoring is SOC-shaped: punting an attack to "needs investigation" costs
-recall, and explicitly clearing an attack counts as a dangerous miss
-(neither engine had any).
+## Quick start
 
-Where the gap comes from — the hard cases:
+```bash
+git clone https://github.com/nahinhayat/ai-soc-triage && cd ai-soc-triage
+pip install -r requirements.txt
 
-- **Employee home logins** (typo then success from a residential IP): the
-  heuristic raises CRITICAL false alarms on all 3; Claude cleared all 3,
-  reasoning that "low-volume, single-account, no invalid users, clean
-  intel" fits a typo, not an attack.
-- **Stolen credentials** (clean login from infostealer infrastructure, zero
-  failures): invisible to failure-counting rules; Claude flagged it
-  CRITICAL and mapped it to **T1078 Valid Accounts** — the correct
-  technique, not brute force.
-- **Distributed spray** (botnet /24, 2 attempts per IP): under every
-  per-IP threshold; Claude caught all 4 nodes from intel context.
-- **Slow-and-low** (3 root failures spread over hours): under the volume
-  threshold; Claude flagged all 3 using reputation + targeting pattern.
+# Dashboard — the committed benchmark results load with NO API key needed
+streamlit run dashboard.py
 
-Every recall miss from Claude was a conservative punt to
-needs_investigation with the correct hypothesis attached — never a cleared
-attack. It also punts ambiguous benign cases (employee home logins, dead
-cron jobs) rather than guessing, which is exactly the Tier 1 behavior you
-want: zero dangerous misses on both sides of the queue. On the small
-hand-built sample (`data/sample_auth.log` + `data/labels.csv`) both engines
-score 7/7; that set is kept as a quick smoke test.
+# CLI, heuristic engine (no key needed)
+python main.py
 
-A full ~50-alert Claude run takes ~90 seconds (4 parallel workers) and
-costs roughly $1 in API usage.
+# CLI, Claude engine
+export ANTHROPIC_API_KEY=sk-ant-...
+python main.py --llm --json results.json
+python evaluate.py results.json
+```
 
-## What the sample log contains
+## Splunk + Active Directory integration
 
-The bundled `data/sample_auth.log` simulates one day on an internet-facing
-web server, including:
+The pipeline can pull live **Windows/AD authentication events** (4625
+failed / 4624 successful logons) from Splunk via the REST API instead of
+flat files:
 
-| Pattern | Source | Ground truth |
-|---|---|---|
-| Multi-username brute force (15 attempts) | `203.0.113.45` | attack (blocked) |
-| **Success after repeated failures** | `198.51.100.23` | account compromise |
-| Root brute force from a Tor exit node | `185.220.101.7` | attack (blocked) |
-| Credential spraying on service accounts | `91.240.118.172` | attack (blocked) |
-| Routine admin publickey logins | `10.0.0.5` | benign |
-| User typo then successful login | `10.0.0.12` | benign |
+```bash
+export SPLUNK_HOST=mystack.splunkcloud.com
+export SPLUNK_TOKEN=eyJr...                  # Settings > Tokens in Splunk Web
+export SPLUNK_INDEX=wineventlog
+python main.py --source splunk --earliest -24h@h --llm
+```
 
-## Design notes
+Splunk events normalize into the same internal event model, so enrichment,
+triage, and reporting are identical. AD semantics are handled in triage:
+internal sources are **not** assumed benign — failures from one internal
+host across many accounts flag as lateral movement / internal spraying
+(T1110.003). The wire-format mapping is covered by an offline fixture
+(`data/sample_splunk_export.jsonl`), testable without a live instance.
 
-- **Structured outputs, not free text.** Triage verdicts come back as a
-  validated Pydantic model via `client.messages.parse()` — no brittle JSON
-  parsing of model prose, and malformed responses fail loudly.
-- **Prompt caching.** The system prompt is cached (`cache_control: ephemeral`)
-  so triaging N alerts only pays for the analyst instructions once.
-- **The LLM never decides alone.** Threat-intel reputation is provided as
-  *context to weigh*, and the heuristic baseline exists so LLM verdicts can be
-  benchmarked, not blindly trusted.
+## AI engineering notes
+
+- **Structured outputs, not free text** — verdicts come back as a
+  validated Pydantic model via `client.messages.parse()`; malformed
+  responses fail loudly instead of corrupting the queue
+- **Prompt caching** — the analyst system prompt is cached
+  (`cache_control: ephemeral`), so N alerts pay for the instructions once
+- **Parallel triage** with a bounded worker pool and a rate-limit-aware
+  retry budget (the SDK honors `retry-after`; large batches on lower API
+  tiers wait out per-minute token limits instead of aborting)
+- **The LLM never decides alone** — threat intel is context to weigh, the
+  heuristic baseline exists so LLM verdicts are benchmarked, and the
+  dashboard's feedback loop turns analyst corrections into labeled data
+
+## Project structure
+
+```
+├── main.py                  # CLI: parse → enrich → triage → ranked report
+├── dashboard.py             # Streamlit SOC console
+├── evaluate.py              # precision/recall vs labeled ground truth
+├── generate_dataset.py      # randomized benchmark generator (--seed, --scale)
+├── src/
+│   ├── parser.py            # sshd log parser + per-source alert correlation
+│   ├── enrich.py            # GeoIP + threat-intel enrichment
+│   ├── triage.py            # Claude triage, heuristic baseline, IR reports
+│   ├── splunk_source.py     # Windows/AD events via the Splunk REST API
+│   └── case_store.py        # persisted case state (status, notes, feedback)
+├── data/                    # sample logs, benchmark, labels, precomputed results
+├── docs/                    # screenshots
+└── scripts/                 # screenshot automation
+```
 
 ## Roadmap
 
 - [ ] Live enrichment: AbuseIPDB + MaxMind GeoLite2
-- [x] Splunk ingestion (`--source splunk` pulls Windows/AD events 4624/4625 via the REST API)
-- [ ] Agentic enrichment: let Claude call lookup tools itself via tool use
-- [x] Windows Event Log (4624/4625) support — covered by the Splunk integration
-- [x] Streamlit dashboard (`streamlit run dashboard.py`)
+- [ ] Agentic enrichment: Claude calls the lookup tools itself via tool use
+- [x] Splunk ingestion (`--source splunk`, Windows/AD events 4624/4625)
+- [x] Windows Event Log support — covered by the Splunk integration
+- [x] Streamlit SOC console with case management and analytics
+- [x] Reproducible 500-alert benchmark with hard cases
 
 ## Disclaimer
 
-All log data is synthetic, generated for demonstration. IP addresses are from
-documentation/example ranges or well-known public scanner ranges; no real
-systems were involved.
+All log data is synthetic, generated for demonstration. IP addresses are
+from documentation/example ranges or generated at random; no real systems
+were involved. Built as a portfolio project exploring AI-assisted security
+operations.
