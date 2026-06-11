@@ -278,62 +278,74 @@ if not geo_df.empty:
         tooltip={"text": "{city}: {attacks} attack alert(s)"},
     ), height=420)
 
-# ---------------------------------------------------------------- queue
-st.subheader("Analyst queue — highest risk first")
-st.session_state.setdefault("f_sev", SEV_ORDER)
-st.session_state.setdefault("f_verdict", VERDICT_ALL)
-f1, f2, f3 = st.columns([3, 3, 2])
-sev_sel = f1.multiselect("Severity", SEV_ORDER, key="f_sev")
-verdict_sel = f2.multiselect("Verdict", VERDICT_ALL, key="f_verdict")
-ip_query = f3.text_input("Find source IP", placeholder="e.g. 10.0.")
+# ---------------------------------------------------------------- queue + eval
+st.divider()
+truth_labels = load_labels(labels_path)
+tab_names = ["Analyst queue"]
+if truth_labels:
+    tab_names.append("Evaluation vs ground truth")
+tabs = st.tabs(tab_names)
 
-filtered = [r for r in results
-            if r["severity"] in sev_sel
-            and VERDICT_LABEL[Verdict(r["verdict"])] in verdict_sel
-            and (not ip_query or ip_query in r["src_ip"])]
-st.caption(f"{len(filtered)} of {len(results)} alerts match the current filters")
+with tabs[0]:
+    fcol, scol = st.columns([5, 2], vertical_alignment="bottom")
+    with fcol:
+        sev_sel = st.pills("Severity", SEV_ORDER, selection_mode="multi",
+                           default=SEV_ORDER, key="f_sev")
+        verdict_sel = st.pills("Verdict", VERDICT_ALL, selection_mode="multi",
+                               default=VERDICT_ALL, key="f_verdict")
+    with scol:
+        ip_query = st.text_input("Find source IP", placeholder="e.g. 10.0.")
 
-with st.container(height=620):
-    for i, r in enumerate(filtered, 1):
-        sev = Severity(r["severity"])
-        verdict = VERDICT_LABEL[Verdict(r["verdict"])]
-        if r["mitre_technique_name"] not in ("N/A", ""):
-            attack = f"{r['mitre_technique_name']} ({r['mitre_technique_id']})"
-        elif r["verdict"] == "false_positive":
-            attack = "benign activity"
-        else:
-            attack = "unclear pattern"
-        header = (f"**#{i}**  ·  `{r['src_ip']}`  ·  {SEVERITY_BADGE[sev]}  ·  "
-                  f"**{attack}**  ·  {verdict}  ·  {r['confidence']}%")
-        with st.expander(header, expanded=(i == 1)):
-            left, right = st.columns([3, 2])
-            with left:
-                st.markdown(f"**Analyst summary** — {r['summary']}")
-                st.markdown("**Recommended actions**")
-                for n, action in enumerate(r["recommended_actions"], 1):
-                    st.markdown(f"{n}. {action}")
-            with right:
-                ctx = enriched_by_ip[r["src_ip"]]["enrichment"]
-                intel = ctx["threat_intel"]
-                st.markdown("**Enrichment**")
-                st.markdown(f"- Geolocation: {ctx['geolocation']}")
-                st.markdown(f"- Reputation: {intel.get('reputation', 'no records')}")
-                if intel.get("tags"):
-                    st.markdown(f"- Intel tags: {', '.join(intel['tags'])}")
-                st.markdown(f"- ATT&CK: `{r['mitre_technique_id']}` {r['mitre_technique_name']}")
-            st.markdown("**Raw events**")
-            st.code("\n".join(raw_events[r["src_ip"]]), language="text")
+    # Empty pill selection = no filter on that dimension (show all)
+    active_sev = sev_sel or SEV_ORDER
+    active_verdict = verdict_sel or VERDICT_ALL
+    filtered = [r for r in results
+                if r["severity"] in active_sev
+                and VERDICT_LABEL[Verdict(r["verdict"])] in active_verdict
+                and (not ip_query or ip_query in r["src_ip"])]
+    st.caption(f"{len(filtered)} of {len(results)} alerts match · ranked highest risk first")
 
-# ---------------------------------------------------------------- evaluation
-labels = load_labels(labels_path)
-if labels:
-    st.subheader("Evaluation against ground truth")
-    rows = []
-    for ip, truth in labels.items():
-        pred = next((r["verdict"] for r in results if r["src_ip"] == ip), "missing")
-        rows.append({"source IP": ip, "ground truth": truth, "predicted": pred,
-                     "result": "✅" if pred == truth else "❌"})
-    eval_df = pd.DataFrame(rows)
-    correct = (eval_df["ground truth"] == eval_df["predicted"]).sum()
-    st.markdown(f"**{correct}/{len(eval_df)}** verdicts match the hand-labeled ground truth.")
-    st.dataframe(eval_df, width="stretch", hide_index=True)
+    with st.container(height=620):
+        for i, r in enumerate(filtered, 1):
+            sev = Severity(r["severity"])
+            if r["mitre_technique_name"] not in ("N/A", ""):
+                attack = f"{r['mitre_technique_name']} ({r['mitre_technique_id']})"
+            elif r["verdict"] == "false_positive":
+                attack = "benign activity"
+            else:
+                attack = "unclear pattern"
+            header = (f"{SEVERITY_BADGE[sev]} · `{r['src_ip']}` · **{attack}** · "
+                      f"{r['confidence']}%")
+            with st.expander(header, expanded=(i == 1)):
+                left, right = st.columns([3, 2])
+                with left:
+                    st.markdown(f"**Analyst summary** — {r['summary']}")
+                    st.markdown("**Recommended actions**")
+                    for n, action in enumerate(r["recommended_actions"], 1):
+                        st.markdown(f"{n}. {action}")
+                with right:
+                    ctx = enriched_by_ip[r["src_ip"]]["enrichment"]
+                    intel = ctx["threat_intel"]
+                    st.markdown("**Assessment**")
+                    st.markdown(f"- Verdict: {VERDICT_LABEL[Verdict(r['verdict'])]} "
+                                f"({r['confidence']}% confidence)")
+                    st.markdown(f"- ATT&CK: `{r['mitre_technique_id']}` {r['mitre_technique_name']}")
+                    st.markdown("**Enrichment**")
+                    st.markdown(f"- Geolocation: {ctx['geolocation']}")
+                    st.markdown(f"- Reputation: {intel.get('reputation', 'no records')}")
+                    if intel.get("tags"):
+                        st.markdown(f"- Intel tags: {', '.join(intel['tags'])}")
+                st.markdown("**Raw events**")
+                st.code("\n".join(raw_events[r["src_ip"]]), language="text")
+
+if truth_labels:
+    with tabs[1]:
+        rows = []
+        for ip, truth in truth_labels.items():
+            pred = next((r["verdict"] for r in results if r["src_ip"] == ip), "missing")
+            rows.append({"source IP": ip, "ground truth": truth, "predicted": pred,
+                         "result": "✅" if pred == truth else "❌"})
+        eval_df = pd.DataFrame(rows)
+        correct = (eval_df["ground truth"] == eval_df["predicted"]).sum()
+        st.markdown(f"**{correct}/{len(eval_df)}** verdicts match the hand-labeled ground truth.")
+        st.dataframe(eval_df, width="stretch", hide_index=True)
