@@ -8,6 +8,7 @@ import json
 import os
 import tempfile
 
+import altair as alt
 import pandas as pd
 import streamlit as st
 
@@ -156,38 +157,87 @@ st.markdown(
 if firsts and lasts:
     st.caption(f"Activity window: {min(firsts)} → {max(lasts)}  ·  model: {engine_label}")
 
-c1, c2, c3, c4 = st.columns(4)
+punted = [r for r in results if r["verdict"] == "needs_investigation"]
+c1, c2, c3, c4, c5 = st.columns(5)
 c1.metric("Alerts in queue", len(results))
 c2.metric("Confirmed attacks", len(attacks))
-c3.metric("Cleared as benign", len(benign))
-c4.metric("Critical — act now", len(critical))
+c3.metric("Needs review", len(punted))
+c4.metric("Cleared as benign", len(benign))
+c5.metric("Critical — act now", len(critical))
 
-# ---------------------------------------------------------------- activity chart
-st.subheader("Most active sources")
-chart_df = pd.DataFrame(
-    [{"source IP": a["src_ip"],
-      "failed logins": a["failed_logins"],
-      "successful logins": a["successful_logins"],
-      "probes (no auth)": a.get("connection_probes_no_auth", 0)} for a in enriched]
-)
-chart_df["total"] = chart_df.drop(columns="source IP").sum(axis=1)
-top = chart_df.nlargest(15, "total")
-if len(chart_df) > 15:
-    st.caption(f"Top 15 of {len(chart_df)} sources by event volume")
-st.bar_chart(
-    top.set_index("source IP")[["failed logins", "successful logins", "probes (no auth)"]],
-    color=["#e24b4a", "#1d9e75", "#ba7517"],
-    horizontal=True,
-    height=max(240, 28 * len(top)),
-)
+# ---------------------------------------------------------------- overview charts
+SEV_ORDER = ["critical", "high", "medium", "low", "informational"]
+SEV_COLORS = ["#e24b4a", "#f0716f", "#ef9f27", "#378add", "#888780"]
+
+left, right = st.columns(2)
+with left:
+    st.subheader("Queue by severity")
+    sev_counts = (pd.DataFrame({"severity": [r["severity"] for r in results]})
+                  .value_counts().reset_index(name="alerts"))
+    sev_chart = alt.Chart(sev_counts).mark_bar().encode(
+        x=alt.X("alerts:Q", title=None),
+        y=alt.Y("severity:N", sort=SEV_ORDER, title=None),
+        color=alt.Color("severity:N",
+                        scale=alt.Scale(domain=SEV_ORDER, range=SEV_COLORS),
+                        legend=None),
+        tooltip=["severity", "alerts"],
+    ).properties(height=200)
+    st.altair_chart(sev_chart, use_container_width=True)
+with right:
+    st.subheader("Attack techniques")
+    techniques = [r["mitre_technique_name"] for r in results
+                  if r["verdict"] == "true_positive"
+                  and r["mitre_technique_name"] not in ("N/A", "")]
+    if techniques:
+        tech_counts = (pd.DataFrame({"technique": techniques})
+                       .value_counts().reset_index(name="alerts").head(8))
+        tech_chart = alt.Chart(tech_counts).mark_bar(color="#d85a30").encode(
+            x=alt.X("alerts:Q", title=None),
+            y=alt.Y("technique:N", sort="-x", title=None),
+            tooltip=["technique", "alerts"],
+        ).properties(height=200)
+        st.altair_chart(tech_chart, use_container_width=True)
+    else:
+        st.caption("No confirmed attacks in this dataset.")
+
+# Per-source activity is only readable on small datasets; at benchmark
+# scale the top sources are uniformly noisy brute-forcers.
+if len(enriched) <= 20:
+    st.subheader("Most active sources")
+    chart_df = pd.DataFrame(
+        [{"source IP": a["src_ip"],
+          "failed logins": a["failed_logins"],
+          "successful logins": a["successful_logins"],
+          "probes (no auth)": a.get("connection_probes_no_auth", 0)} for a in enriched]
+    )
+    chart_df["total"] = chart_df.drop(columns="source IP").sum(axis=1)
+    top = chart_df.nlargest(15, "total")
+    st.bar_chart(
+        top.set_index("source IP")[["failed logins", "successful logins", "probes (no auth)"]],
+        color=["#e24b4a", "#1d9e75", "#ba7517"],
+        horizontal=True,
+        height=max(240, 28 * len(top)),
+    )
 
 # ---------------------------------------------------------------- queue
 st.subheader("Analyst queue — highest risk first")
-MAX_SHOWN = 30
-if len(results) > MAX_SHOWN:
-    st.caption(f"Showing the top {MAX_SHOWN} of {len(results)} alerts — "
-               f"export the full queue with `python main.py --llm --json`")
-for i, r in enumerate(results[:MAX_SHOWN], 1):
+f1, f2, f3, f4 = st.columns([3, 3, 2, 1])
+sev_sel = f1.multiselect("Severity", SEV_ORDER, default=SEV_ORDER)
+verdict_sel = f2.multiselect("Verdict", list(VERDICT_LABEL.values()),
+                             default=list(VERDICT_LABEL.values()))
+ip_query = f3.text_input("Find source IP", placeholder="e.g. 10.0.")
+show_n = f4.selectbox("Show", [25, 50, 100, "All"])
+
+filtered = [r for r in results
+            if r["severity"] in sev_sel
+            and VERDICT_LABEL[Verdict(r["verdict"])] in verdict_sel
+            and (not ip_query or ip_query in r["src_ip"])]
+limit = len(filtered) if show_n == "All" else int(show_n)
+if len(filtered) != len(results) or len(filtered) > limit:
+    st.caption(f"Showing {min(limit, len(filtered))} of {len(filtered)} matching "
+               f"alerts ({len(results)} total)")
+
+for i, r in enumerate(filtered[:limit], 1):
     sev = Severity(r["severity"])
     verdict = VERDICT_LABEL[Verdict(r["verdict"])]
     if r["mitre_technique_name"] not in ("N/A", ""):
