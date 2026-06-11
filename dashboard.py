@@ -57,12 +57,6 @@ VERDICT_ALL = list(VERDICT_LABEL.values())
 SEV_ORDER = ["critical", "high", "medium", "low", "informational"]
 SEV_COLORS = ["#e24b4a", "#f0716f", "#ef9f27", "#378add", "#888780"]
 
-
-def _set_queue_filter(severities, verdicts):
-    """Metric-button callback: point the queue filters at one slice."""
-    st.session_state["f_sev"] = severities
-    st.session_state["f_verdict"] = verdicts
-
 # Coordinates for the cities that appear in enrichment geolocation strings
 # (format: "CC — City (ASN/provider)").
 CITY_COORDS = {
@@ -204,18 +198,12 @@ if firsts and lasts:
     st.caption(f"Activity window: {min(firsts)} → {max(lasts)}  ·  model: {engine_label}")
 
 punted = [r for r in results if r["verdict"] == "needs_investigation"]
-metric_cards = [
-    ("Alerts in queue", len(results), SEV_ORDER, VERDICT_ALL),
-    ("Confirmed attacks", len(attacks), SEV_ORDER, ["true positive"]),
-    ("Needs review", len(punted), SEV_ORDER, ["needs investigation"]),
-    ("Cleared as benign", len(benign), SEV_ORDER, ["false positive"]),
-    ("Critical — act now", len(critical), ["critical"], VERDICT_ALL),
-]
-for col, (label, value, sevs, verdicts) in zip(st.columns(5), metric_cards):
-    with col:
-        st.metric(label, value)
-        st.button("View ↓", key=f"btn_{label}", on_click=_set_queue_filter,
-                  args=(sevs, verdicts))
+c1, c2, c3, c4, c5 = st.columns(5)
+c1.metric("Alerts in queue", len(results))
+c2.metric("Confirmed attacks", len(attacks))
+c3.metric("Needs review", len(punted))
+c4.metric("Cleared as benign", len(benign))
+c5.metric("Critical — act now", len(critical))
 
 # ---------------------------------------------------------------- overview charts
 left, right = st.columns(2)
