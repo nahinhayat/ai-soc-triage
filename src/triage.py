@@ -100,6 +100,33 @@ def llm_triage(enriched_alerts: List[dict], model: str = "claude-opus-4-8",
         return list(executor.map(triage_one, enriched_alerts))
 
 
+REPORT_PROMPT = """You are a senior incident responder writing a formal incident \
+report for SOC management and the affected system owners. Write it in markdown with \
+these sections: Executive summary (non-technical, 3-4 sentences); Incident details \
+(what happened, when, source, targets); Evidence (quote the key log lines); MITRE \
+ATT&CK mapping; Impact assessment; Containment and remediation (numbered, by \
+priority); Indicators of compromise. Be precise; do not speculate beyond the \
+evidence provided. Title the report with the source IP and technique."""
+
+
+def generate_incident_report(alert: dict, triage_result: dict, raw_lines: List[str],
+                             model: str = "claude-opus-4-8") -> str:
+    """Write a formal incident report for one triaged alert."""
+    import anthropic
+
+    client = anthropic.Anthropic(max_retries=5)
+    body = ("Alert data and AI triage verdict:\n"
+            + json.dumps({"alert": alert, "ai_triage": triage_result}, indent=2)
+            + "\n\nRaw log events:\n" + "\n".join(raw_lines))
+    response = client.messages.create(
+        model=model,
+        max_tokens=3000,
+        system=REPORT_PROMPT,
+        messages=[{"role": "user", "content": body}],
+    )
+    return "".join(b.text for b in response.content if b.type == "text")
+
+
 def heuristic_triage(enriched_alerts: List[dict]) -> List[TriageResult]:
     """Rule-based triage for offline runs. Intentionally simpler than the LLM —
     it exists to keep the pipeline demoable without an API key and as a

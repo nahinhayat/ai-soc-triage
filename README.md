@@ -16,6 +16,28 @@ list of what actually matters.
 analyst summary, prioritized response actions, threat-intel enrichment, and
 the raw log evidence per alert ([full-page screenshot](docs/dashboard.png)).*
 
+### SOC console features
+
+Beyond triage, the dashboard covers the alert lifecycle the way a real SOC
+console does:
+
+- **Case management** — per-alert status (New → Investigating → Contained →
+  Closed), assignee, and investigation notes, persisted across sessions;
+  status shows in the queue row
+- **Analyst feedback loop** — agree/disagree on every AI verdict, exportable
+  as CSV: analyst corrections become new labeled training data
+- **Attack timeline** — hourly event volume colored by severity, for
+  spotting campaigns vs background noise
+- **MITRE ATT&CK coverage matrix** — observed tactics × techniques with
+  alert counts
+- **Entity analytics** — most-targeted accounts and hosts across all
+  confirmed attacks
+- **IOC export** — one-click CSV of attacking IPs (with reputation, tags,
+  ATT&CK) or a plain-text firewall blocklist
+- **AI incident reports** — pick any confirmed attack and Claude writes a
+  formal markdown incident report (executive summary, evidence, impact,
+  remediation, IOCs) ready to download
+
 ## Pipeline
 
 ```

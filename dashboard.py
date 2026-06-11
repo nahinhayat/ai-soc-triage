@@ -3,10 +3,13 @@
 Run with:
     streamlit run dashboard.py
 """
+import calendar
 import csv
+import hashlib
 import json
 import math
 import os
+import re
 import tempfile
 
 import altair as alt
@@ -14,9 +17,10 @@ import pandas as pd
 import pydeck as pdk
 import streamlit as st
 
+from src.case_store import STATUS_ICON, STATUSES, get_cases, update_case
 from src.enrich import enrich_alert
 from src.parser import parse_log
-from src.triage import Severity, Verdict, llm_triage
+from src.triage import Severity, Verdict, generate_incident_report, llm_triage
 
 def _load_dotenv(path=".env"):
     """Tiny .env loader so the dashboard picks up keys without exports."""
@@ -71,6 +75,102 @@ CITY_COORDS = {
     "Toronto": (43.65, -79.38), "Iowa": (41.88, -93.10),
     "Ashburn": (39.04, -77.49), "Frankfurt": (50.11, 8.68),
 }
+
+
+# Tactic mapping for the techniques the triage engines emit; parent
+# technique is used as a fallback for sub-techniques.
+TACTIC_MAP = {
+    "T1595": "Reconnaissance",
+    "T1078": "Initial Access",
+    "T1110": "Credential Access",
+    "T1021": "Lateral Movement",
+    "T1046": "Discovery",
+}
+TACTIC_ORDER = ["Reconnaissance", "Initial Access", "Credential Access",
+                "Discovery", "Lateral Movement", "Other"]
+MONTHS = {m: i for i, m in enumerate(calendar.month_abbr) if m}
+TS_RE = re.compile(r"^(\w{3})\s+(\d+)\s(\d\d):(\d\d):\d\d")
+
+
+def timeline_df(raw_events, results):
+    """One row per log event with its hour and the parent alert's severity."""
+    sev_by_ip = {r["src_ip"]: r["severity"] for r in results}
+    rows = []
+    for ip, lines in raw_events.items():
+        sev = sev_by_ip.get(ip, "informational")
+        for line in lines:
+            m = TS_RE.match(line)
+            if not m:
+                continue
+            mon, day, hour, _ = m.groups()
+            rows.append({"hour": pd.Timestamp(2026, MONTHS.get(mon, 6),
+                                              int(day), int(hour)),
+                         "severity": sev})
+    return pd.DataFrame(rows)
+
+
+def attack_matrix_df(results):
+    """Confirmed attacks grouped into a MITRE ATT&CK tactic/technique grid.
+
+    Grouped by technique ID only — the LLM may phrase the technique *name*
+    slightly differently across alerts, and grouping on the name would
+    produce near-duplicate rows.
+    """
+    counts, names = {}, {}
+    for r in results:
+        tid = r["mitre_technique_id"]
+        if r["verdict"] != "true_positive" or tid in ("N/A", ""):
+            continue
+        counts[tid] = counts.get(tid, 0) + 1
+        name_votes = names.setdefault(tid, {})
+        name_votes[r["mitre_technique_name"]] = name_votes.get(r["mitre_technique_name"], 0) + 1
+    rows = []
+    for tid, count in counts.items():
+        name = max(names[tid], key=names[tid].get)
+        tactic = TACTIC_MAP.get(tid, TACTIC_MAP.get(tid.split(".")[0], "Other"))
+        rows.append({"tactic": tactic, "technique": f"{tid} — {name}", "alerts": count})
+    return pd.DataFrame(rows)
+
+
+def entity_tables(enriched, results):
+    """Top targeted accounts and hosts across confirmed attacks."""
+    verdict_by_ip = {r["src_ip"]: r["verdict"] for r in results}
+    accounts, hosts = {}, {}
+    for a in enriched:
+        if verdict_by_ip.get(a["src_ip"]) != "true_positive":
+            continue
+        for user in a["usernames_targeted"]:
+            accounts[user] = accounts.get(user, 0) + 1
+        for host in a.get("hosts_targeted", []):
+            hosts[host] = hosts.get(host, 0) + 1
+    acc_df = (pd.DataFrame([{"account": u, "attacking sources": n}
+                            for u, n in accounts.items()])
+              .sort_values("attacking sources", ascending=False).head(10))
+    host_df = (pd.DataFrame([{"host": h, "attack alerts": n}
+                             for h, n in hosts.items()])
+               .sort_values("attack alerts", ascending=False).head(10))
+    return acc_df, host_df
+
+
+def ioc_df(results, enriched_by_ip):
+    """Exportable indicators of compromise: external attacking IPs."""
+    rows = []
+    for r in results:
+        if r["verdict"] != "true_positive":
+            continue
+        ctx = enriched_by_ip[r["src_ip"]]
+        if ctx["enrichment"]["internal_source"]:
+            continue
+        intel = ctx["enrichment"]["threat_intel"]
+        rows.append({
+            "indicator": r["src_ip"], "type": "ipv4",
+            "severity": r["severity"], "technique": r["mitre_technique_id"],
+            "reputation": intel.get("reputation", "no records"),
+            "tags": ";".join(intel.get("tags") or []),
+            "first_seen": ctx.get("first_seen", ""),
+            "last_seen": ctx.get("last_seen", ""),
+        })
+    return pd.DataFrame(rows)
 
 
 def attack_origin_df(results, enriched_by_ip):
@@ -281,7 +381,15 @@ if not geo_df.empty:
 # ---------------------------------------------------------------- queue + eval
 st.divider()
 truth_labels = load_labels(labels_path)
-tab_names = ["Analyst queue"]
+dataset_key = hashlib.sha1(log_text.encode()).hexdigest()[:12]
+cases = get_cases(dataset_key)
+
+
+def _persist(field, widget_key, ip):
+    update_case(dataset_key, ip, **{field: st.session_state[widget_key]})
+
+
+tab_names = ["Analyst queue", "Threat analysis"]
 if truth_labels:
     tab_names.append("Evaluation vs ground truth")
 tabs = st.tabs(tab_names)
@@ -304,10 +412,16 @@ with tabs[0]:
                 and VERDICT_LABEL[Verdict(r["verdict"])] in active_verdict
                 and (not ip_query or ip_query in r["src_ip"])]
     st.caption(f"{len(filtered)} of {len(results)} alerts match · ranked highest risk first")
+    show_case_forms = len(filtered) <= 150
+    if not show_case_forms:
+        st.caption("ℹ️ Case management forms appear when 150 or fewer alerts "
+                   "are shown — narrow the filters to work cases.")
 
     with st.container(height=620):
         for i, r in enumerate(filtered, 1):
             sev = Severity(r["severity"])
+            case = cases.get(r["src_ip"], {})
+            status = case.get("status", "New")
             if r["mitre_technique_name"] not in ("N/A", ""):
                 attack = f"{r['mitre_technique_name']} ({r['mitre_technique_id']})"
             elif r["verdict"] == "false_positive":
@@ -316,6 +430,8 @@ with tabs[0]:
                 attack = "unclear pattern"
             header = (f"{SEVERITY_BADGE[sev]} · `{r['src_ip']}` · **{attack}** · "
                       f"{r['confidence']}%")
+            if status != "New":
+                header += f" · {STATUS_ICON[status]} {status.lower()}"
             with st.expander(header, expanded=(i == 1)):
                 left, right = st.columns([3, 2])
                 with left:
@@ -337,9 +453,123 @@ with tabs[0]:
                         st.markdown(f"- Intel tags: {', '.join(intel['tags'])}")
                 st.markdown("**Raw events**")
                 st.code("\n".join(raw_events[r["src_ip"]]), language="text")
+                if show_case_forms:
+                    ip = r["src_ip"]
+                    st.markdown("**Case management**")
+                    cc1, cc2, cc3 = st.columns([1.4, 1.4, 2])
+                    cc1.selectbox("Status", STATUSES,
+                                  index=STATUSES.index(status),
+                                  key=f"cs_{dataset_key}_{ip}",
+                                  on_change=_persist,
+                                  args=("status", f"cs_{dataset_key}_{ip}", ip))
+                    cc2.text_input("Assignee", value=case.get("assignee", ""),
+                                   key=f"ca_{dataset_key}_{ip}",
+                                   on_change=_persist,
+                                   args=("assignee", f"ca_{dataset_key}_{ip}", ip))
+                    cc3.segmented_control("AI verdict feedback",
+                                          ["👍 agree", "👎 disagree"],
+                                          default=case.get("feedback"),
+                                          key=f"cf_{dataset_key}_{ip}",
+                                          on_change=_persist,
+                                          args=("feedback", f"cf_{dataset_key}_{ip}", ip))
+                    st.text_area("Investigation notes", value=case.get("notes", ""),
+                                 key=f"cn_{dataset_key}_{ip}", height=70,
+                                 on_change=_persist,
+                                 args=("notes", f"cn_{dataset_key}_{ip}", ip))
+
+# ---------------------------------------------------------------- threat analysis
+with tabs[1]:
+    st.markdown("##### Attack timeline")
+    tl_df = timeline_df(raw_events, results)
+    if not tl_df.empty:
+        tl_chart = alt.Chart(tl_df).mark_bar().encode(
+            x=alt.X("hour:T", title=None),
+            y=alt.Y("count()", title="events"),
+            color=alt.Color("severity:N",
+                            scale=alt.Scale(domain=SEV_ORDER, range=SEV_COLORS),
+                            legend=alt.Legend(orient="top", title=None)),
+            tooltip=[alt.Tooltip("hour:T"), "severity", alt.Tooltip("count()", title="events")],
+        ).properties(height=220)
+        st.altair_chart(tl_chart, use_container_width=True)
+
+    st.markdown("##### MITRE ATT&CK coverage")
+    mx_df = attack_matrix_df(results)
+    if not mx_df.empty:
+        base = alt.Chart(mx_df).encode(
+            x=alt.X("tactic:N", sort=TACTIC_ORDER, title=None,
+                    axis=alt.Axis(labelAngle=0, orient="top")),
+            y=alt.Y("technique:N", title=None),
+        )
+        heat = base.mark_rect().encode(
+            color=alt.Color("alerts:Q", scale=alt.Scale(scheme="reds"), legend=None))
+        text = base.mark_text(fontWeight="bold").encode(
+            text="alerts:Q",
+            color=alt.condition("datum.alerts > 60", alt.value("white"), alt.value("#501313")))
+        st.altair_chart((heat + text).properties(height=60 + 38 * mx_df["technique"].nunique()),
+                        use_container_width=True)
+    else:
+        st.caption("No confirmed attacks to map.")
+
+    e1, e2 = st.columns(2)
+    acc_df, host_df = entity_tables(enriched, results)
+    with e1:
+        st.markdown("##### Most targeted accounts")
+        st.dataframe(acc_df, width="stretch", hide_index=True)
+    with e2:
+        st.markdown("##### Most targeted hosts")
+        st.dataframe(host_df, width="stretch", hide_index=True)
+
+    st.markdown("##### Indicators of compromise")
+    iocs = ioc_df(results, enriched_by_ip)
+    if iocs.empty:
+        st.caption("No external attack indicators.")
+    else:
+        st.caption(f"{len(iocs)} external attacking IPs")
+        d1, d2, _ = st.columns([1.5, 1.5, 3])
+        d1.download_button("Download IOCs (CSV)", iocs.to_csv(index=False),
+                           "iocs.csv", "text/csv")
+        d2.download_button("Download blocklist (TXT)",
+                           "\n".join(iocs["indicator"]), "blocklist.txt", "text/plain")
+
+    fb = [(ip, c) for ip, c in cases.items() if c.get("feedback")]
+    if fb:
+        st.markdown("##### Analyst feedback on AI verdicts")
+        agree = sum(1 for _, c in fb if "agree" in c["feedback"] and "dis" not in c["feedback"])
+        st.caption(f"{agree} agree · {len(fb) - agree} disagree — exportable as new "
+                   f"labeled training data")
+        verdict_by_ip = {r["src_ip"]: r["verdict"] for r in results}
+        fb_df = pd.DataFrame([{
+            "src_ip": ip, "ai_verdict": verdict_by_ip.get(ip, ""),
+            "analyst_feedback": c["feedback"], "notes": c.get("notes", ""),
+        } for ip, c in fb])
+        st.download_button("Download feedback (CSV)", fb_df.to_csv(index=False),
+                           "analyst_feedback.csv", "text/csv")
+
+    st.markdown("##### Incident report")
+    attack_ips = [r["src_ip"] for r in results if r["verdict"] == "true_positive"]
+    if not attack_ips:
+        st.caption("No confirmed attacks to report on.")
+    elif not os.environ.get("ANTHROPIC_API_KEY"):
+        st.caption("Set an API key to generate incident reports.")
+    else:
+        rc1, rc2 = st.columns([2, 1], vertical_alignment="bottom")
+        report_ip = rc1.selectbox("Alert", attack_ips, key="report_ip")
+        if rc2.button("Generate with Claude"):
+            r = next(x for x in results if x["src_ip"] == report_ip)
+            with st.spinner("Claude is writing the incident report..."):
+                report_md = generate_incident_report(
+                    enriched_by_ip[report_ip], r, raw_events[report_ip], model=model)
+            st.session_state["last_report"] = (report_ip, report_md)
+        if st.session_state.get("last_report", (None,))[0] == report_ip:
+            report_md = st.session_state["last_report"][1]
+            with st.container(height=420):
+                st.markdown(report_md)
+            st.download_button("Download report (Markdown)", report_md,
+                               f"incident_{report_ip.replace('.', '_')}.md",
+                               "text/markdown")
 
 if truth_labels:
-    with tabs[1]:
+    with tabs[2]:
         rows = []
         for ip, truth in truth_labels.items():
             pred = next((r["verdict"] for r in results if r["src_ip"] == ip), "missing")

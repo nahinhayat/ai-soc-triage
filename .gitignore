@@ -4,3 +4,4 @@ __pycache__/
 .venv/
 venv/
 results*.json
+data/case_state.json
