@@ -5,11 +5,13 @@ Run with:
 """
 import csv
 import json
+import math
 import os
 import tempfile
 
 import altair as alt
 import pandas as pd
+import pydeck as pdk
 import streamlit as st
 
 from src.enrich import enrich_alert
@@ -51,6 +53,41 @@ VERDICT_LABEL = {
     Verdict.false_positive: "false positive",
     Verdict.needs_investigation: "needs investigation",
 }
+
+# Coordinates for the cities that appear in enrichment geolocation strings
+# (format: "CC — City (ASN/provider)").
+CITY_COORDS = {
+    "Moscow": (55.76, 37.62), "St. Petersburg": (59.93, 30.36),
+    "Hangzhou": (30.27, 120.16), "Shenzhen": (22.54, 114.06),
+    "Amsterdam": (52.37, 4.90), "São Paulo": (-23.55, -46.63),
+    "Hanoi": (21.03, 105.85), "Tehran": (35.69, 51.39),
+    "Mumbai": (19.08, 72.88), "Seoul": (37.57, 126.98),
+    "Warsaw": (52.23, 21.01), "Istanbul": (41.01, 28.98),
+    "Stockholm": (59.33, 18.07), "Panama City": (8.98, -79.52),
+    "Chicago": (41.88, -87.63), "Dallas": (32.78, -96.80),
+    "Toronto": (43.65, -79.38), "Iowa": (41.88, -93.10),
+    "Ashburn": (39.04, -77.49), "Frankfurt": (50.11, 8.68),
+}
+
+
+def attack_origin_df(results, enriched_by_ip):
+    """Aggregate confirmed attacks per city for the bubble map."""
+    cities = {}
+    for r in results:
+        if r["verdict"] != "true_positive":
+            continue
+        geo = enriched_by_ip[r["src_ip"]]["enrichment"]["geolocation"]
+        if "—" not in geo:
+            continue
+        city = geo.split("—", 1)[1].split("(")[0].strip()
+        if city in CITY_COORDS:
+            cities[city] = cities.get(city, 0) + 1
+    rows = []
+    for city, count in cities.items():
+        lat, lon = CITY_COORDS[city]
+        rows.append({"city": city, "lat": lat, "lon": lon, "attacks": count,
+                     "radius": 90_000 + 130_000 * math.sqrt(count)})
+    return pd.DataFrame(rows)
 
 st.set_page_config(page_title="AI SOC Triage", page_icon="🛡️", layout="wide")
 
@@ -219,6 +256,28 @@ if len(enriched) <= 20:
         height=max(240, 28 * len(top)),
     )
 
+# ---------------------------------------------------------------- attack map
+geo_df = attack_origin_df(results, enriched_by_ip)
+if not geo_df.empty:
+    st.subheader("Attack origins")
+    st.caption("Confirmed attacks by source geolocation — bubble size = attack count")
+    st.pydeck_chart(pdk.Deck(
+        map_style=None,
+        initial_view_state=pdk.ViewState(latitude=28, longitude=20, zoom=1.1),
+        layers=[pdk.Layer(
+            "ScatterplotLayer",
+            data=geo_df,
+            get_position="[lon, lat]",
+            get_radius="radius",
+            get_fill_color=[226, 75, 74, 170],
+            get_line_color=[80, 19, 19],
+            line_width_min_pixels=1,
+            stroked=True,
+            pickable=True,
+        )],
+        tooltip={"text": "{city}: {attacks} attack alert(s)"},
+    ), height=420)
+
 # ---------------------------------------------------------------- queue
 st.subheader("Analyst queue — highest risk first")
 f1, f2, f3, f4 = st.columns([3, 3, 2, 1])
@@ -237,35 +296,36 @@ if len(filtered) != len(results) or len(filtered) > limit:
     st.caption(f"Showing {min(limit, len(filtered))} of {len(filtered)} matching "
                f"alerts ({len(results)} total)")
 
-for i, r in enumerate(filtered[:limit], 1):
-    sev = Severity(r["severity"])
-    verdict = VERDICT_LABEL[Verdict(r["verdict"])]
-    if r["mitre_technique_name"] not in ("N/A", ""):
-        attack = f"{r['mitre_technique_name']} ({r['mitre_technique_id']})"
-    elif r["verdict"] == "false_positive":
-        attack = "benign activity"
-    else:
-        attack = "unclear pattern"
-    header = (f"**#{i}**  ·  `{r['src_ip']}`  ·  {SEVERITY_BADGE[sev]}  ·  "
-              f"**{attack}**  ·  {verdict}  ·  {r['confidence']}%")
-    with st.expander(header, expanded=(i == 1)):
-        left, right = st.columns([3, 2])
-        with left:
-            st.markdown(f"**Analyst summary** — {r['summary']}")
-            st.markdown("**Recommended actions**")
-            for n, action in enumerate(r["recommended_actions"], 1):
-                st.markdown(f"{n}. {action}")
-        with right:
-            ctx = enriched_by_ip[r["src_ip"]]["enrichment"]
-            intel = ctx["threat_intel"]
-            st.markdown("**Enrichment**")
-            st.markdown(f"- Geolocation: {ctx['geolocation']}")
-            st.markdown(f"- Reputation: {intel.get('reputation', 'no records')}")
-            if intel.get("tags"):
-                st.markdown(f"- Intel tags: {', '.join(intel['tags'])}")
-            st.markdown(f"- ATT&CK: `{r['mitre_technique_id']}` {r['mitre_technique_name']}")
-        st.markdown("**Raw events**")
-        st.code("\n".join(raw_events[r["src_ip"]]), language="text")
+with st.container(height=620):
+    for i, r in enumerate(filtered[:limit], 1):
+        sev = Severity(r["severity"])
+        verdict = VERDICT_LABEL[Verdict(r["verdict"])]
+        if r["mitre_technique_name"] not in ("N/A", ""):
+            attack = f"{r['mitre_technique_name']} ({r['mitre_technique_id']})"
+        elif r["verdict"] == "false_positive":
+            attack = "benign activity"
+        else:
+            attack = "unclear pattern"
+        header = (f"**#{i}**  ·  `{r['src_ip']}`  ·  {SEVERITY_BADGE[sev]}  ·  "
+                  f"**{attack}**  ·  {verdict}  ·  {r['confidence']}%")
+        with st.expander(header, expanded=(i == 1)):
+            left, right = st.columns([3, 2])
+            with left:
+                st.markdown(f"**Analyst summary** — {r['summary']}")
+                st.markdown("**Recommended actions**")
+                for n, action in enumerate(r["recommended_actions"], 1):
+                    st.markdown(f"{n}. {action}")
+            with right:
+                ctx = enriched_by_ip[r["src_ip"]]["enrichment"]
+                intel = ctx["threat_intel"]
+                st.markdown("**Enrichment**")
+                st.markdown(f"- Geolocation: {ctx['geolocation']}")
+                st.markdown(f"- Reputation: {intel.get('reputation', 'no records')}")
+                if intel.get("tags"):
+                    st.markdown(f"- Intel tags: {', '.join(intel['tags'])}")
+                st.markdown(f"- ATT&CK: `{r['mitre_technique_id']}` {r['mitre_technique_name']}")
+            st.markdown("**Raw events**")
+            st.code("\n".join(raw_events[r["src_ip"]]), language="text")
 
 # ---------------------------------------------------------------- evaluation
 labels = load_labels(labels_path)
