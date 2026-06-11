@@ -230,7 +230,7 @@ web server, including:
 - [ ] Live enrichment: AbuseIPDB + MaxMind GeoLite2
 - [x] Splunk ingestion (`--source splunk` pulls Windows/AD events 4624/4625 via the REST API)
 - [ ] Agentic enrichment: let Claude call lookup tools itself via tool use
-- [ ] Windows Event Log (4625/4624) support
+- [x] Windows Event Log (4624/4625) support — covered by the Splunk integration
 - [x] Streamlit dashboard (`streamlit run dashboard.py`)
 
 ## Disclaimer
